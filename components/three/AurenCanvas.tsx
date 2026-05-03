@@ -2,17 +2,23 @@
 
 import { SheetProvider } from "@theatre/r3f";
 import { Canvas } from "@react-three/fiber";
-import { useEffect } from "react";
 import * as THREE from "three";
 
 import { SceneController } from "@/components/three/SceneController";
+import { TheatreScrollController } from "@/components/three/TheatreScrollController";
 import { usePerformanceTier } from "@/lib/detectPerformanceTier";
-import { initializeTheatreStudio, mainSheet } from "@/lib/theatre";
+import { mainSheet } from "@/lib/theatre";
 import { usePrefersReducedMotion } from "@/lib/usePrefersReducedMotion";
 
 type AurenCanvasProps = {
   active?: boolean;
 };
+
+if (typeof window !== "undefined" && process.env.NODE_ENV === "development") {
+  void import("@/lib/theatre-studio").then(({ initializeTheatreStudio }) => {
+    initializeTheatreStudio();
+  });
+}
 
 export default function AurenCanvas({ active = true }: AurenCanvasProps) {
   const tier = usePerformanceTier();
@@ -21,10 +27,6 @@ export default function AurenCanvas({ active = true }: AurenCanvasProps) {
   const preserveDrawingBuffer =
     typeof window !== "undefined" &&
     window.location.search.includes("verifyCanvas=1");
-
-  useEffect(() => {
-    void initializeTheatreStudio();
-  }, []);
 
   return (
     <div className="fixed inset-0 z-0 bg-obsidian" aria-hidden>
@@ -47,6 +49,7 @@ export default function AurenCanvas({ active = true }: AurenCanvasProps) {
         shadows={tier !== "low"}
       >
         <SheetProvider sheet={mainSheet}>
+          <TheatreScrollController active={active} reducedMotion={reducedMotion} />
           <color args={["#0A0806"]} attach="background" />
           <fog args={["#0A0806", 4, 12]} attach="fog" />
           <SceneController

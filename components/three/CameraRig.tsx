@@ -28,69 +28,78 @@ export function CameraRig({ reducedMotion = false }: CameraRigProps) {
 
   useFrame(({ camera }, delta) => {
     const cameraValues = theatreControls.heroCamera.value;
-    const basePosition = levaOverrides
-      ? {
-          x: cameraControls.cameraX,
-          y: cameraControls.cameraY,
-          z: cameraControls.cameraZ
-        }
-      : cameraValues.position;
-    const baseTarget = levaOverrides
-      ? {
-          x: cameraControls.targetX,
-          y: cameraControls.targetY,
-          z: cameraControls.targetZ
-        }
-      : cameraValues.target;
-    const baseFov = levaOverrides ? cameraControls.cameraFov : cameraValues.fov;
-    const heroZoom = levaOverrides ? 2 : cameraValues.heroZoom;
-    const targetFov = progress < 0.12 ? mapRange(progress, 0, 0.12, baseFov, 42) : 45;
-    const breathing =
-      levaOverrides &&
-      cameraControls.enableHeroBreathing &&
-      !debugControls.freezeAnimations &&
-      progress < 0.1
-        ? Math.sin(performance.now() * 0.00045) * cameraControls.breathingAmount
-        : 0;
+    let targetFov = cameraValues.fov;
+    let dampingRate = 5.2;
 
-    if (reducedMotion) {
-      target.set(basePosition.x, basePosition.y, basePosition.z);
-      lookAt.set(baseTarget.x, baseTarget.y, baseTarget.z);
-    } else if (progress < 0.1) {
+    if (!levaOverrides) {
       target.set(
-        basePosition.x,
-        basePosition.y + breathing,
-        mapRange(progress, 0, 0.1, basePosition.z, basePosition.z - heroZoom)
+        cameraValues.position.x,
+        cameraValues.position.y,
+        cameraValues.position.z
       );
-      lookAt.set(baseTarget.x, baseTarget.y, baseTarget.z);
-    } else if (progress < 0.22) {
-      target.set(0, 0.05, mapRange(progress, 0.1, 0.22, 5, 3.15));
-      lookAt.set(0, 0, 0);
-    } else if (progress < 0.38) {
-      const angle = mapRange(progress, 0.22, 0.38, -0.38, 0.78);
-      target.set(Math.sin(angle) * 2.15, 0.28, Math.cos(angle) * 3.45);
-      lookAt.set(0, 0.05, 0);
-    } else if (progress < 0.52) {
-      target.set(mapRange(progress, 0.38, 0.52, 0.3, -1.2), 0.58, 4.7);
-      lookAt.set(-0.35, 0.2, 0);
-    } else if (progress < 0.64) {
-      target.set(0, mapRange(progress, 0.52, 0.64, 0.4, 1), 6.05);
-      lookAt.set(0, 0.12, 0);
-    } else if (progress < 0.74) {
-      target.set(0.95, 0.45, 5.8);
-      lookAt.set(0.25, 0, 0);
-    } else if (progress < 0.83) {
-      target.set(0, 0.18, 4.25);
-      lookAt.set(0, 0, 0);
-    } else if (progress < 0.93) {
-      target.set(0.62, 0.3, 4.95);
-      lookAt.set(0.12, 0, 0);
+      lookAt.set(cameraValues.target.x, cameraValues.target.y, cameraValues.target.z);
     } else {
-      target.set(0, 0.4, mapRange(progress, 0.93, 1, 4.95, 6.25));
-      lookAt.set(0, 0.1, 0);
+      const basePosition = {
+        x: cameraControls.cameraX,
+        y: cameraControls.cameraY,
+        z: cameraControls.cameraZ
+      };
+      const baseTarget = {
+        x: cameraControls.targetX,
+        y: cameraControls.targetY,
+        z: cameraControls.targetZ
+      };
+      const heroZoom = 2;
+      const breathing =
+        cameraControls.enableHeroBreathing &&
+        !debugControls.freezeAnimations &&
+        progress < 0.1
+          ? Math.sin(performance.now() * 0.00045) * cameraControls.breathingAmount
+          : 0;
+
+      targetFov =
+        progress < 0.12 ? mapRange(progress, 0, 0.12, cameraControls.cameraFov, 42) : 45;
+      dampingRate = cameraControls.cameraDamping;
+
+      if (reducedMotion) {
+        target.set(basePosition.x, basePosition.y, basePosition.z);
+        lookAt.set(baseTarget.x, baseTarget.y, baseTarget.z);
+      } else if (progress < 0.1) {
+        target.set(
+          basePosition.x,
+          basePosition.y + breathing,
+          mapRange(progress, 0, 0.1, basePosition.z, basePosition.z - heroZoom)
+        );
+        lookAt.set(baseTarget.x, baseTarget.y, baseTarget.z);
+      } else if (progress < 0.22) {
+        target.set(0, 0.05, mapRange(progress, 0.1, 0.22, 5, 3.15));
+        lookAt.set(0, 0, 0);
+      } else if (progress < 0.38) {
+        const angle = mapRange(progress, 0.22, 0.38, -0.38, 0.78);
+        target.set(Math.sin(angle) * 2.15, 0.28, Math.cos(angle) * 3.45);
+        lookAt.set(0, 0.05, 0);
+      } else if (progress < 0.52) {
+        target.set(mapRange(progress, 0.38, 0.52, 0.3, -1.2), 0.58, 4.7);
+        lookAt.set(-0.35, 0.2, 0);
+      } else if (progress < 0.64) {
+        target.set(0, mapRange(progress, 0.52, 0.64, 0.4, 1), 6.05);
+        lookAt.set(0, 0.12, 0);
+      } else if (progress < 0.74) {
+        target.set(0.95, 0.45, 5.8);
+        lookAt.set(0.25, 0, 0);
+      } else if (progress < 0.83) {
+        target.set(0, 0.18, 4.25);
+        lookAt.set(0, 0, 0);
+      } else if (progress < 0.93) {
+        target.set(0.62, 0.3, 4.95);
+        lookAt.set(0.12, 0, 0);
+      } else {
+        target.set(0, 0.4, mapRange(progress, 0.93, 1, 4.95, 6.25));
+        lookAt.set(0, 0.1, 0);
+      }
     }
 
-    const damping = 1 - Math.exp(-delta * (levaOverrides ? cameraControls.cameraDamping : 2.4));
+    const damping = 1 - Math.exp(-delta * dampingRate);
     camera.position.lerp(target, damping);
     if ("fov" in camera) {
       camera.fov = THREE.MathUtils.damp(camera.fov, targetFov, 2.6, delta);
