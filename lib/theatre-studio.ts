@@ -6,7 +6,8 @@ import type { IExtension, ToolsetConfig } from "@theatre/studio";
 
 import {
   THEATRE_PROJECT_ID,
-  THEATRE_STUDIO_PERSISTENCE_KEY
+  THEATRE_STUDIO_PERSISTENCE_KEY,
+  theatreProject
 } from "@/lib/theatre";
 
 const globalForTheatre = globalThis as typeof globalThis & {
@@ -18,6 +19,8 @@ const globalForTheatre = globalThis as typeof globalThis & {
 };
 
 async function saveTheatreStateToDisk() {
+  await theatreProject.ready;
+
   const state = studio.createContentOfSaveFile(THEATRE_PROJECT_ID);
   const response = await fetch("/api/theatre-state", {
     method: "POST",
@@ -84,7 +87,10 @@ export function initializeTheatreStudio() {
 
   globalForTheatre.__AUREN_THEATRE__ = {
     saveState: saveTheatreStateToDisk,
-    getState: () => studio.createContentOfSaveFile(THEATRE_PROJECT_ID)
+    getState: () =>
+      theatreProject.isReady
+        ? studio.createContentOfSaveFile(THEATRE_PROJECT_ID)
+        : { projectReady: false }
   };
 
   globalForTheatre.__aurenTheatreStudioInitialized = true;

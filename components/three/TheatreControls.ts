@@ -20,16 +20,6 @@ function vector3(x: number, y: number, z: number, range: [number, number] = [-10
 }
 
 export const theatreControls = {
-  heroCamera: mainSheet.object(
-    "Hero Camera",
-    {
-      position: vector3(0, 0.12, 7.2, [-12, 12]),
-      target: vector3(0, 0.04, 0, [-4, 4]),
-      fov: t.number(34, { range: [24, 55] }),
-      heroZoom: t.number(2, { range: [0, 4] })
-    },
-    { reconfigure: true }
-  ),
   heroEnvironment: mainSheet.object(
     "Hero Environment Controls",
     {

@@ -33,24 +33,24 @@ export function GoldParticles({ tier }: GoldParticlesProps) {
       const central = i < count * 0.76;
       const beam = i < count * 0.34;
       const radius = beam
-        ? Math.pow(Math.random(), 1.8) * 1.05
+        ? Math.pow(Math.random(), 1.95) * 0.92
         : central
-          ? 0.55 + Math.random() * 2.6
-          : 2.7 + Math.random() * 4.8;
+          ? 0.42 + Math.random() * 2.25
+          : 2.35 + Math.random() * 4.35;
       const angle = Math.random() * Math.PI * 2;
 
       positionArray[i * 3] = Math.cos(angle) * radius;
       positionArray[i * 3 + 1] = beam
-        ? -0.9 + Math.random() * 3.9
+        ? -1.18 + Math.random() * 4.9
         : central
-          ? -1.15 + Math.random() * 3.55
-          : -1.9 + Math.random() * 5.4;
-      positionArray[i * 3 + 2] = Math.sin(angle) * radius - (beam ? 0.65 : central ? 0.78 : 1.9);
+          ? -1.3 + Math.random() * 4.15
+          : -1.95 + Math.random() * 5.65;
+      positionArray[i * 3 + 2] = Math.sin(angle) * radius - (beam ? 0.4 : central ? 0.72 : 1.8);
       scaleArray[i] = beam
-        ? 0.16 + Math.random() * 0.82
+        ? 0.08 + Math.random() * 0.42
         : central
-          ? 0.12 + Math.random() * 0.95
-          : 0.1 + Math.random() * 0.54;
+          ? 0.06 + Math.random() * 0.48
+          : 0.05 + Math.random() * 0.28;
       phaseArray[i] = Math.random();
     }
 
@@ -70,7 +70,9 @@ export function GoldParticles({ tier }: GoldParticlesProps) {
           uOpacity: { value: 1 },
           uColorIntensity: { value: 1 },
           uTwinkle: { value: 1 },
-          uBeamDensity: { value: 1 }
+          uBeamDensity: { value: 1 },
+          uUpwardFlow: { value: 1 },
+          uDepthStrength: { value: 1 }
         },
         transparent: true,
         depthWrite: false,
@@ -91,13 +93,17 @@ export function GoldParticles({ tier }: GoldParticlesProps) {
           colorIntensity: particleControls.particleDensity,
           twinkle: particleControls.particleTwinkle,
           beamDensity: particleControls.particleBeamDensity,
-          color: particleControls.particleColor
+          color: particleControls.particleColor,
+          upwardFlow: particleControls.particleUpwardFlow,
+          depthStrength: particleControls.particleDepthStrength
         }
       : {
           ...theatreParticles,
           twinkle: 1,
-          beamDensity: 1,
-          color: "#D8B65D"
+          beamDensity: 1.65,
+          color: "#D8B65D",
+          upwardFlow: 0.72,
+          depthStrength: 1.24
         };
     const environment = levaOverrides ? environmentControls : theatreEnvironment;
     const timeScale = levaOverrides && debugControls.freezeAnimations ? 0 : particles.speed;
@@ -113,6 +119,8 @@ export function GoldParticles({ tier }: GoldParticlesProps) {
     material.uniforms.uColorIntensity.value = particles.colorIntensity;
     material.uniforms.uTwinkle.value = particles.twinkle;
     material.uniforms.uBeamDensity.value = particles.beamDensity;
+    material.uniforms.uUpwardFlow.value = particles.upwardFlow;
+    material.uniforms.uDepthStrength.value = particles.depthStrength;
     material.uniforms.uColor.value.set(particles.color);
   });
 

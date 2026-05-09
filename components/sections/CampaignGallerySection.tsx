@@ -88,30 +88,35 @@ export function CampaignGallerySection() {
         ref={trackRef}
       >
         {galleryItems.map((item) => (
-          <article
-            className="gold-frame group relative h-[73vh] min-h-[34rem] overflow-hidden border border-gold/20 bg-charcoal/50 md:w-[27rem] lg:w-[31rem]"
-            data-gallery-card
-            key={item.index}
-          >
-            <Image
-              alt={`${item.title} campaign frame`}
-              className="image-lift object-cover opacity-82 transition duration-700 group-hover:scale-105 group-hover:opacity-95"
-              fill
-              sizes="(min-width: 900px) 31rem, 100vw"
-              src={item.image}
+          <div className="contents" key={item.index}>
+            <article
+              className="gold-frame group relative h-[73vh] min-h-[34rem] shrink-0 overflow-hidden border border-gold/20 bg-charcoal/50 md:w-[27rem] lg:w-[31rem]"
+              data-gallery-card
+            >
+              <Image
+                alt={`${item.title} campaign frame`}
+                className="image-lift object-cover opacity-82 transition duration-700 group-hover:scale-105 group-hover:opacity-95"
+                fill
+                sizes="(min-width: 900px) 31rem, 100vw"
+                src={item.image}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/22 to-obsidian/20" />
+              <div className="absolute inset-x-6 top-6 flex justify-between font-mono text-[0.62rem] uppercase text-gold/76">
+                <span>{item.index}</span>
+                <span>{item.caption}</span>
+              </div>
+              <div className="absolute bottom-7 left-6 right-6">
+                <div className="mb-4 h-px bg-gradient-to-r from-gold/70 to-transparent" />
+                <h3 className="font-display text-3xl leading-tight text-ivory sm:text-4xl">
+                  {item.title}
+                </h3>
+              </div>
+            </article>
+            <div
+              aria-hidden
+              className="hidden h-[73vh] min-h-[34rem] shrink-0 md:block md:w-[27rem] lg:w-[31rem]"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/22 to-obsidian/20" />
-            <div className="absolute inset-x-6 top-6 flex justify-between font-mono text-[0.62rem] uppercase text-gold/76">
-              <span>{item.index}</span>
-              <span>{item.caption}</span>
-            </div>
-            <div className="absolute bottom-7 left-6 right-6">
-              <div className="mb-4 h-px bg-gradient-to-r from-gold/70 to-transparent" />
-              <h3 className="font-display text-3xl leading-tight text-ivory sm:text-4xl">
-                {item.title}
-              </h3>
-            </div>
-          </article>
+          </div>
         ))}
       </div>
     </SectionFrame>

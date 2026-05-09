@@ -21,18 +21,8 @@ export function useAurenLevaControls(enabled: boolean) {
   const [values] = useControls(
     "AUREN NOIR / Hero Scene",
     () => ({
-      "Hero Camera": folder({
-        enableLevaOverrides: aurenHeroPreset.enableLevaOverrides,
-        cameraX: range(aurenHeroPreset.camera.cameraX, -8, 8),
-        cameraY: range(aurenHeroPreset.camera.cameraY, -4, 4),
-        cameraZ: range(aurenHeroPreset.camera.cameraZ, 2, 12),
-        cameraFov: range(aurenHeroPreset.camera.cameraFov, 24, 55, 0.1),
-        targetX: range(aurenHeroPreset.camera.targetX, -3, 3),
-        targetY: range(aurenHeroPreset.camera.targetY, -3, 3),
-        targetZ: range(aurenHeroPreset.camera.targetZ, -3, 3),
-        cameraDamping: range(aurenHeroPreset.camera.cameraDamping, 0.4, 8, 0.05),
-        enableHeroBreathing: aurenHeroPreset.camera.enableHeroBreathing,
-        breathingAmount: range(aurenHeroPreset.camera.breathingAmount, 0, 0.12, 0.001)
+      "Leva Overrides": folder({
+        enableLevaOverrides: aurenHeroPreset.enableLevaOverrides
       }),
       "Hero Environment Controls": folder({
         particleIntensity: range(aurenHeroPreset.environment.particleIntensity, 0, 2.5),
@@ -55,14 +45,22 @@ export function useAurenLevaControls(enabled: boolean) {
         idleRotationSpeed: range(aurenHeroPreset.bottle.idleRotationSpeed, 0, 1),
         cursorTiltAmount: range(aurenHeroPreset.bottle.cursorTiltAmount, 0, 0.3, 0.001),
         cursorTiltEnabled: aurenHeroPreset.bottle.cursorTiltEnabled,
-        glassOpacity: range(aurenHeroPreset.bottle.glassOpacity, 0.15, 1),
-        glassRoughness: range(aurenHeroPreset.bottle.glassRoughness, 0.01, 0.8),
         glassTransmission: range(aurenHeroPreset.bottle.glassTransmission, 0, 1),
+        glassOpacity: range(aurenHeroPreset.bottle.glassOpacity, 0.05, 1),
         glassIOR: range(aurenHeroPreset.bottle.glassIOR, 1, 2.3),
         glassThickness: range(aurenHeroPreset.bottle.glassThickness, 0, 2),
+        glassRoughness: range(aurenHeroPreset.bottle.glassRoughness, 0.01, 0.8),
+        glassReflectivity: range(aurenHeroPreset.bottle.glassReflectivity, 0, 1.5),
+        glassClearcoat: range(aurenHeroPreset.bottle.glassClearcoat, 0, 1),
+        amberTint: aurenHeroPreset.bottle.amberTint,
+        attenuationDistance: range(aurenHeroPreset.bottle.attenuationDistance, 0.1, 6),
+        fresnelStrength: range(aurenHeroPreset.bottle.fresnelStrength, 0, 2),
+        fresnelPower: range(aurenHeroPreset.bottle.fresnelPower, 0.5, 8),
+        edgeHighlightIntensity: range(aurenHeroPreset.bottle.edgeHighlightIntensity, 0, 2.5),
         amberGlowIntensity: range(aurenHeroPreset.bottle.amberGlowIntensity, 0, 1.5),
         capMetalness: range(aurenHeroPreset.bottle.capMetalness, 0, 1),
-        capRoughness: range(aurenHeroPreset.bottle.capRoughness, 0.01, 1)
+        capRoughness: range(aurenHeroPreset.bottle.capRoughness, 0.01, 1),
+        labelBoost: range(aurenHeroPreset.bottle.labelBoost, 0, 2)
       }),
       "Hero Spotlight": folder({
         spotlightX: range(aurenHeroPreset.spotlight.spotlightX, -8, 8),
@@ -72,6 +70,7 @@ export function useAurenLevaControls(enabled: boolean) {
         spotlightAngle: range(aurenHeroPreset.spotlight.spotlightAngle, 0.03, 1, 0.001),
         spotlightPenumbra: range(aurenHeroPreset.spotlight.spotlightPenumbra, 0, 1),
         spotlightDistance: range(aurenHeroPreset.spotlight.spotlightDistance, 0, 30),
+        spotlightDecay: range(aurenHeroPreset.spotlight.spotlightDecay, 0, 4),
         spotlightColor: aurenHeroPreset.spotlight.spotlightColor
       }),
       "Rim Light": folder({
@@ -92,7 +91,12 @@ export function useAurenLevaControls(enabled: boolean) {
         beamOpacity: range(aurenHeroPreset.beam.beamOpacity, 0, 2.5),
         beamIntensity: range(aurenHeroPreset.beam.beamIntensity, 0, 2.5),
         beamColor: aurenHeroPreset.beam.beamColor,
-        beamSoftness: range(aurenHeroPreset.beam.beamSoftness, 0.2, 2.4)
+        beamSoftness: range(aurenHeroPreset.beam.beamSoftness, 0.2, 2.4),
+        beamTopWidth: range(aurenHeroPreset.beam.beamTopWidth, 0.2, 2.5),
+        beamBottomWidth: range(aurenHeroPreset.beam.beamBottomWidth, 0.02, 1.2),
+        beamHeight: range(aurenHeroPreset.beam.beamHeight, 2, 10),
+        beamFalloff: range(aurenHeroPreset.beam.beamFalloff, 0.3, 3),
+        beamNoiseAmount: range(aurenHeroPreset.beam.beamNoiseAmount, 0, 1.5)
       }),
       "Gold Particles": folder({
         particlesEnabled: aurenHeroPreset.particles.particlesEnabled,
@@ -103,17 +107,41 @@ export function useAurenLevaControls(enabled: boolean) {
         particleSpread: range(aurenHeroPreset.particles.particleSpread, 0.25, 3),
         particleBeamDensity: range(aurenHeroPreset.particles.particleBeamDensity, 0, 3),
         particleTwinkle: range(aurenHeroPreset.particles.particleTwinkle, 0, 3),
-        particleColor: aurenHeroPreset.particles.particleColor
+        particleColor: aurenHeroPreset.particles.particleColor,
+        particleUpwardFlow: range(aurenHeroPreset.particles.particleUpwardFlow, 0, 3),
+        particleDepthStrength: range(aurenHeroPreset.particles.particleDepthStrength, 0.2, 3)
       }),
       "Smoke Atmosphere": folder({
         smokeEnabled: aurenHeroPreset.smoke.smokeEnabled,
         smokeOpacity: range(aurenHeroPreset.smoke.smokeOpacity, 0, 2.5),
+        smokeBrightness: range(aurenHeroPreset.smoke.smokeBrightness, 0, 3),
         smokeSpeed: range(aurenHeroPreset.smoke.smokeSpeed, 0, 4),
+        smokeRiseSpeed: range(aurenHeroPreset.smoke.smokeRiseSpeed, 0, 4),
+        smokeDriftX: range(aurenHeroPreset.smoke.smokeDriftX, -1.5, 1.5, 0.001),
+        smokeDriftZ: range(aurenHeroPreset.smoke.smokeDriftZ, -1.5, 1.5, 0.001),
         smokeScale: range(aurenHeroPreset.smoke.smokeScale, 0.2, 3),
         smokeSpread: range(aurenHeroPreset.smoke.smokeSpread, 0.2, 3),
         smokeCurlStrength: range(aurenHeroPreset.smoke.smokeCurlStrength, 0, 3),
+        smokeNoiseScale: range(aurenHeroPreset.smoke.smokeNoiseScale, 0.5, 8),
+        smokeDissolve: range(aurenHeroPreset.smoke.smokeDissolve, 0.05, 0.95),
+        smokeLayerCount: range(aurenHeroPreset.smoke.smokeLayerCount, 1, 56, 1),
+        smokeDepthStrength: range(aurenHeroPreset.smoke.smokeDepthStrength, 0.2, 3),
         smokeColor: aurenHeroPreset.smoke.smokeColor,
-        smokeLayerDepth: range(aurenHeroPreset.smoke.smokeLayerDepth, 0.2, 3)
+        smokeWarmthInBeam: range(aurenHeroPreset.smoke.smokeWarmthInBeam, 0, 2),
+        smokeBeamInfluence: range(aurenHeroPreset.smoke.smokeBeamInfluence, 0, 3),
+        smokeShadowDensity: range(aurenHeroPreset.smoke.smokeShadowDensity, 0, 2),
+        smokeLowerDensity: range(aurenHeroPreset.smoke.smokeLowerDensity, 0, 3),
+        smokeUpperFade: range(aurenHeroPreset.smoke.smokeUpperFade, 0, 2),
+        smokeFrontLayerOpacity: range(aurenHeroPreset.smoke.smokeFrontLayerOpacity, 0, 2),
+        smokeMidLayerOpacity: range(aurenHeroPreset.smoke.smokeMidLayerOpacity, 0, 2),
+        smokeRearLayerOpacity: range(aurenHeroPreset.smoke.smokeRearLayerOpacity, 0, 2),
+        smokeSpawnRadius: range(aurenHeroPreset.smoke.smokeSpawnRadius, 0.2, 3),
+        smokeSpawnStrength: range(aurenHeroPreset.smoke.smokeSpawnStrength, 0, 3),
+        smokeHeight: range(aurenHeroPreset.smoke.smokeHeight, 0.3, 3),
+        smokeLightResponse: range(aurenHeroPreset.smoke.smokeLightResponse, 0, 3),
+        smokeShellRadius: range(aurenHeroPreset.smoke.smokeShellRadius, 0.8, 5),
+        smokeShellHeight: range(aurenHeroPreset.smoke.smokeShellHeight, 1.5, 7),
+        smokeOpenFrontAngle: range(aurenHeroPreset.smoke.smokeOpenFrontAngle, 70, 150, 1)
       }),
       "Reflective Floor": folder({
         floorEnabled: aurenHeroPreset.floor.floorEnabled,
@@ -122,10 +150,15 @@ export function useAurenLevaControls(enabled: boolean) {
         floorBlur: range(aurenHeroPreset.floor.floorBlur, 0, 2),
         floorRoughness: range(aurenHeroPreset.floor.floorRoughness, 0.01, 1),
         floorMetalness: range(aurenHeroPreset.floor.floorMetalness, 0, 1),
+        floorBaseColor: aurenHeroPreset.floor.floorBaseColor,
         floorVeinIntensity: range(aurenHeroPreset.floor.floorVeinIntensity, 0, 2.5),
+        floorVeinScale: range(aurenHeroPreset.floor.floorVeinScale, 0.2, 4),
+        floorVeinColor: aurenHeroPreset.floor.floorVeinColor,
         floorGlowIntensity: range(aurenHeroPreset.floor.floorGlowIntensity, 0, 2.5),
-        floorColor: aurenHeroPreset.floor.floorColor,
-        veinColor: aurenHeroPreset.floor.veinColor
+        floorHotspotStrength: range(aurenHeroPreset.floor.floorHotspotStrength, 0, 3),
+        floorHotspotRadius: range(aurenHeroPreset.floor.floorHotspotRadius, 0.05, 1.5),
+        floorAtmosphereReflection: range(aurenHeroPreset.floor.floorAtmosphereReflection, 0, 3),
+        reflectionStrength: range(aurenHeroPreset.floor.reflectionStrength, 0, 3)
       }),
       "Post FX": folder({
         bloomEnabled: aurenHeroPreset.postfx.bloomEnabled,
@@ -162,18 +195,6 @@ export function useAurenLevaControls(enabled: boolean) {
 
     const nextControls: AurenHeroPreset = {
       enableLevaOverrides: Boolean(values.enableLevaOverrides),
-      camera: {
-        cameraX: Number(values.cameraX),
-        cameraY: Number(values.cameraY),
-        cameraZ: Number(values.cameraZ),
-        cameraFov: Number(values.cameraFov),
-        targetX: Number(values.targetX),
-        targetY: Number(values.targetY),
-        targetZ: Number(values.targetZ),
-        cameraDamping: Number(values.cameraDamping),
-        enableHeroBreathing: Boolean(values.enableHeroBreathing),
-        breathingAmount: Number(values.breathingAmount)
-      },
       environment: {
         particleIntensity: Number(values.particleIntensity),
         smokeOpacity: Number(values.smokeGlobalOpacity),
@@ -195,14 +216,22 @@ export function useAurenLevaControls(enabled: boolean) {
         idleRotationSpeed: Number(values.idleRotationSpeed),
         cursorTiltAmount: Number(values.cursorTiltAmount),
         cursorTiltEnabled: Boolean(values.cursorTiltEnabled),
-        glassOpacity: Number(values.glassOpacity),
-        glassRoughness: Number(values.glassRoughness),
         glassTransmission: Number(values.glassTransmission),
+        glassOpacity: Number(values.glassOpacity),
         glassIOR: Number(values.glassIOR),
         glassThickness: Number(values.glassThickness),
+        glassRoughness: Number(values.glassRoughness),
+        glassReflectivity: Number(values.glassReflectivity),
+        glassClearcoat: Number(values.glassClearcoat),
+        amberTint: String(values.amberTint),
+        attenuationDistance: Number(values.attenuationDistance),
+        fresnelStrength: Number(values.fresnelStrength),
+        fresnelPower: Number(values.fresnelPower),
+        edgeHighlightIntensity: Number(values.edgeHighlightIntensity),
         amberGlowIntensity: Number(values.amberGlowIntensity),
         capMetalness: Number(values.capMetalness),
-        capRoughness: Number(values.capRoughness)
+        capRoughness: Number(values.capRoughness),
+        labelBoost: Number(values.labelBoost)
       },
       spotlight: {
         spotlightX: Number(values.spotlightX),
@@ -212,6 +241,7 @@ export function useAurenLevaControls(enabled: boolean) {
         spotlightAngle: Number(values.spotlightAngle),
         spotlightPenumbra: Number(values.spotlightPenumbra),
         spotlightDistance: Number(values.spotlightDistance),
+        spotlightDecay: Number(values.spotlightDecay),
         spotlightColor: String(values.spotlightColor)
       },
       rim: {
@@ -232,7 +262,12 @@ export function useAurenLevaControls(enabled: boolean) {
         beamOpacity: Number(values.beamOpacity),
         beamIntensity: Number(values.beamIntensity),
         beamColor: String(values.beamColor),
-        beamSoftness: Number(values.beamSoftness)
+        beamSoftness: Number(values.beamSoftness),
+        beamTopWidth: Number(values.beamTopWidth),
+        beamBottomWidth: Number(values.beamBottomWidth),
+        beamHeight: Number(values.beamHeight),
+        beamFalloff: Number(values.beamFalloff),
+        beamNoiseAmount: Number(values.beamNoiseAmount)
       },
       particles: {
         particlesEnabled: Boolean(values.particlesEnabled),
@@ -243,17 +278,42 @@ export function useAurenLevaControls(enabled: boolean) {
         particleSpread: Number(values.particleSpread),
         particleBeamDensity: Number(values.particleBeamDensity),
         particleTwinkle: Number(values.particleTwinkle),
-        particleColor: String(values.particleColor)
+        particleColor: String(values.particleColor),
+        particleUpwardFlow: Number(values.particleUpwardFlow),
+        particleDepthStrength: Number(values.particleDepthStrength)
       },
       smoke: {
         smokeEnabled: Boolean(values.smokeEnabled),
         smokeOpacity: Number(values.smokeOpacity),
+        smokeBrightness: Number(values.smokeBrightness),
         smokeSpeed: Number(values.smokeSpeed),
+        smokeRiseSpeed: Number(values.smokeRiseSpeed),
+        smokeDriftX: Number(values.smokeDriftX),
+        smokeDriftZ: Number(values.smokeDriftZ),
         smokeScale: Number(values.smokeScale),
         smokeSpread: Number(values.smokeSpread),
         smokeCurlStrength: Number(values.smokeCurlStrength),
+        smokeNoiseScale: Number(values.smokeNoiseScale),
+        smokeDissolve: Number(values.smokeDissolve),
+        smokeLayerCount: Number(values.smokeLayerCount),
+        smokeDepthStrength: Number(values.smokeDepthStrength),
         smokeColor: String(values.smokeColor),
-        smokeLayerDepth: Number(values.smokeLayerDepth)
+        smokeWarmthInBeam: Number(values.smokeWarmthInBeam),
+        smokeBeamInfluence: Number(values.smokeBeamInfluence),
+        smokeShadowDensity: Number(values.smokeShadowDensity),
+        smokeLowerDensity: Number(values.smokeLowerDensity),
+        smokeUpperFade: Number(values.smokeUpperFade),
+        smokeFrontLayerOpacity: Number(values.smokeFrontLayerOpacity),
+        smokeMidLayerOpacity: Number(values.smokeMidLayerOpacity),
+        smokeRearLayerOpacity: Number(values.smokeRearLayerOpacity),
+        smokeSpawnRadius: Number(values.smokeSpawnRadius),
+        smokeSpawnStrength: Number(values.smokeSpawnStrength),
+        smokeHeight: Number(values.smokeHeight),
+        smokeLightResponse: Number(values.smokeLightResponse),
+        smokeShellRadius: Number(values.smokeShellRadius),
+        smokeShellHeight: Number(values.smokeShellHeight),
+        smokeOpenFrontAngle: Number(values.smokeOpenFrontAngle),
+        smokeLayerDepth: aurenHeroPreset.smoke.smokeLayerDepth
       },
       floor: {
         floorEnabled: Boolean(values.floorEnabled),
@@ -262,10 +322,15 @@ export function useAurenLevaControls(enabled: boolean) {
         floorBlur: Number(values.floorBlur),
         floorRoughness: Number(values.floorRoughness),
         floorMetalness: Number(values.floorMetalness),
+        floorBaseColor: String(values.floorBaseColor),
         floorVeinIntensity: Number(values.floorVeinIntensity),
+        floorVeinScale: Number(values.floorVeinScale),
+        floorVeinColor: String(values.floorVeinColor),
         floorGlowIntensity: Number(values.floorGlowIntensity),
-        floorColor: String(values.floorColor),
-        veinColor: String(values.veinColor)
+        floorHotspotStrength: Number(values.floorHotspotStrength),
+        floorHotspotRadius: Number(values.floorHotspotRadius),
+        floorAtmosphereReflection: Number(values.floorAtmosphereReflection),
+        reflectionStrength: Number(values.reflectionStrength)
       },
       postfx: {
         bloomEnabled: Boolean(values.bloomEnabled),

@@ -4,6 +4,7 @@ uniform float uColorIntensity;
 
 varying float vAlpha;
 varying float vTwinkle;
+varying float vBeam;
 
 void main() {
   vec2 uv = gl_PointCoord - 0.5;
@@ -13,6 +14,6 @@ void main() {
   float glint = pow(max(0.0, 1.0 - d * 3.2), 5.0);
   float circle = halo * 0.44 + core * 0.34 + glint * 0.34;
 
-  vec3 color = mix(uColor, vec3(1.0, 0.82, 0.36), glint * 0.45) * uColorIntensity;
+  vec3 color = mix(uColor, vec3(1.0, 0.82, 0.36), glint * 0.45 + vBeam * 0.25) * uColorIntensity;
   gl_FragColor = vec4(color, circle * vAlpha * vTwinkle * 0.74 * uOpacity);
 }

@@ -31,7 +31,7 @@ export default function AurenCanvas({ active = true }: AurenCanvasProps) {
   return (
     <div className="fixed inset-0 z-0 bg-obsidian" aria-hidden>
       <Canvas
-        camera={{ fov: 34, position: [0, 0.12, 7.2] }}
+        camera={{ fov: 34, near: 0.1, far: 100, position: [0, 0.12, 7.2], zoom: 1 }}
         dpr={dpr}
         eventPrefix="client"
         eventSource={typeof document !== "undefined" ? document.body : undefined}
@@ -49,7 +49,7 @@ export default function AurenCanvas({ active = true }: AurenCanvasProps) {
         shadows={tier !== "low"}
       >
         <SheetProvider sheet={mainSheet}>
-          <TheatreScrollController active={active} reducedMotion={reducedMotion} />
+          <TheatreScrollController active reducedMotion={reducedMotion} />
           <color args={["#0A0806"]} attach="background" />
           <fog args={["#0A0806", 4, 12]} attach="fog" />
           <SceneController

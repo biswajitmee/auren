@@ -82,7 +82,9 @@ Leva is also available in development for fast live tuning of the hero scene. It
 npm run dev
 ```
 
-Open the `AUREN NOIR` Leva panel and enable `enableLevaOverrides` under `Hero Camera`. When that toggle is off, Theatre/default scene values dominate. When it is on, Leva can tune camera, bottle, spotlight, rim light, god ray, particles, smoke, floor, post FX, and debug helpers.
+Open the `AUREN NOIR` Leva panel and enable `enableLevaOverrides` under `Leva Overrides`. When that toggle is off, Theatre/default scene values dominate. When it is on, Leva can tune bottle, spotlight, rim light, god ray, particles, smoke, floor, post FX, and debug helpers. The hero camera is always driven by Theatre's `Hero Camera` object and the saved `lib/theatre-state.json` state, including position, target, fov, zoom, near/far clipping, and roll keyframes.
+
+In development and production, page scroll drives the Theatre sheet sequence so the `Hero Camera` keyframes preview directly in Theatre Studio. When scroll is idle, you can still scrub the Studio timeline manually; the next page scroll hands control back to the scroll position.
 
 Leva is development-only by default. To hide it locally:
 
