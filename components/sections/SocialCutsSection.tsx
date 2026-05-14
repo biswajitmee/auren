@@ -34,17 +34,17 @@ export function SocialCutsSection() {
 
   return (
     <SectionFrame
-      className="min-h-screen bg-[linear-gradient(90deg,rgba(201,168,76,.06)_1px,transparent_1px),linear-gradient(rgba(201,168,76,.05)_1px,transparent_1px)] bg-[size:5rem_5rem]"
+      className="bg-[linear-gradient(90deg,rgba(201,168,76,.06)_1px,transparent_1px),linear-gradient(rgba(201,168,76,.05)_1px,transparent_1px)] bg-[size:5rem_5rem] min-h-screen"
       eyebrow="Social Cuts"
       id="social-cuts"
       index="06"
       ref={sectionRef}
     >
-      <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.28fr_1fr]">
-        <aside className="hidden flex-col justify-end gap-5 border-l border-gold/18 pl-5 lg:flex">
+      <div className="gap-10 grid lg:grid-cols-[0.28fr_1fr] mx-auto max-w-7xl">
+        <aside className="hidden lg:flex flex-col justify-end gap-5 pl-5 border-gold/18 border-l">
           {socialBenefits.map((benefit) => (
             <p
-              className="font-mono text-[0.66rem] uppercase leading-5 text-ivory/46"
+              className="font-mono text-[0.66rem] text-ivory/46 uppercase leading-5"
               data-social-item
               key={benefit}
             >
@@ -54,19 +54,19 @@ export function SocialCutsSection() {
         </aside>
 
         <div>
-          <div className="mb-9 text-center">
+          {/* <div className="mb-9 text-center">
             <MicroLabel>06 / Campaign Deliverables</MicroLabel>
-            <h2 className="mx-auto mt-4 max-w-3xl font-display text-6xl leading-[0.88] text-ivory sm:text-7xl">
+            <h2 className="mx-auto mt-4 max-w-3xl font-display text-ivory text-6xl sm:text-7xl leading-[0.88]">
               Built for every screen.
             </h2>
           </div>
-          <div className="grid items-end gap-5 md:grid-cols-[0.86fr_1fr_0.9fr]">
+          <div className="items-end gap-5 grid md:grid-cols-[0.86fr_1fr_0.9fr]">
             {socialFormats.map((format) => (
               <div data-social-item key={format.title}>
                 <DeviceMockup {...format} />
               </div>
             ))}
-          </div>
+          </div> */}
         </div>
       </div>
     </SectionFrame>
