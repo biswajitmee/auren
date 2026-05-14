@@ -18,7 +18,10 @@ export const SectionFrame = forwardRef<HTMLElement, SectionFrameProps>(
       ref={ref}
       {...props}
     >
-      <div className="pointer-events-none absolute left-5 top-24 z-10 hidden items-center gap-3 text-[0.66rem] uppercase text-gold/65 md:flex">
+      <div
+        className="pointer-events-none absolute left-5 top-24 z-10 hidden items-center gap-3 text-[0.66rem] uppercase text-gold/65 md:flex"
+        data-section-kicker
+      >
         <span>{index}</span>
         <span className="h-px w-12 bg-gold/30" />
         <span>{eyebrow}</span>

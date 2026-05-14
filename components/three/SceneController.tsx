@@ -1,6 +1,9 @@
 "use client";
 
+import { Suspense } from "react";
+
 import { CameraRig } from "@/components/three/CameraRig";
+import { DesireGlassGallery } from "@/components/three/DesireGlassGallery";
 import { GoldParticles } from "@/components/three/GoldParticles";
 import { HeroEnvironment } from "@/components/three/HeroEnvironment";
 import { PerfumeBottle } from "@/components/three/PerfumeBottle";
@@ -33,6 +36,9 @@ export function SceneController({
       <ReflectiveFloor tier={effectiveTier} />
       <GoldParticles tier={effectiveTier} />
       <SmokeShell tier={effectiveTier} />
+      <Suspense fallback={null}>
+        <DesireGlassGallery />
+      </Suspense>
       {levaOverrides && debugControls.showAxes ? <axesHelper args={[3]} /> : null}
       {levaOverrides && debugControls.showHelpers ? (
         <gridHelper args={[12, 24, "#C9A84C", "#3A2A16"]} position={[0, -1.4, 0]} />

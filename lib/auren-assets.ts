@@ -32,5 +32,8 @@ export const criticalAssets = [
   aurenAssets.images.loading,
   aurenAssets.images.hero,
   aurenAssets.images.productReveal,
+  "/desire-gallery/saffron-crocus.png",
+  "/desire-gallery/black-rose.png",
+  "/desire-gallery/taproot.png",
   "/asset-manifest.json"
 ];
