@@ -10,13 +10,13 @@ import { useScrollProgress } from "@/lib/useScrollProgress";
 
 export function FragranceCards3D() {
   const groupRef = useRef<THREE.Group>(null);
-  const progress = useScrollProgress((state) => state.progress);
 
   useFrame((_, delta) => {
     if (!groupRef.current) {
       return;
     }
 
+    const progress = useScrollProgress.getState().progress;
     const inView =
       THREE.MathUtils.smoothstep(progress, 0.34, 0.42) *
       (1 - THREE.MathUtils.smoothstep(progress, 0.54, 0.62));

@@ -3,7 +3,6 @@
 import {
   Bloom,
   ChromaticAberration,
-  DepthOfField,
   EffectComposer,
   Noise,
   Vignette
@@ -17,6 +16,7 @@ import type { WebGLRenderer } from "three";
 import { theatreControls } from "@/components/three/TheatreControls";
 import { PerformanceTier } from "@/lib/detectPerformanceTier";
 import { useAurenSceneStore } from "@/lib/useAurenSceneStore";
+import { useDesireGalleryScene } from "@/lib/useDesireGalleryScene";
 
 type PostFXProps = {
   tier: PerformanceTier;
@@ -85,6 +85,7 @@ export function PostFX({ tier }: PostFXProps) {
   const levaOverrides = useAurenSceneStore((state) => state.enableLevaOverrides);
   const postfx = useAurenSceneStore((state) => state.postfx);
   const environment = useAurenSceneStore((state) => state.environment);
+  const gallerySceneReduced = useDesireGalleryScene((state) => state.sceneReduced);
 
   useEffect(() => {
     return theatreControls.heroEnvironment.onValuesChange((values) => {
@@ -134,15 +135,11 @@ export function PostFX({ tier }: PostFXProps) {
   return (
     <PostFXRuntimeBoundary resetKey={composerResetKey}>
       <EffectComposer
+        enabled={!gallerySceneReduced}
         key={composerResetKey}
-        multisampling={tier === "high" ? 2 : 0}
+        multisampling={0}
       >
         <Bloom intensity={finalBloomIntensity} luminanceThreshold={finalThreshold} mipmapBlur />
-        {tier === "high" && (!levaOverrides || postfx.dofEnabled) ? (
-          <DepthOfField bokehScale={0.85} focalLength={0.02} focusDistance={0.025} />
-        ) : (
-          <></>
-        )}
         <ChromaticAberration
           modulationOffset={0}
           offset={chromaOffset}

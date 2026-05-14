@@ -16,8 +16,7 @@ type GoldParticlesProps = {
 };
 
 export function GoldParticles({ tier }: GoldParticlesProps) {
-  const count = tier === "high" ? 2800 : tier === "medium" ? 1600 : 720;
-  const progress = useScrollProgress((state) => state.progress);
+  const count = tier === "high" ? 1200 : tier === "medium" ? 820 : 420;
   const groupRef = useRef<THREE.Group>(null);
   const levaOverrides = useAurenSceneStore((state) => state.enableLevaOverrides);
   const particleControls = useAurenSceneStore((state) => state.particles);
@@ -82,6 +81,7 @@ export function GoldParticles({ tier }: GoldParticlesProps) {
   );
 
   useFrame((state) => {
+    const progress = useScrollProgress.getState().progress;
     const theatreParticles = theatreControls.goldParticles.value;
     const theatreEnvironment = theatreControls.heroEnvironment.value;
     const particles = levaOverrides

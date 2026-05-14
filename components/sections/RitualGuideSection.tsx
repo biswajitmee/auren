@@ -38,11 +38,11 @@ export function RitualGuideSection() {
       className="grid min-h-screen items-center gap-12 lg:grid-cols-[0.9fr_1.1fr]"
       eyebrow="Ritual Guide"
       id="ritual-guide"
-      index="09"
+      index="08"
       ref={sectionRef}
     >
       <div>
-        <MicroLabel data-guide-item>09 / Ritual Guide</MicroLabel>
+        <MicroLabel data-guide-item>08 / Ritual Guide</MicroLabel>
         <blockquote
           className="mt-7 max-w-xl font-display text-5xl leading-[0.98] text-ivory sm:text-7xl"
           data-guide-item

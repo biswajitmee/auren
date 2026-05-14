@@ -12,7 +12,7 @@ export function FooterSection() {
       className="flex min-h-screen items-end overflow-hidden pb-8"
       eyebrow="Footer"
       id="footer"
-      index="10"
+      index="09"
     >
       <Image
         alt=""

@@ -17,10 +17,6 @@ export const aurenAssets = {
       imagePath("ChatGPT Image Apr 30, 2026, 12_29_27 PM.png")
     ],
     film: imagePath("ChatGPT Image Apr 30, 2026, 12_29_27 PM.png"),
-    socialCuts: [
-      imagePath("ChatGPT Image Apr 30, 2026, 12_29_14 PM (1).png"),
-      imagePath("ChatGPT Image Apr 30, 2026, 12_29_14 PM (2).png")
-    ],
     editions: imagePath("ChatGPT Image Apr 30, 2026, 12_28_58 PM.png"),
     ritualGuide: imagePath("ChatGPT Image Apr 30, 2026, 12_28_44 PM.png"),
     footer: imagePath("ChatGPT Image Apr 30, 2026, 12_31_23 PM.png")
@@ -32,6 +28,7 @@ export const criticalAssets = [
   aurenAssets.images.loading,
   aurenAssets.images.hero,
   aurenAssets.images.productReveal,
+  aurenAssets.images.fragranceNotes,
   "/desire-gallery/saffron-crocus.png",
   "/desire-gallery/black-rose.png",
   "/desire-gallery/taproot.png",

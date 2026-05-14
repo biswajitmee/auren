@@ -13,7 +13,6 @@ import vertexShader from "@/shaders/godray.vert";
 
 export function GodRayBeam() {
   const groupRef = useRef<THREE.Group>(null);
-  const progress = useScrollProgress((state) => state.progress);
   const levaOverrides = useAurenSceneStore((state) => state.enableLevaOverrides);
   const beamControls = useAurenSceneStore((state) => state.beam);
   const environmentControls = useAurenSceneStore((state) => state.environment);
@@ -46,6 +45,7 @@ export function GodRayBeam() {
   );
 
   useFrame((state, delta) => {
+    const progress = useScrollProgress.getState().progress;
     const theatreGodRay = theatreControls.godRayBeam.value;
     const theatreEnvironment = theatreControls.heroEnvironment.value;
     const preset = aurenHeroPreset.beam;

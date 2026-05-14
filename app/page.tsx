@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { ByteLoader } from "@/components/loader/ByteLoader";
 import { CustomCursor } from "@/components/layout/CustomCursor";
@@ -16,7 +16,6 @@ import { HeroSection } from "@/components/sections/HeroSection";
 import { ProductRevealSection } from "@/components/sections/ProductRevealSection";
 import { RitualGuideSection } from "@/components/sections/RitualGuideSection";
 import { RitualStorySection } from "@/components/sections/RitualStorySection";
-import { SocialCutsSection } from "@/components/sections/SocialCutsSection";
 import { criticalAssets } from "@/lib/auren-assets";
 import { cn } from "@/lib/cn";
 
@@ -32,11 +31,16 @@ const LevaPanel = dynamic(
 
 export default function Home() {
   const [experienceReady, setExperienceReady] = useState(false);
+  const [showDebug, setShowDebug] = useState(false);
+
+  useEffect(() => {
+    setShowDebug(window.location.search.includes("debug=1"));
+  }, []);
 
   return (
     <SmoothScrollProvider enabled={experienceReady}>
       <AurenCanvas active={experienceReady} />
-      <LevaPanel />
+      {showDebug ? <LevaPanel /> : null}
       <CustomCursor />
       <Header />
       <ByteLoader
@@ -54,7 +58,6 @@ export default function Home() {
         <CampaignGallerySection />
         <FragranceNotesSection />
         <RitualStorySection />
-        <SocialCutsSection />
         <FilmSection />
         <EditionsSection />
         <RitualGuideSection />

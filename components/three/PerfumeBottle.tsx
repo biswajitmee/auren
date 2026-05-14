@@ -29,14 +29,20 @@ type PerfumeBottleProps = ThreeElements["group"] & {
 };
 
 export function PerfumeBottle({
-  active: _active,
+  active = true,
   tier: _tier,
   ...props
 }: PerfumeBottleProps) {
   const { nodes, materials } = useGLTF(MODEL_PATH) as GLTFResult;
 
   return (
-    <e.group theatreKey="Hero Bottle" position={[0, 0, 0]} rotation={[0, 0, 0]} scale={[1, 1, 1]}>
+    <e.group
+      theatreKey="Hero Bottle"
+      position={[0, 0, 0]}
+      rotation={[0, 0, 0]}
+      scale={[1, 1, 1]}
+      visible={active}
+    >
       <group {...props} dispose={null}>
         <mesh
           castShadow

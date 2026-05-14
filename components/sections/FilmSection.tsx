@@ -35,7 +35,7 @@ export function FilmSection() {
       className="flex min-h-screen items-center"
       eyebrow="The Film"
       id="film"
-      index="07"
+      index="06"
       ref={sectionRef}
     >
       <div className="w-full" data-film-card>

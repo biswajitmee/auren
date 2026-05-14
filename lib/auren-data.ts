@@ -80,27 +80,6 @@ export const galleryItems = [
   }
 ];
 
-export const socialFormats = [
-  {
-    title: "9:16 Reel",
-    ratio: "9 / 16",
-    image: aurenAssets.images.socialCuts[0],
-    detail: "Vertical reveal"
-  },
-  {
-    title: "1:1 Social Post",
-    ratio: "1 / 1",
-    image: aurenAssets.images.socialCuts[1],
-    detail: "Editorial still"
-  },
-  {
-    title: "4:5 Story",
-    ratio: "4 / 5",
-    image: aurenAssets.images.hero,
-    detail: "Campaign crop"
-  }
-];
-
 export const productEditions = [
   {
     name: "AUREN NOIR Original",
@@ -126,10 +105,4 @@ export const ritualSteps = [
   "Warm the bottle between your palms.",
   "Apply to wrist, neck, behind the ear.",
   "Allow 30 minutes for the full composition to emerge."
-];
-
-export const socialBenefits = [
-  "Multi-format ready",
-  "Premium presentation",
-  "Consistent brand impact"
 ];

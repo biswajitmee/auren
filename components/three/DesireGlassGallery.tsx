@@ -91,10 +91,10 @@ function roundedPanelGeometry(width: number, height: number, depth: number, radi
   const geometry = new THREE.ExtrudeGeometry(shape, {
     depth,
     bevelEnabled: true,
-    bevelSegments: 8,
+    bevelSegments: 3,
     bevelSize: 0.034,
     bevelThickness: 0.038,
-    curveSegments: 20,
+    curveSegments: 10,
     steps: 1
   });
 
@@ -175,7 +175,7 @@ function GlassPane({
 function GlassShell({
   materialRef
 }: {
-  materialRef: MutableRefObject<THREE.MeshPhysicalMaterial | null>;
+  materialRef: MutableRefObject<THREE.MeshStandardMaterial | null>;
 }) {
   const geometry = useMemo(
     () => roundedPanelGeometry(CARD_WIDTH, CARD_HEIGHT, CARD_DEPTH, CARD_RADIUS),
@@ -187,10 +187,8 @@ function GlassShell({
   return (
     <mesh frustumCulled={false} renderOrder={3}>
       <primitive attach="geometry" object={geometry} />
-      <meshPhysicalMaterial
+      <meshStandardMaterial
         ref={materialRef}
-        clearcoat={1}
-        clearcoatRoughness={0.08}
         color="#F7D991"
         depthTest={false}
         depthWrite={false}
@@ -199,10 +197,8 @@ function GlassShell({
         envMapIntensity={1.8}
         metalness={0.18}
         opacity={0}
-        roughness={0.08}
+        roughness={0.18}
         side={THREE.DoubleSide}
-        thickness={0.42}
-        transmission={0.42}
         transparent
       />
     </mesh>
@@ -241,22 +237,6 @@ function CardText({
       >
         {card.code}
       </Text>
-      {card.notes.map((note, noteIndex) => (
-        <Text
-          anchorX="left"
-          anchorY="middle"
-          color="#E6D6B0"
-          fontSize={0.046}
-          key={note}
-          letterSpacing={0.08}
-          material-depthTest={false}
-          material-transparent
-          position={[-0.52, -0.78 - noteIndex * 0.12, 0.125]}
-          renderOrder={12}
-        >
-          {note}
-        </Text>
-      ))}
     </>
   );
 }
@@ -271,10 +251,11 @@ function DesireCard({
   texture: THREE.Texture;
 }) {
   const groupRef = useRef<THREE.Group>(null);
-  const shellMaterialRef = useRef<THREE.MeshPhysicalMaterial>(null);
+  const shellMaterialRef = useRef<THREE.MeshStandardMaterial>(null);
   const imageMaterialRef = useRef<THREE.ShaderMaterial>(null);
   const glowMaterialRef = useRef<THREE.MeshBasicMaterial>(null);
   const opacityRef = useRef(0);
+  const progressRef = useRef(0);
   const scaleRef = useRef(0.92);
   const imageUniforms = useMemo(
     () => ({
@@ -293,8 +274,11 @@ function DesireCard({
     }
 
     const { progress, visible } = useDesireGalleryScene.getState();
+    progressRef.current = THREE.MathUtils.damp(progressRef.current, progress, 7.2, delta);
+
+    const sceneProgress = progressRef.current;
     const trackSpan = Math.max(0, desireCards.length - 3) * CARD_SPACING;
-    const targetX = (index - 1) * CARD_SPACING - progress * trackSpan;
+    const targetX = (index - 1) * CARD_SPACING - sceneProgress * trackSpan;
     const centerDistance = Math.abs(targetX);
     const focus = 1 - Math.min(1, centerDistance / (CARD_SPACING * 1.6));
     const rangeFade = 1 - THREE.MathUtils.smoothstep(centerDistance, 2.9, 3.72);
@@ -396,6 +380,7 @@ function DesireGalleryRing() {
   const meshRef = useRef<THREE.Mesh>(null);
   const materialRef = useRef<THREE.ShaderMaterial>(null);
   const opacityRef = useRef(0);
+  const progressRef = useRef(0);
   const uniforms = useMemo(
     () => ({
       uAccent: { value: new THREE.Color("#D9A950") },
@@ -416,11 +401,12 @@ function DesireGalleryRing() {
 
     const { progress, visible } = useDesireGalleryScene.getState();
 
+    progressRef.current = THREE.MathUtils.damp(progressRef.current, progress, 6.8, delta);
     opacityRef.current = THREE.MathUtils.damp(opacityRef.current, visible ? 1 : 0, 3.2, delta);
     mesh.visible = opacityRef.current > 0.015;
     mesh.rotation.z = state.clock.elapsedTime * 0.035;
     material.uniforms.uOpacity.value = opacityRef.current;
-    material.uniforms.uProgress.value = progress;
+    material.uniforms.uProgress.value = progressRef.current;
     material.uniforms.uTime.value = state.clock.elapsedTime;
   });
 
@@ -459,7 +445,7 @@ export function DesireGlassGallery() {
   useEffect(() => {
     textures.forEach((texture) => {
       texture.colorSpace = THREE.SRGBColorSpace;
-      texture.anisotropy = 8;
+      texture.anisotropy = 2;
       texture.needsUpdate = true;
     });
   }, [textures]);

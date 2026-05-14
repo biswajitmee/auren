@@ -10,16 +10,18 @@ import { theatreControls } from "@/components/three/TheatreControls";
 import { aurenHeroPreset } from "@/lib/auren-hero-preset";
 import { PerformanceTier } from "@/lib/detectPerformanceTier";
 import { useAurenSceneStore } from "@/lib/useAurenSceneStore";
+import { useDesireGalleryScene } from "@/lib/useDesireGalleryScene";
 import { useScrollProgress } from "@/lib/useScrollProgress";
 import fragmentShader from "@/shaders/floor.frag";
 import vertexShader from "@/shaders/floor.vert";
 
 type ReflectiveFloorProps = {
+  active?: boolean;
   tier: PerformanceTier;
 };
 
-export function ReflectiveFloor({ tier }: ReflectiveFloorProps) {
-  const progress = useScrollProgress((state) => state.progress);
+export function ReflectiveFloor({ active = true, tier }: ReflectiveFloorProps) {
+  const gallerySceneReduced = useDesireGalleryScene((state) => state.sceneReduced);
   const groupRef = useRef<THREE.Group>(null);
   const reflectorRef = useRef<MeshReflectorMaterialImpl>(null);
   const levaOverrides = useAurenSceneStore((state) => state.enableLevaOverrides);
@@ -49,6 +51,15 @@ export function ReflectiveFloor({ tier }: ReflectiveFloorProps) {
   );
 
   useFrame((state) => {
+    if (!active) {
+      if (groupRef.current) {
+        groupRef.current.visible = false;
+      }
+
+      return;
+    }
+
+    const progress = useScrollProgress.getState().progress;
     const theatreFloor = theatreControls.reflectiveFloor.value;
     const theatreEnvironment = theatreControls.heroEnvironment.value;
     const environment = levaOverrides ? environmentControls : theatreEnvironment;
@@ -125,10 +136,10 @@ export function ReflectiveFloor({ tier }: ReflectiveFloorProps) {
   });
 
   return (
-    <group position={[0, -1.42, 0]} ref={groupRef} rotation={[-Math.PI / 2, 0, 0]}>
+    <group position={[0, -1.42, 0]} ref={groupRef} rotation={[-Math.PI / 2, 0, 0]} visible={active}>
       <mesh receiveShadow>
         <planeGeometry args={[22, 22]} />
-        {tier === "low" ? (
+        {tier === "low" || gallerySceneReduced ? (
           <meshStandardMaterial
             color={levaOverrides ? floorControls.floorBaseColor : "#080604"}
             metalness={levaOverrides ? floorControls.floorMetalness : 0.58}

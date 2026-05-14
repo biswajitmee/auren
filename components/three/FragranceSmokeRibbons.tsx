@@ -13,6 +13,7 @@ import fragmentShader from "@/shaders/smokeRibbon.frag";
 import vertexShader from "@/shaders/smokeRibbon.vert";
 
 type FragranceSmokeRibbonsProps = {
+  active?: boolean;
   tier: PerformanceTier;
 };
 
@@ -290,8 +291,7 @@ function createRibbonDescriptors(tier: PerformanceTier): RibbonDescriptor[] {
   return descriptors;
 }
 
-export function FragranceSmokeRibbons({ tier }: FragranceSmokeRibbonsProps) {
-  const progress = useScrollProgress((state) => state.progress);
+export function FragranceSmokeRibbons({ active = true, tier }: FragranceSmokeRibbonsProps) {
   const meshRefs = useRef<Array<THREE.Mesh | null>>([]);
   const levaOverrides = useAurenSceneStore((state) => state.enableLevaOverrides);
   const smokeControls = useAurenSceneStore((state) => state.smoke);
@@ -309,6 +309,17 @@ export function FragranceSmokeRibbons({ tier }: FragranceSmokeRibbonsProps) {
   }, [tier]);
 
   useFrame((state) => {
+    if (!active) {
+      meshRefs.current.forEach((mesh) => {
+        if (mesh) {
+          mesh.visible = false;
+        }
+      });
+
+      return;
+    }
+
+    const progress = useScrollProgress.getState().progress;
     const theatreSmoke = theatreControls.smokeAtmosphere.value;
     const theatreEnvironment = theatreControls.heroEnvironment.value;
     const theatreGodRay = theatreControls.godRayBeam.value;
@@ -397,7 +408,7 @@ export function FragranceSmokeRibbons({ tier }: FragranceSmokeRibbonsProps) {
   });
 
   return (
-    <group>
+    <group visible={active}>
       {ribbons.map((ribbon, index) => (
         <mesh
           geometry={ribbon.geometry}

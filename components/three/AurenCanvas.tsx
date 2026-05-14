@@ -14,7 +14,11 @@ type AurenCanvasProps = {
   active?: boolean;
 };
 
-if (typeof window !== "undefined" && process.env.NODE_ENV === "development") {
+if (
+  typeof window !== "undefined" &&
+  process.env.NODE_ENV === "development" &&
+  window.location.search.includes("studio=1")
+) {
   void import("@/lib/theatre-studio").then(({ initializeTheatreStudio }) => {
     initializeTheatreStudio();
   });
@@ -23,21 +27,19 @@ if (typeof window !== "undefined" && process.env.NODE_ENV === "development") {
 export default function AurenCanvas({ active = true }: AurenCanvasProps) {
   const tier = usePerformanceTier();
   const reducedMotion = usePrefersReducedMotion();
-  const dpr: [number, number] = tier === "high" ? [1, 2] : [1, 1.5];
+  const dpr: [number, number] = [1, 1];
   const preserveDrawingBuffer =
     typeof window !== "undefined" &&
     window.location.search.includes("verifyCanvas=1");
 
   return (
-    <div className="fixed inset-0 z-0 bg-obsidian" aria-hidden>
+    <div className="pointer-events-none fixed inset-0 z-0 bg-obsidian" aria-hidden>
       <Canvas
         camera={{ fov: 34, near: 0.1, far: 100, position: [0, 0.12, 7.2], zoom: 1 }}
         dpr={dpr}
-        eventPrefix="client"
-        eventSource={typeof document !== "undefined" ? document.body : undefined}
         gl={{
           alpha: false,
-          antialias: tier !== "low",
+          antialias: false,
           powerPreference: tier === "high" ? "high-performance" : "default",
           preserveDrawingBuffer
         }}

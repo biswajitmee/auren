@@ -17,7 +17,6 @@ type SmokeRibbonsProps = {
 
 export function SmokeRibbons({ tier }: SmokeRibbonsProps) {
   const groupRef = useRef<THREE.Group>(null);
-  const progress = useScrollProgress((state) => state.progress);
   const ribbonCount = tier === "high" ? 12 : tier === "medium" ? 8 : 5;
   const levaOverrides = useAurenSceneStore((state) => state.enableLevaOverrides);
   const smokeControls = useAurenSceneStore((state) => state.smoke);
@@ -78,6 +77,7 @@ export function SmokeRibbons({ tier }: SmokeRibbonsProps) {
       return;
     }
 
+    const progress = useScrollProgress.getState().progress;
     const theatreSmoke = theatreControls.smokeAtmosphere.value;
     const theatreEnvironment = theatreControls.heroEnvironment.value;
     const smoke = levaOverrides

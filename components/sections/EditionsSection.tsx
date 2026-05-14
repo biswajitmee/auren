@@ -37,12 +37,12 @@ export function EditionsSection() {
       className="min-h-screen"
       eyebrow="Editions"
       id="editions"
-      index="08"
+      index="07"
       ref={sectionRef}
     >
       <SectionTitle
         copy="Three calibrated concentrations, each composed for a different hour of darkness."
-        eyebrow="08 / Product Editions"
+        eyebrow="07 / Product Editions"
         title="Product editions."
       />
       <div className="mt-14 grid gap-5 lg:grid-cols-3">

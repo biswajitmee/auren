@@ -12,6 +12,7 @@ import { ReflectiveFloor } from "@/components/three/ReflectiveFloor";
 import { SmokeShell } from "@/components/three/SmokeShell";
 import { PerformanceTier } from "@/lib/detectPerformanceTier";
 import { useAurenSceneStore } from "@/lib/useAurenSceneStore";
+import { useDesireGalleryScene } from "@/lib/useDesireGalleryScene";
 
 type SceneControllerProps = {
   active?: boolean;
@@ -26,16 +27,17 @@ export function SceneController({
 }: SceneControllerProps) {
   const levaOverrides = useAurenSceneStore((state) => state.enableLevaOverrides);
   const debugControls = useAurenSceneStore((state) => state.debug);
+  const gallerySceneReduced = useDesireGalleryScene((state) => state.sceneReduced);
   const effectiveTier = levaOverrides ? debugControls.performanceMode : tier;
 
   return (
     <>
       <CameraRig />
       <HeroEnvironment />
-      <PerfumeBottle active={active} tier={effectiveTier} />
-      <ReflectiveFloor tier={effectiveTier} />
+      <PerfumeBottle active={active && !gallerySceneReduced} tier={effectiveTier} />
+      <ReflectiveFloor active={!gallerySceneReduced} tier={effectiveTier} />
       <GoldParticles tier={effectiveTier} />
-      <SmokeShell tier={effectiveTier} />
+      <SmokeShell active={!gallerySceneReduced} tier={effectiveTier} />
       <Suspense fallback={null}>
         <DesireGlassGallery />
       </Suspense>

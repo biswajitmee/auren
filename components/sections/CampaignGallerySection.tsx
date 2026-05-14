@@ -10,96 +10,115 @@ import { galleryItems } from "@/lib/auren-data";
 import { useDesireGalleryScene } from "@/lib/useDesireGalleryScene";
 import { usePrefersReducedMotion } from "@/lib/usePrefersReducedMotion";
 
+const DESKTOP_QUERY = "(min-width: 900px)";
+const MOBILE_QUERY = "(max-width: 899px)";
+const DESKTOP_SCROLL_VH = Math.max(360, galleryItems.length * 86);
+
 export function CampaignGallerySection() {
   const sectionRef = useRef<HTMLElement>(null);
-  const trackRef = useRef<HTMLDivElement>(null);
   const reducedMotion = usePrefersReducedMotion();
   const setGalleryProgress = useDesireGalleryScene((state) => state.setProgress);
+  const setGallerySceneReduced = useDesireGalleryScene((state) => state.setSceneReduced);
   const setGalleryVisible = useDesireGalleryScene((state) => state.setVisible);
   const resetGalleryScene = useDesireGalleryScene((state) => state.reset);
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
-    const mm = gsap.matchMedia();
     const section = sectionRef.current;
 
     if (!section) {
       return;
     }
 
-    const visibilityTrigger = ScrollTrigger.create({
-      trigger: section,
-      start: "top 82%",
-      end: "bottom 12%",
-      onEnter: () => {
-        if (reducedMotion || window.innerWidth < 900) {
-          setGalleryVisible(true);
-        }
-      },
-      onEnterBack: () => {
-        if (reducedMotion || window.innerWidth < 900) {
-          setGalleryVisible(true);
-        }
-      },
-      onLeave: () => {
-        if (reducedMotion || window.innerWidth < 900) {
-          setGalleryVisible(false);
-        }
-      },
-      onLeaveBack: () => {
-        if (reducedMotion || window.innerWidth < 900) {
-          setGalleryVisible(false);
-        }
-      },
-      onUpdate: (self) => {
-        if (reducedMotion || window.innerWidth < 900) {
-          setGalleryProgress(self.progress);
-        }
-      }
-    });
+    const showGallery = () => {
+      setGallerySceneReduced(true);
+      setGalleryVisible(true);
+    };
+    const hideGalleryBeforeSection = () => {
+      setGalleryVisible(false);
+      setGallerySceneReduced(false);
+    };
+    const hideGalleryAfterSection = () => {
+      setGalleryVisible(false);
+      setGallerySceneReduced(true);
+    };
 
-    if (!reducedMotion) {
-      mm.add("(min-width: 900px)", () => {
-        const ctx = gsap.context(() => {
-          const track = trackRef.current;
-
-          if (!track) {
-            return;
-          }
-
-          const distance = () => Math.max(0, track.scrollWidth - window.innerWidth + 96);
-
-          gsap.to(track, {
-            x: () => -distance(),
-            ease: "none",
-            scrollTrigger: {
-              trigger: section,
-              pin: true,
-              scrub: 1,
-              start: "top top",
-              end: () => `+=${distance()}`,
-              onEnter: () => setGalleryVisible(true),
-              onEnterBack: () => setGalleryVisible(true),
-              onLeave: () => setGalleryVisible(false),
-              onLeaveBack: () => setGalleryVisible(false),
-              onUpdate: (self) => {
-                setGalleryProgress(self.progress);
-                setGalleryVisible(self.isActive);
-              }
-            }
-          });
-        }, sectionRef);
-
-        return () => ctx.revert();
+    if (reducedMotion) {
+      const visibilityTrigger = ScrollTrigger.create({
+        trigger: section,
+        start: "top 82%",
+        end: "bottom 12%",
+        onEnter: showGallery,
+        onEnterBack: showGallery,
+        onLeave: hideGalleryAfterSection,
+        onLeaveBack: hideGalleryBeforeSection,
+        onUpdate: (self) => setGalleryProgress(self.progress)
       });
+
+      return () => {
+        visibilityTrigger.kill();
+        resetGalleryScene();
+      };
     }
 
+    const mm = gsap.matchMedia();
+
+    mm.add(DESKTOP_QUERY, () => {
+      const visibilityTrigger = ScrollTrigger.create({
+        trigger: section,
+        start: "top 82%",
+        end: "bottom top",
+        onEnter: showGallery,
+        onEnterBack: showGallery,
+        onLeave: hideGalleryAfterSection,
+        onLeaveBack: hideGalleryBeforeSection
+      });
+
+      const galleryTrigger = ScrollTrigger.create({
+        trigger: section,
+        invalidateOnRefresh: true,
+        start: "top top",
+        end: "bottom top",
+        onLeave: () => setGalleryProgress(1),
+        onLeaveBack: () => {
+          setGalleryProgress(0);
+        },
+        onUpdate: (self) => setGalleryProgress(self.progress)
+      });
+
+      return () => {
+        visibilityTrigger.kill();
+        galleryTrigger.kill();
+        setGalleryVisible(false);
+      };
+    });
+
+    mm.add(MOBILE_QUERY, () => {
+      const visibilityTrigger = ScrollTrigger.create({
+        trigger: section,
+        start: "top 82%",
+        end: "bottom 12%",
+        onEnter: () => setGalleryVisible(true),
+        onEnterBack: () => setGalleryVisible(true),
+        onLeave: () => setGalleryVisible(false),
+        onLeaveBack: () => setGalleryVisible(false),
+        onUpdate: (self) => setGalleryProgress(self.progress)
+      });
+
+      return () => visibilityTrigger.kill();
+    });
+
     return () => {
-      visibilityTrigger.kill();
       mm.revert();
       resetGalleryScene();
     };
-  }, [reducedMotion, resetGalleryScene, setGalleryProgress, setGalleryVisible]);
+  }, [
+    reducedMotion,
+    resetGalleryScene,
+    setGalleryProgress,
+    setGallerySceneReduced,
+    setGalleryVisible
+  ]);
 
   return (
     <SectionFrame
@@ -108,6 +127,7 @@ export function CampaignGallerySection() {
       id="campaign-gallery"
       index="03"
       ref={sectionRef}
+      style={{ minHeight: `${DESKTOP_SCROLL_VH}vh` }}
     >
       <div
         aria-hidden
@@ -123,22 +143,6 @@ export function CampaignGallerySection() {
           Five cinematic chapters composed in black marble, shadow, flame, and
           gold.
         </p>
-      </div>
-
-      <div
-        aria-hidden
-        className="pointer-events-none flex flex-col gap-4 opacity-0 will-change-transform md:w-max md:flex-row"
-        ref={trackRef}
-      >
-        {galleryItems.map((item) => (
-          <div className="contents" key={item.index}>
-            <div className="h-[73vh] min-h-[34rem] shrink-0 md:w-[27rem] lg:w-[31rem]" />
-            <div
-              aria-hidden
-              className="hidden h-[73vh] min-h-[34rem] shrink-0 md:block md:w-[27rem] lg:w-[31rem]"
-            />
-          </div>
-        ))}
       </div>
     </SectionFrame>
   );

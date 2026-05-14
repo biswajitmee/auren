@@ -59,7 +59,6 @@ export function HeroEnvironment() {
   const rimRightRef = useRef<THREE.DirectionalLight>(null);
   const glowRef = useRef<THREE.PointLight>(null);
   const frontGlowRef = useRef<THREE.PointLight>(null);
-  const progress = useScrollProgress((state) => state.progress);
   const levaOverrides = useAurenSceneStore((state) => state.enableLevaOverrides);
   const environmentControls = useAurenSceneStore((state) => state.environment);
   const spotlightControls = useAurenSceneStore((state) => state.spotlight);
@@ -67,6 +66,7 @@ export function HeroEnvironment() {
   const floorControls = useAurenSceneStore((state) => state.floor);
 
   useFrame((_, delta) => {
+    const progress = useScrollProgress.getState().progress;
     const theatreEnvironment = theatreControls.heroEnvironment.value;
     const theatreSpotlight = theatreControls.heroSpotlight.value;
     const theatreRim = theatreControls.rimLight.value;

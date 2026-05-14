@@ -17,7 +17,6 @@ type SmokeParticlesProps = {
 
 export function SmokeParticles({ tier }: SmokeParticlesProps) {
   const count = tier === "high" ? 86 : tier === "medium" ? 54 : 32;
-  const progress = useScrollProgress((state) => state.progress);
   const groupRef = useRef<THREE.Group>(null);
   const levaOverrides = useAurenSceneStore((state) => state.enableLevaOverrides);
   const smokeControls = useAurenSceneStore((state) => state.smoke);
@@ -63,6 +62,7 @@ export function SmokeParticles({ tier }: SmokeParticlesProps) {
   );
 
   useFrame((state) => {
+    const progress = useScrollProgress.getState().progress;
     const theatreSmoke = theatreControls.smokeAtmosphere.value;
     const theatreEnvironment = theatreControls.heroEnvironment.value;
     const smoke = levaOverrides

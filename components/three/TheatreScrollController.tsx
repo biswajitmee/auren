@@ -5,6 +5,7 @@ import { useFrame } from "@react-three/fiber";
 import { useRef } from "react";
 
 import { mainSheet, THEATRE_SCROLL_SEQUENCE_LENGTH } from "@/lib/theatre";
+import { useDesireGalleryScene } from "@/lib/useDesireGalleryScene";
 import { useScrollProgress } from "@/lib/useScrollProgress";
 
 type TheatreScrollControllerProps = {
@@ -19,17 +20,17 @@ export function TheatreScrollController({
   active = true,
   reducedMotion = false
 }: TheatreScrollControllerProps) {
-  const progress = useScrollProgress((state) => state.progress);
   const editorControlledRef = useRef(false);
   const lastAppliedPositionRef = useRef<number | null>(null);
-  const lastProgressRef = useRef(progress);
+  const lastProgressRef = useRef(0);
 
   useFrame(() => {
-    if (!active) {
+    if (!active || useDesireGalleryScene.getState().visible) {
       return;
     }
 
     const savedLength = val(mainSheet.sequence.pointer.length);
+    const progress = useScrollProgress.getState().progress;
     const sequenceLength =
       Number.isFinite(savedLength) && savedLength > 0
         ? savedLength
