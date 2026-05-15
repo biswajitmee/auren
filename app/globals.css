@@ -118,6 +118,11 @@ img {
     linear-gradient(180deg, rgba(10, 8, 6, 0.12), rgba(10, 8, 6, 0.72));
 }
 
+.section-shell[data-clear-section-layer]::after {
+  opacity: 0;
+  background: transparent;
+}
+
 .gold-hairline {
   background: linear-gradient(90deg, transparent, rgba(201, 168, 76, 0.8), transparent);
 }

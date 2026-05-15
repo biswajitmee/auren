@@ -16,8 +16,7 @@ type AurenCanvasProps = {
 
 if (
   typeof window !== "undefined" &&
-  process.env.NODE_ENV === "development" &&
-  window.location.search.includes("studio=1")
+  process.env.NODE_ENV === "development"
 ) {
   void import("@/lib/theatre-studio").then(({ initializeTheatreStudio }) => {
     initializeTheatreStudio();

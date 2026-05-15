@@ -13,9 +13,12 @@ import { usePrefersReducedMotion } from "@/lib/usePrefersReducedMotion";
 const DESKTOP_QUERY = "(min-width: 900px)";
 const MOBILE_QUERY = "(max-width: 899px)";
 const DESKTOP_SCROLL_VH = Math.max(360, galleryItems.length * 86);
+const GALLERY_REVEAL_DELAY_MS = 500;
+const GALLERY_VISIBILITY_START = "top top";
 
 export function CampaignGallerySection() {
   const sectionRef = useRef<HTMLElement>(null);
+  const revealDelayRef = useRef<number | null>(null);
   const reducedMotion = usePrefersReducedMotion();
   const setGalleryProgress = useDesireGalleryScene((state) => state.setProgress);
   const setGallerySceneReduced = useDesireGalleryScene((state) => state.setSceneReduced);
@@ -30,15 +33,28 @@ export function CampaignGallerySection() {
       return;
     }
 
+    const clearGalleryRevealDelay = () => {
+      if (revealDelayRef.current !== null) {
+        window.clearTimeout(revealDelayRef.current);
+        revealDelayRef.current = null;
+      }
+    };
+
     const showGallery = () => {
-      setGallerySceneReduced(true);
-      setGalleryVisible(true);
+      clearGalleryRevealDelay();
+      revealDelayRef.current = window.setTimeout(() => {
+        setGallerySceneReduced(true);
+        setGalleryVisible(true);
+        revealDelayRef.current = null;
+      }, GALLERY_REVEAL_DELAY_MS);
     };
     const hideGalleryBeforeSection = () => {
+      clearGalleryRevealDelay();
       setGalleryVisible(false);
       setGallerySceneReduced(false);
     };
     const hideGalleryAfterSection = () => {
+      clearGalleryRevealDelay();
       setGalleryVisible(false);
       setGallerySceneReduced(true);
     };
@@ -46,7 +62,7 @@ export function CampaignGallerySection() {
     if (reducedMotion) {
       const visibilityTrigger = ScrollTrigger.create({
         trigger: section,
-        start: "top 82%",
+        start: GALLERY_VISIBILITY_START,
         end: "bottom 12%",
         onEnter: showGallery,
         onEnterBack: showGallery,
@@ -56,6 +72,7 @@ export function CampaignGallerySection() {
       });
 
       return () => {
+        clearGalleryRevealDelay();
         visibilityTrigger.kill();
         resetGalleryScene();
       };
@@ -66,7 +83,7 @@ export function CampaignGallerySection() {
     mm.add(DESKTOP_QUERY, () => {
       const visibilityTrigger = ScrollTrigger.create({
         trigger: section,
-        start: "top 82%",
+        start: GALLERY_VISIBILITY_START,
         end: "bottom top",
         onEnter: showGallery,
         onEnterBack: showGallery,
@@ -87,6 +104,7 @@ export function CampaignGallerySection() {
       });
 
       return () => {
+        clearGalleryRevealDelay();
         visibilityTrigger.kill();
         galleryTrigger.kill();
         setGalleryVisible(false);
@@ -96,19 +114,23 @@ export function CampaignGallerySection() {
     mm.add(MOBILE_QUERY, () => {
       const visibilityTrigger = ScrollTrigger.create({
         trigger: section,
-        start: "top 82%",
+        start: GALLERY_VISIBILITY_START,
         end: "bottom 12%",
-        onEnter: () => setGalleryVisible(true),
-        onEnterBack: () => setGalleryVisible(true),
-        onLeave: () => setGalleryVisible(false),
-        onLeaveBack: () => setGalleryVisible(false),
+        onEnter: showGallery,
+        onEnterBack: showGallery,
+        onLeave: hideGalleryAfterSection,
+        onLeaveBack: hideGalleryBeforeSection,
         onUpdate: (self) => setGalleryProgress(self.progress)
       });
 
-      return () => visibilityTrigger.kill();
+      return () => {
+        clearGalleryRevealDelay();
+        visibilityTrigger.kill();
+      };
     });
 
     return () => {
+      clearGalleryRevealDelay();
       mm.revert();
       resetGalleryScene();
     };
@@ -123,6 +145,7 @@ export function CampaignGallerySection() {
   return (
     <SectionFrame
       className="min-h-screen [&>[data-section-kicker]]:opacity-0"
+      data-clear-section-layer
       eyebrow="Campaign Gallery"
       id="campaign-gallery"
       index="03"

@@ -58,10 +58,10 @@ export const theatreControls = {
     "Reflective Floor",
     {
       position: vector3(0, -1.42, 0, [-6, 6]),
-      rotation: vector3(-Math.PI / 2, 0, 0, [-Math.PI, Math.PI]),
-      scale: vector3(1, 1, 1, [0.2, 3]),
-      roughness: t.number(0.22, { range: [0.02, 0.8] }),
-      reflectionIntensity: t.number(1, { range: [0, 2.5] }),
+      rotation: vector3(0, 0, 0, [-Math.PI, Math.PI]),
+      scale: vector3(1.45, 1, 2.05, [0.2, 3]),
+      roughness: t.number(0.12, { range: [0.02, 0.8] }),
+      reflectionIntensity: t.number(1.18, { range: [0, 2.5] }),
       veinOpacity: t.number(1, { range: [0, 2] })
     },
     { reconfigure: true }

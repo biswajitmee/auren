@@ -3,6 +3,7 @@ const imagePath = (fileName: string) => encodeURI(`/reference/images/${fileName}
 // Mapping is based on visible captions/compositions in the generated reference images.
 export const aurenAssets = {
   bottleModel: "/models/auren-bottle.glb",
+  floorModel: "/models/auren_fractured_floor.glb",
   images: {
     loading: imagePath("ChatGPT Image Apr 30, 2026, 12_31_23 PM.png"),
     hero: imagePath("ChatGPT Image Apr 30, 2026, 12_30_52 PM.png"),
@@ -25,6 +26,7 @@ export const aurenAssets = {
 
 export const criticalAssets = [
   aurenAssets.bottleModel,
+  aurenAssets.floorModel,
   aurenAssets.images.loading,
   aurenAssets.images.hero,
   aurenAssets.images.productReveal,

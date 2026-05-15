@@ -3,6 +3,7 @@
 import { val } from "@theatre/core";
 import { useFrame } from "@react-three/fiber";
 import { useRef } from "react";
+import * as THREE from "three";
 
 import { mainSheet, THEATRE_SCROLL_SEQUENCE_LENGTH } from "@/lib/theatre";
 import { useDesireGalleryScene } from "@/lib/useDesireGalleryScene";
@@ -15,6 +16,7 @@ type TheatreScrollControllerProps = {
 
 const POSITION_EPSILON = 0.0001;
 const PROGRESS_EPSILON = 0.00001;
+const SEQUENCE_DAMPING = 7.5;
 
 export function TheatreScrollController({
   active = true,
@@ -24,7 +26,7 @@ export function TheatreScrollController({
   const lastAppliedPositionRef = useRef<number | null>(null);
   const lastProgressRef = useRef(0);
 
-  useFrame(() => {
+  useFrame((_, delta) => {
     if (!active || useDesireGalleryScene.getState().visible) {
       return;
     }
@@ -58,11 +60,19 @@ export function TheatreScrollController({
       return;
     }
 
-    if (Math.abs(currentPosition - nextScrollPosition) > POSITION_EPSILON) {
-      mainSheet.sequence.position = nextScrollPosition;
+    const easedPosition = reducedMotion
+      ? nextScrollPosition
+      : THREE.MathUtils.damp(currentPosition, nextScrollPosition, SEQUENCE_DAMPING, delta);
+    const appliedPosition =
+      Math.abs(easedPosition - nextScrollPosition) > POSITION_EPSILON
+        ? easedPosition
+        : nextScrollPosition;
+
+    if (Math.abs(currentPosition - appliedPosition) > POSITION_EPSILON) {
+      mainSheet.sequence.position = appliedPosition;
     }
 
-    lastAppliedPositionRef.current = nextScrollPosition;
+    lastAppliedPositionRef.current = appliedPosition;
   });
 
   return null;

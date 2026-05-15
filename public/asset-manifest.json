@@ -2,6 +2,7 @@
   "brand": "AUREN NOIR",
   "critical": [
     "/models/auren-bottle.glb",
+    "/models/auren_fractured_floor.glb",
     "/reference/images/ChatGPT%20Image%20Apr%2030,%202026,%2012_31_23%20PM.png",
     "/reference/images/ChatGPT%20Image%20Apr%2030,%202026,%2012_30_52%20PM.png",
     "/reference/images/ChatGPT%20Image%20Apr%2030,%202026,%2012_30_35%20PM.png"

@@ -13,18 +13,6 @@ type SmoothScrollProviderProps = {
   enabled?: boolean;
 };
 
-function isGalleryInWheelRange() {
-  const gallery = document.getElementById("campaign-gallery");
-
-  if (!gallery) {
-    return false;
-  }
-
-  const rect = gallery.getBoundingClientRect();
-
-  return rect.top < window.innerHeight * 1.5 && rect.bottom > -window.innerHeight * 0.5;
-}
-
 export function SmoothScrollProvider({
   children,
   enabled = true
@@ -40,8 +28,13 @@ export function SmoothScrollProvider({
     gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
     let refreshFrame: number | undefined;
-    let isAnimatingScroll = false;
+    let scrollTween: ReturnType<typeof gsap.to> | null = null;
+    let lastWheelDirection = 0;
     let smoothTarget = window.scrollY;
+    const wheelListenerOptions: AddEventListenerOptions = {
+      capture: true,
+      passive: false
+    };
 
     const progressTrigger = ScrollTrigger.create({
       trigger: document.documentElement,
@@ -65,38 +58,43 @@ export function SmoothScrollProvider({
       Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
 
     const syncTarget = () => {
-      if (!isAnimatingScroll) {
+      if (!scrollTween) {
         smoothTarget = window.scrollY;
       }
     };
 
     const handleWheel = (event: WheelEvent) => {
-      if (
-        reducedMotion ||
-        event.ctrlKey ||
-        event.defaultPrevented ||
-        isGalleryInWheelRange()
-      ) {
+      if (reducedMotion || event.ctrlKey) {
         return;
       }
 
       event.preventDefault();
+      event.stopPropagation();
 
       const delta = Math.abs(event.deltaY) > Math.abs(event.deltaX) ? event.deltaY : event.deltaX;
-      smoothTarget = Math.max(0, Math.min(getMaxScroll(), smoothTarget + delta * 0.82));
-      isAnimatingScroll = true;
+      const wheelDirection = Math.sign(delta);
 
-      gsap.to(window, {
+      if (
+        scrollTween &&
+        wheelDirection !== 0 &&
+        lastWheelDirection !== 0 &&
+        wheelDirection !== lastWheelDirection
+      ) {
+        smoothTarget = window.scrollY;
+      }
+
+      smoothTarget = Math.max(0, Math.min(getMaxScroll(), smoothTarget + delta * 0.82));
+      lastWheelDirection = wheelDirection;
+
+      scrollTween?.kill();
+      scrollTween = gsap.to(window, {
         duration: 0.56,
         ease: "power3.out",
-        overwrite: "auto",
+        overwrite: true,
         scrollTo: { y: smoothTarget, autoKill: false },
         onComplete: () => {
-          isAnimatingScroll = false;
-          smoothTarget = window.scrollY;
-        },
-        onInterrupt: () => {
-          isAnimatingScroll = false;
+          scrollTween = null;
+          lastWheelDirection = 0;
           smoothTarget = window.scrollY;
         },
         onUpdate: ScrollTrigger.update
@@ -108,7 +106,7 @@ export function SmoothScrollProvider({
     window.addEventListener("load", refresh);
     window.addEventListener("resize", refresh);
     window.addEventListener("scroll", syncTarget, { passive: true });
-    window.addEventListener("wheel", handleWheel, { passive: false });
+    window.addEventListener("wheel", handleWheel, wheelListenerOptions);
     refresh();
 
     return () => {
@@ -118,10 +116,11 @@ export function SmoothScrollProvider({
       }
 
       progressTrigger.kill();
+      scrollTween?.kill();
       window.removeEventListener("load", refresh);
       window.removeEventListener("resize", refresh);
       window.removeEventListener("scroll", syncTarget);
-      window.removeEventListener("wheel", handleWheel);
+      window.removeEventListener("wheel", handleWheel, wheelListenerOptions);
       gsap.killTweensOf(window);
     };
   }, [enabled, reducedMotion, setProgress]);
