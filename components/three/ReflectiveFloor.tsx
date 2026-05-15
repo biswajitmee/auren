@@ -278,7 +278,7 @@ export function ReflectiveFloor({ active = true, tier }: ReflectiveFloorProps) {
       reflectionMirrorRef.current.visible = floor.enabled && !gallerySceneReduced;
       reflectionMirrorRef.current.scale.set(
         1 / Math.max(0.001, Math.abs(floor.scale.x)),
-        -0.66 / Math.max(0.001, Math.abs(floor.scale.y)),
+        -0.18 / Math.max(0.001, Math.abs(floor.scale.y)),
         1 / Math.max(0.001, Math.abs(floor.scale.z))
       );
       reflectedBottleRef.current.position.set(
@@ -332,11 +332,11 @@ export function ReflectiveFloor({ active = true, tier }: ReflectiveFloorProps) {
       0,
       2.2
     );
-    reflectionMaterials.shadow.opacity = 0.12 * reflectedBottleStrength;
-    reflectionMaterials.body.opacity = 0.16 * reflectedBottleStrength;
-    reflectionMaterials.detail.opacity = 0.2 * reflectedBottleStrength;
+    reflectionMaterials.shadow.opacity = 0.08 * reflectedBottleStrength;
+    reflectionMaterials.body.opacity = 0.18 * reflectedBottleStrength;
+    reflectionMaterials.detail.opacity = 0.05 * reflectedBottleStrength;
     projectedReflectionMaterial.uniforms.uOpacity.value = THREE.MathUtils.clamp(
-      0.42 * reflectedBottleStrength,
+      0.34 * reflectedBottleStrength,
       0,
       0.9
     );
@@ -361,21 +361,23 @@ export function ReflectiveFloor({ active = true, tier }: ReflectiveFloorProps) {
   return (
     <group position={[0, -1.42, 0]} ref={groupRef} visible={active}>
       <primitive object={floorScene} />
-      <group ref={reflectionMirrorRef} renderOrder={2}>
+      <group ref={reflectionMirrorRef} renderOrder={5}>
         <group ref={reflectedBottleRef} rotation={HERO_BOTTLE_ROTATION}>
           <mesh
+            frustumCulled={false}
             geometry={bottleNodes.textd.geometry}
             material={reflectionMaterials.detail}
             position={[0.414, 0.875, 0.314]}
-            renderOrder={2}
+            renderOrder={5}
             rotation={[1.527, 0.009, 0.011]}
             scale={0.073}
           />
           <mesh
+            frustumCulled={false}
             geometry={bottleNodes.Plane.geometry}
             material={reflectionMaterials.detail}
             position={[0.401, 0.835, 0.242]}
-            renderOrder={2}
+            renderOrder={5}
             rotation={[1.572, -0.007, 0.02]}
             scale={[0.446, 2.464, 0.323]}
           />
@@ -386,16 +388,18 @@ export function ReflectiveFloor({ active = true, tier }: ReflectiveFloorProps) {
               scale={25.346}
             >
               <mesh
+                frustumCulled={false}
                 geometry={bottleNodes.Cube_Material001_0.geometry}
                 material={reflectionMaterials.shadow}
                 position={[0.06, 1.631, -0.881]}
-                renderOrder={2}
+                renderOrder={5}
               />
               <mesh
+                frustumCulled={false}
                 geometry={bottleNodes.Cube_Material001_0.geometry}
                 material={reflectionMaterials.body}
                 position={[0.06, 1.631, -0.881]}
-                renderOrder={2}
+                renderOrder={5}
                 scale={[1.035, 1, 1.035]}
               />
             </group>
