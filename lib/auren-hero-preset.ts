@@ -87,6 +87,21 @@ export const aurenHeroPreset = {
     particleUpwardFlow: 0.72,
     particleDepthStrength: 1.24
   },
+  goldHelix: {
+    helixEnabled: true,
+    helixRadius: 0.18,
+    helixHeight: 1.18,
+    helixTurns: 3.15,
+    helixTubeRadius: 0.058,
+    helixParticleCount: 1120,
+    helixParticleSize: 0.72,
+    helixParticleSpeed: 0.82,
+    helixParticleOpacity: 0.9,
+    helixParticleColor: "#D8B65D",
+    helixColorIntensity: 1.14,
+    helixSmokeCurl: 0.86,
+    helixNoiseStrength: 0.68
+  },
   smoke: {
     smokeEnabled: true,
     smokeOpacity: 2.32,

@@ -111,6 +111,21 @@ export function useAurenLevaControls(enabled: boolean) {
         particleUpwardFlow: range(aurenHeroPreset.particles.particleUpwardFlow, 0, 3),
         particleDepthStrength: range(aurenHeroPreset.particles.particleDepthStrength, 0.2, 3)
       }),
+      "Golden Helix Particles": folder({
+        helixEnabled: aurenHeroPreset.goldHelix.helixEnabled,
+        helixRadius: range(aurenHeroPreset.goldHelix.helixRadius, 0.04, 0.72, 0.001),
+        helixHeight: range(aurenHeroPreset.goldHelix.helixHeight, 0.18, 2.4, 0.001),
+        helixTurns: range(aurenHeroPreset.goldHelix.helixTurns, 0.4, 8, 0.001),
+        helixTubeRadius: range(aurenHeroPreset.goldHelix.helixTubeRadius, 0.004, 0.32, 0.001),
+        helixParticleCount: range(aurenHeroPreset.goldHelix.helixParticleCount, 0, 2400, 1),
+        helixParticleSize: range(aurenHeroPreset.goldHelix.helixParticleSize, 0.1, 4),
+        helixParticleSpeed: range(aurenHeroPreset.goldHelix.helixParticleSpeed, 0, 4),
+        helixParticleOpacity: range(aurenHeroPreset.goldHelix.helixParticleOpacity, 0, 2.5),
+        helixParticleColor: aurenHeroPreset.goldHelix.helixParticleColor,
+        helixColorIntensity: range(aurenHeroPreset.goldHelix.helixColorIntensity, 0, 3),
+        helixSmokeCurl: range(aurenHeroPreset.goldHelix.helixSmokeCurl, 0, 3),
+        helixNoiseStrength: range(aurenHeroPreset.goldHelix.helixNoiseStrength, 0, 2)
+      }),
       "Smoke Atmosphere": folder({
         smokeEnabled: aurenHeroPreset.smoke.smokeEnabled,
         smokeOpacity: range(aurenHeroPreset.smoke.smokeOpacity, 0, 2.5),
@@ -290,6 +305,21 @@ export function useAurenLevaControls(enabled: boolean) {
         particleColor: String(values.particleColor),
         particleUpwardFlow: Number(values.particleUpwardFlow),
         particleDepthStrength: Number(values.particleDepthStrength)
+      },
+      goldHelix: {
+        helixEnabled: Boolean(values.helixEnabled),
+        helixRadius: Number(values.helixRadius),
+        helixHeight: Number(values.helixHeight),
+        helixTurns: Number(values.helixTurns),
+        helixTubeRadius: Number(values.helixTubeRadius),
+        helixParticleCount: Number(values.helixParticleCount),
+        helixParticleSize: Number(values.helixParticleSize),
+        helixParticleSpeed: Number(values.helixParticleSpeed),
+        helixParticleOpacity: Number(values.helixParticleOpacity),
+        helixParticleColor: String(values.helixParticleColor),
+        helixColorIntensity: Number(values.helixColorIntensity),
+        helixSmokeCurl: Number(values.helixSmokeCurl),
+        helixNoiseStrength: Number(values.helixNoiseStrength)
       },
       smoke: {
         smokeEnabled: Boolean(values.smokeEnabled),

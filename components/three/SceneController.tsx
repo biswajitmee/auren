@@ -3,6 +3,7 @@
 import { Suspense } from "react";
 
 import { CameraRig } from "@/components/three/CameraRig";
+import { BottleGoldenHelix } from "@/components/three/BottleGoldenHelix";
 import { DesireGlassGallery } from "@/components/three/DesireGlassGallery";
 import { GoldParticles } from "@/components/three/GoldParticles";
 import { HeroEnvironment } from "@/components/three/HeroEnvironment";
@@ -35,6 +36,7 @@ export function SceneController({
       <CameraRig />
       <HeroEnvironment />
       <PerfumeBottle active={active && !gallerySceneReduced} tier={effectiveTier} />
+      <BottleGoldenHelix active={active && !gallerySceneReduced} tier={effectiveTier} />
       <ReflectiveFloor active={!gallerySceneReduced} tier={effectiveTier} />
       <GoldParticles tier={effectiveTier} />
       <SmokeShell active={!gallerySceneReduced} tier={effectiveTier} />

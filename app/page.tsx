@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { ByteLoader } from "@/components/loader/ByteLoader";
 import { CustomCursor } from "@/components/layout/CustomCursor";
@@ -31,16 +31,11 @@ const LevaPanel = dynamic(
 
 export default function Home() {
   const [experienceReady, setExperienceReady] = useState(false);
-  const [showDebug, setShowDebug] = useState(false);
-
-  useEffect(() => {
-    setShowDebug(window.location.search.includes("debug=1"));
-  }, []);
 
   return (
     <SmoothScrollProvider enabled={experienceReady}>
       <AurenCanvas active={experienceReady} />
-      {showDebug ? <LevaPanel /> : null}
+      <LevaPanel />
       <CustomCursor />
       <Header />
       <ByteLoader
