@@ -1,5 +1,5 @@
 export const aurenHeroPreset = {
-  enableLevaOverrides: false,
+  enableLevaOverrides: true,
   environment: {
     particleIntensity: 1,
     smokeOpacity: 1,
@@ -83,24 +83,24 @@ export const aurenHeroPreset = {
     particleSpread: 1.05,
     particleBeamDensity: 1.65,
     particleTwinkle: 1.18,
-    particleColor: "#D8B65D",
+    particleColor: "#d8b65d",
     particleUpwardFlow: 0.72,
     particleDepthStrength: 1.24
   },
   goldHelix: {
     helixEnabled: true,
-    helixRadius: 0.18,
-    helixHeight: 1.18,
-    helixTurns: 3.15,
-    helixTubeRadius: 0.058,
-    helixParticleCount: 1120,
-    helixParticleSize: 0.72,
-    helixParticleSpeed: 0.82,
-    helixParticleOpacity: 0.9,
-    helixParticleColor: "#D8B65D",
-    helixColorIntensity: 1.14,
-    helixSmokeCurl: 0.86,
-    helixNoiseStrength: 0.68
+    helixRadius: 0.72,
+    helixHeight: 2.106,
+    helixTurns: 2.0999999999999996,
+    helixTubeRadius: 0.131,
+    helixParticleCount: 709,
+    helixParticleSize: 0.62,
+    helixParticleSpeed: 0.5499999999999999,
+    helixParticleOpacity: 2.09,
+    helixParticleColor: "#f1b111",
+    helixColorIntensity: 1.17,
+    helixSmokeCurl: 3,
+    helixNoiseStrength: 1.75
   },
   smoke: {
     smokeEnabled: true,
@@ -145,7 +145,7 @@ export const aurenHeroPreset = {
   },
   floor: {
     floorEnabled: true,
-    floorY: -1.42,
+    floorY: -0.52,
     floorReflectivity: 1.3,
     floorBlur: 0.54,
     floorRoughness: 0.12,

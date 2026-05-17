@@ -5,6 +5,7 @@ import { useEffect } from "react";
 
 import { AurenHeroPreset, aurenHeroPreset } from "@/lib/auren-hero-preset";
 import { getAurenSceneSnapshot, useAurenSceneStore } from "@/lib/useAurenSceneStore";
+import { serializeAurenHeroPreset } from "@/lib/serializeAurenHeroPreset";
 
 function range(value: number, min: number, max: number, step = 0.01) {
   return { value, min, max, step };
@@ -12,7 +13,41 @@ function range(value: number, min: number, max: number, step = 0.01) {
 
 function serializePreset() {
   const snapshot = getAurenSceneSnapshot();
-  return `export const aurenHeroPreset = ${JSON.stringify(snapshot, null, 2)};\n\nexport type AurenHeroPreset = typeof aurenHeroPreset;\n`;
+  return serializeAurenHeroPreset(snapshot);
+}
+
+let presetSaveTimer: number | null = null;
+
+function createBuildPreset(controls: AurenHeroPreset): AurenHeroPreset {
+  return {
+    ...aurenHeroPreset,
+    enableLevaOverrides: true,
+    particles: controls.particles,
+    goldHelix: controls.goldHelix
+  };
+}
+
+function persistPreset(preset: AurenHeroPreset) {
+  if (process.env.NODE_ENV !== "development") {
+    return;
+  }
+
+  if (presetSaveTimer !== null) {
+    window.clearTimeout(presetSaveTimer);
+  }
+
+  presetSaveTimer = window.setTimeout(() => {
+    void fetch("/api/auren-hero-preset", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(preset)
+    }).catch((error) => {
+      console.warn("Unable to save Auren hero preset", error);
+    });
+    presetSaveTimer = null;
+  }, 500);
 }
 
 export function useAurenLevaControls(enabled: boolean) {
@@ -21,9 +56,6 @@ export function useAurenLevaControls(enabled: boolean) {
   const [values] = useControls(
     "AUREN NOIR / Hero Scene",
     () => ({
-      "Leva Overrides": folder({
-        enableLevaOverrides: aurenHeroPreset.enableLevaOverrides
-      }),
       "Hero Environment Controls": folder({
         particleIntensity: range(aurenHeroPreset.environment.particleIntensity, 0, 2.5),
         smokeGlobalOpacity: range(aurenHeroPreset.environment.smokeOpacity, 0, 2.5),
@@ -218,7 +250,7 @@ export function useAurenLevaControls(enabled: boolean) {
     }
 
     const nextControls: AurenHeroPreset = {
-      enableLevaOverrides: Boolean(values.enableLevaOverrides),
+      enableLevaOverrides: true,
       environment: {
         particleIntensity: Number(values.particleIntensity),
         smokeOpacity: Number(values.smokeGlobalOpacity),
@@ -399,5 +431,6 @@ export function useAurenLevaControls(enabled: boolean) {
     };
 
     setControls(nextControls);
+    persistPreset(createBuildPreset(nextControls));
   }, [enabled, setControls, values]);
 }
