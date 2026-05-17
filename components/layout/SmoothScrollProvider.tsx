@@ -5,6 +5,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import { ReactNode, useEffect } from "react";
 
+import { useDesireGalleryScene } from "@/lib/useDesireGalleryScene";
 import { usePrefersReducedMotion } from "@/lib/usePrefersReducedMotion";
 import { useScrollProgress } from "@/lib/useScrollProgress";
 
@@ -32,6 +33,10 @@ export function SmoothScrollProvider({
     let lastWheelDirection = 0;
     let smoothTarget = window.scrollY;
     const wheelListenerOptions: AddEventListenerOptions = {
+      capture: true,
+      passive: false
+    };
+    const scrollLockListenerOptions: AddEventListenerOptions = {
       capture: true,
       passive: false
     };
@@ -64,6 +69,16 @@ export function SmoothScrollProvider({
     };
 
     const handleWheel = (event: WheelEvent) => {
+      if (useDesireGalleryScene.getState().detailCardIndex !== null) {
+        event.preventDefault();
+        event.stopPropagation();
+        scrollTween?.kill();
+        scrollTween = null;
+        smoothTarget = window.scrollY;
+        lastWheelDirection = 0;
+        return;
+      }
+
       if (reducedMotion || event.ctrlKey) {
         return;
       }
@@ -101,12 +116,20 @@ export function SmoothScrollProvider({
       });
     };
 
+    const handleTouchMove = (event: TouchEvent) => {
+      if (useDesireGalleryScene.getState().detailCardIndex !== null) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+    };
+
     const initialRefresh = window.setTimeout(refresh, 120);
 
     window.addEventListener("load", refresh);
     window.addEventListener("resize", refresh);
     window.addEventListener("scroll", syncTarget, { passive: true });
     window.addEventListener("wheel", handleWheel, wheelListenerOptions);
+    window.addEventListener("touchmove", handleTouchMove, scrollLockListenerOptions);
     refresh();
 
     return () => {
@@ -121,6 +144,7 @@ export function SmoothScrollProvider({
       window.removeEventListener("resize", refresh);
       window.removeEventListener("scroll", syncTarget);
       window.removeEventListener("wheel", handleWheel, wheelListenerOptions);
+      window.removeEventListener("touchmove", handleTouchMove, scrollLockListenerOptions);
       gsap.killTweensOf(window);
     };
   }, [enabled, reducedMotion, setProgress]);

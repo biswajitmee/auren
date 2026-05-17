@@ -2,7 +2,8 @@
 
 import { Text, useGLTF, useTexture } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import type { MutableRefObject } from "react";
 import * as THREE from "three";
 import type { GLTF } from "three-stdlib";
 
@@ -15,12 +16,15 @@ import ringVertexShader from "@/shaders/desireRing.vert";
 const CARD_SHELL_PATH = "/models/luxury_gallery_card_shell.glb";
 const CARD_SPACING = 2.14;
 const SHELL_DISPLAY_SCALE = 0.54;
-const SHELL_DEPTH_SCALE = 0.46;
+const SHELL_DEPTH_SCALE = 0.82;
 const SHELL_FRONT_Z = 0.16 * SHELL_DEPTH_SCALE * 0.5;
 const CONTENT_Z = SHELL_FRONT_Z + 0.026;
 const TEXT_Z = SHELL_FRONT_Z + 0.034;
 const HIT_PLANE_Z = SHELL_FRONT_Z + 0.07;
 const GLOW_PLANE_Z = -SHELL_FRONT_Z - 0.03;
+const CLICK_MOVE_TOLERANCE = 8;
+const DETAIL_TEXT =
+  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever";
 
 const galleryCards = [
   {
@@ -32,6 +36,12 @@ const galleryCards = [
     imageSize: [1.72, 1.18] as const,
     imagePosition: [-0.04, -0.18] as const,
     imageRotation: -0.12,
+    detailNotes: [
+      "A bright saffron spark opens the ritual with polished spice.",
+      "Solar citrus keeps the first impression sharp and luminous.",
+      "Thin gold facets frame the image before the heart unfolds.",
+      DETAIL_TEXT
+    ],
     accent: "#E7B45A"
   },
   {
@@ -43,6 +53,12 @@ const galleryCards = [
     imageSize: [1.82, 1.62] as const,
     imagePosition: [0, -0.12] as const,
     imageRotation: 0.03,
+    detailNotes: [
+      "Midnight rose moves through the center with velvet density.",
+      "Dark petals sit close to the skin, rich but never sweet.",
+      "The floral heart is cut by smoke and soft mineral shadow.",
+      DETAIL_TEXT
+    ],
     accent: "#D3A15A"
   },
   {
@@ -54,6 +70,12 @@ const galleryCards = [
     imageSize: [1.38, 1.92] as const,
     imagePosition: [0.02, -0.16] as const,
     imageRotation: 0.08,
+    detailNotes: [
+      DETAIL_TEXT,
+      DETAIL_TEXT,
+      DETAIL_TEXT,
+      DETAIL_TEXT
+    ],
     accent: "#C99547"
   },
   {
@@ -65,6 +87,12 @@ const galleryCards = [
     imageSize: [1.36, 1.22] as const,
     imagePosition: [-0.04, -0.12] as const,
     imageRotation: -0.1,
+    detailNotes: [
+      "Labdanum folds the composition into amber smoke.",
+      "Benzoin gives the resin accord a slow, balsamic warmth.",
+      "The surface stays dark and glossy, like varnished wood.",
+      DETAIL_TEXT
+    ],
     accent: "#E5A44A"
   },
   {
@@ -76,6 +104,12 @@ const galleryCards = [
     imageSize: [1.22, 1.76] as const,
     imagePosition: [0.03, -0.14] as const,
     imageRotation: -0.14,
+    detailNotes: [
+      "Oud wood deepens the finish with a dry ceremonial edge.",
+      "Black tea and ash give the base a mineral restraint.",
+      "The final trail is smoky, textured, and deliberately close.",
+      DETAIL_TEXT
+    ],
     accent: "#D9AF67"
   }
 ] as const;
@@ -94,6 +128,7 @@ type LuxuryGalleryCardProps = {
   imageSize?: readonly [number, number];
   imagePosition?: readonly [number, number];
   imageRotation?: number;
+  detailNotes: readonly string[];
   trackIndex?: number;
 };
 
@@ -237,6 +272,250 @@ function CardLine({
   );
 }
 
+function AnimatedLineSegment({
+  delay = 0,
+  end,
+  opacity = 0.78,
+  progress,
+  start,
+  thickness = 0.01,
+  z = TEXT_Z + 0.06
+}: {
+  delay?: number;
+  end: readonly [number, number];
+  opacity?: number;
+  progress: number;
+  start: readonly [number, number];
+  thickness?: number;
+  z?: number;
+}) {
+  const draw = THREE.MathUtils.smoothstep(progress, delay, delay + 0.22);
+  const dx = end[0] - start[0];
+  const dy = end[1] - start[1];
+  const length = Math.max(0.001, Math.hypot(dx, dy));
+
+  if (draw <= 0.002) {
+    return null;
+  }
+
+  return (
+    <mesh
+      position={[start[0] + dx * draw * 0.5, start[1] + dy * draw * 0.5, z]}
+      renderOrder={31}
+      rotation={[0, 0, Math.atan2(dy, dx)]}
+      scale={[length * draw, thickness, 1]}
+    >
+      <planeGeometry args={[1, 1]} />
+      <meshBasicMaterial
+        blending={THREE.NormalBlending}
+        color="#F5F0E8"
+        depthTest={false}
+        depthWrite={false}
+        opacity={opacity * draw}
+        transparent
+      />
+    </mesh>
+  );
+}
+
+function TypedCalloutText({
+  anchorX = "left",
+  delay,
+  maxWidth = 1.22,
+  position,
+  progress,
+  text
+}: {
+  anchorX?: "center" | "left" | "right";
+  delay: number;
+  maxWidth?: number;
+  position: readonly [number, number, number];
+  progress: number;
+  text: string;
+}) {
+  const reveal = THREE.MathUtils.smoothstep(progress, delay, delay + 0.46);
+  const typedText = text.slice(0, Math.floor(text.length * reveal));
+
+  return (
+    <Text
+      anchorX={anchorX}
+      anchorY="top"
+      color="#F5F0E8"
+      fontSize={0.118}
+      lineHeight={1.08}
+      material-depthTest={false}
+      material-depthWrite={false}
+      material-opacity={Math.min(1, reveal * 1.25)}
+      material-transparent
+      maxWidth={maxWidth}
+      position={position}
+      renderOrder={34}
+    >
+      {typedText}
+    </Text>
+  );
+}
+
+function CardDetailOverlay({
+  active,
+  closeHitRef,
+  notes
+}: {
+  active: boolean;
+  closeHitRef: MutableRefObject<THREE.Mesh | null>;
+  notes: readonly string[];
+}) {
+  const progressRef = useRef(0);
+  const [progress, setProgress] = useState(0);
+  const z = TEXT_Z + 0.07;
+  const calloutNotes =
+    notes.length >= 4 ? notes : [DETAIL_TEXT, DETAIL_TEXT, DETAIL_TEXT, DETAIL_TEXT];
+
+  useFrame((_, delta) => {
+    const nextProgress = THREE.MathUtils.damp(progressRef.current, active ? 1 : 0, 5.2, delta);
+
+    progressRef.current = nextProgress;
+    setProgress((currentProgress) =>
+      Math.abs(currentProgress - nextProgress) > 0.018 ? nextProgress : currentProgress
+    );
+  });
+
+  if (!active && progress < 0.02) {
+    return null;
+  }
+
+  return (
+    <group>
+      <mesh ref={closeHitRef} position={[1.28, 1.84, z + 0.02]} renderOrder={42} visible={active}>
+        <planeGeometry args={[0.54, 0.54]} />
+        <meshBasicMaterial
+          color="#000000"
+          depthTest={false}
+          depthWrite={false}
+          opacity={0}
+          transparent
+        />
+      </mesh>
+
+      <mesh position={[1.28, 1.84, z + 0.01]} renderOrder={41} rotation={[0, 0, Math.PI / 4]}>
+        <planeGeometry args={[0.31, 0.016]} />
+        <meshBasicMaterial
+          color="#F3D58A"
+          depthTest={false}
+          depthWrite={false}
+          opacity={THREE.MathUtils.smoothstep(progress, 0.1, 0.32)}
+          transparent
+        />
+      </mesh>
+      <mesh position={[1.28, 1.84, z + 0.01]} renderOrder={41} rotation={[0, 0, -Math.PI / 4]}>
+        <planeGeometry args={[0.31, 0.016]} />
+        <meshBasicMaterial
+          color="#F3D58A"
+          depthTest={false}
+          depthWrite={false}
+          opacity={THREE.MathUtils.smoothstep(progress, 0.14, 0.36)}
+          transparent
+        />
+      </mesh>
+
+      <AnimatedLineSegment
+        delay={0.04}
+        end={[1.04, 1.43]}
+        opacity={0.7}
+        progress={progress}
+        start={[-1.04, 1.43]}
+        thickness={0.012}
+        z={z}
+      />
+      <AnimatedLineSegment
+        delay={0.08}
+        end={[-2.04, 0.95]}
+        progress={progress}
+        start={[-1.1, 0.95]}
+        z={z}
+      />
+      <AnimatedLineSegment
+        delay={0.16}
+        end={[-2.72, 1.15]}
+        progress={progress}
+        start={[-2.04, 0.95]}
+        z={z}
+      />
+      <AnimatedLineSegment
+        delay={0.18}
+        end={[-1.54, -1.28]}
+        progress={progress}
+        start={[-0.52, -0.52]}
+        z={z}
+      />
+      <AnimatedLineSegment
+        delay={0.26}
+        end={[-2.72, -1.28]}
+        progress={progress}
+        start={[-1.54, -1.28]}
+        z={z}
+      />
+      <AnimatedLineSegment
+        delay={0.22}
+        end={[1.72, 1.74]}
+        progress={progress}
+        start={[0.84, 0.76]}
+        z={z}
+      />
+      <AnimatedLineSegment
+        delay={0.3}
+        end={[2.58, 1.74]}
+        progress={progress}
+        start={[1.72, 1.74]}
+        z={z}
+      />
+      <AnimatedLineSegment
+        delay={0.28}
+        end={[1.82, -1.04]}
+        progress={progress}
+        start={[0.42, -0.1]}
+        z={z}
+      />
+      <AnimatedLineSegment
+        delay={0.36}
+        end={[2.58, -1.04]}
+        progress={progress}
+        start={[1.82, -1.04]}
+        z={z}
+      />
+
+      <TypedCalloutText
+        delay={0.34}
+        maxWidth={1.34}
+        position={[-3.5, 1.36, z + 0.01]}
+        progress={progress}
+        text={calloutNotes[0]}
+      />
+      <TypedCalloutText
+        delay={0.46}
+        maxWidth={1.34}
+        position={[-3.5, -1.08, z + 0.01]}
+        progress={progress}
+        text={calloutNotes[1]}
+      />
+      <TypedCalloutText
+        delay={0.58}
+        maxWidth={1.34}
+        position={[2.74, 1.98, z + 0.01]}
+        progress={progress}
+        text={calloutNotes[2]}
+      />
+      <TypedCalloutText
+        delay={0.7}
+        maxWidth={1.34}
+        position={[2.74, -0.78, z + 0.01]}
+        progress={progress}
+        text={calloutNotes[3]}
+      />
+    </group>
+  );
+}
+
 export function LuxuryGalleryCard({
   title,
   index,
@@ -251,22 +530,27 @@ export function LuxuryGalleryCard({
   imageSize = [1.6, 1.4],
   imagePosition = [0, -0.12],
   imageRotation = 0,
+  detailNotes,
   trackIndex = 0
 }: LuxuryGalleryCardProps) {
   const groupRef = useRef<THREE.Group>(null);
   const hitPlaneRef = useRef<THREE.Mesh>(null);
+  const closeHitPlaneRef = useRef<THREE.Mesh>(null);
   const imageMaterialRef = useRef<THREE.ShaderMaterial>(null);
   const glowMaterialRef = useRef<THREE.MeshBasicMaterial>(null);
-  const dragStartRotationRef = useRef(0);
-  const dragStartXRef = useRef(0);
-  const draggingRef = useRef(false);
+  const pendingPointerActionRef = useRef<{
+    kind: "card" | "close";
+    x: number;
+    y: number;
+  } | null>(null);
   const hoverTiltRef = useRef(0);
   const hoverTargetRef = useRef(0);
   const interactionRotationRef = useRef(0);
-  const manualRotationRef = useRef(0);
   const opacityRef = useRef(0);
   const progressRef = useRef(0);
   const scaleRef = useRef(0.92);
+  const detailCardIndex = useDesireGalleryScene((state) => state.detailCardIndex);
+  const isDetailSelected = detailCardIndex === trackIndex;
   const { camera } = useThree();
   const { scene } = useGLTF(CARD_SHELL_PATH) as GLTF;
   const texture = useTexture(image) as THREE.Texture;
@@ -289,11 +573,10 @@ export function LuxuryGalleryCard({
   }, [texture]);
 
   useEffect(() => {
-    const getCardHit = (event: PointerEvent) => {
-      const hitPlane = hitPlaneRef.current;
+    const getMeshHit = (event: PointerEvent, mesh: THREE.Mesh | null) => {
       const { visible } = useDesireGalleryScene.getState();
 
-      if (!hitPlane || !visible || opacityRef.current < 0.08) {
+      if (!mesh || !visible || opacityRef.current < 0.08) {
         return null;
       }
 
@@ -303,23 +586,43 @@ export function LuxuryGalleryCard({
       );
       raycaster.setFromCamera(pointerNdc, camera);
 
-      return raycaster.intersectObject(hitPlane, false)[0] ?? null;
+      return raycaster.intersectObject(mesh, false)[0] ?? null;
     };
 
     const handlePointerDown = (event: PointerEvent) => {
-      if (event.button !== 0 || event.pointerType !== "mouse") {
+      if (event.button !== 0) {
         return;
       }
 
-      const hit = getCardHit(event);
+      const { detailCardIndex: activeDetailIndex } = useDesireGalleryScene.getState();
+      const closeHit =
+        activeDetailIndex === trackIndex ? getMeshHit(event, closeHitPlaneRef.current) : null;
 
-      if (!hit) {
+      if (closeHit) {
+        pendingPointerActionRef.current = {
+          kind: "close",
+          x: event.clientX,
+          y: event.clientY
+        };
+        event.preventDefault();
         return;
       }
 
-      draggingRef.current = true;
-      dragStartXRef.current = event.clientX;
-      dragStartRotationRef.current = manualRotationRef.current;
+      if (activeDetailIndex !== null) {
+        return;
+      }
+
+      const cardHit = getMeshHit(event, hitPlaneRef.current);
+
+      if (!cardHit) {
+        return;
+      }
+
+      pendingPointerActionRef.current = {
+        kind: "card",
+        x: event.clientX,
+        y: event.clientY
+      };
       hoverTargetRef.current = 0;
       event.preventDefault();
     };
@@ -329,18 +632,12 @@ export function LuxuryGalleryCard({
         return;
       }
 
-      if (draggingRef.current) {
-        const dragDelta = event.clientX - dragStartXRef.current;
-        manualRotationRef.current = THREE.MathUtils.clamp(
-          dragStartRotationRef.current + dragDelta * 0.012,
-          -0.72,
-          0.72
-        );
+      if (useDesireGalleryScene.getState().detailCardIndex !== null) {
         hoverTargetRef.current = 0;
         return;
       }
 
-      const hit = getCardHit(event);
+      const hit = getMeshHit(event, hitPlaneRef.current);
 
       if (!hit) {
         hoverTargetRef.current = 0;
@@ -351,22 +648,54 @@ export function LuxuryGalleryCard({
       hoverTargetRef.current = THREE.MathUtils.clamp(-hoverX * 0.28, -0.14, 0.14);
     };
 
-    const stopDragging = () => {
-      draggingRef.current = false;
+    const handlePointerUp = (event: PointerEvent) => {
+      const pendingAction = pendingPointerActionRef.current;
+
+      if (!pendingAction) {
+        return;
+      }
+
+      pendingPointerActionRef.current = null;
+
+      if (
+        Math.hypot(event.clientX - pendingAction.x, event.clientY - pendingAction.y) >
+        CLICK_MOVE_TOLERANCE
+      ) {
+        return;
+      }
+
+      const galleryState = useDesireGalleryScene.getState();
+
+      if (pendingAction.kind === "close") {
+        galleryState.closeDetail();
+        event.preventDefault();
+        return;
+      }
+
+      if (galleryState.detailCardIndex === null && galleryState.visible) {
+        galleryState.openDetail(trackIndex);
+        event.preventDefault();
+      }
+    };
+
+    const clearPendingAction = () => {
+      pendingPointerActionRef.current = null;
     };
 
     window.addEventListener("pointerdown", handlePointerDown, { passive: false });
     window.addEventListener("pointermove", handlePointerMove);
-    window.addEventListener("pointerup", stopDragging);
-    window.addEventListener("blur", stopDragging);
+    window.addEventListener("pointerup", handlePointerUp, { passive: false });
+    window.addEventListener("pointercancel", clearPendingAction);
+    window.addEventListener("blur", clearPendingAction);
 
     return () => {
       window.removeEventListener("pointerdown", handlePointerDown);
       window.removeEventListener("pointermove", handlePointerMove);
-      window.removeEventListener("pointerup", stopDragging);
-      window.removeEventListener("blur", stopDragging);
+      window.removeEventListener("pointerup", handlePointerUp);
+      window.removeEventListener("pointercancel", clearPendingAction);
+      window.removeEventListener("blur", clearPendingAction);
     };
-  }, [camera, pointerNdc, raycaster]);
+  }, [camera, pointerNdc, raycaster, trackIndex]);
 
   useFrame((state, delta) => {
     const group = groupRef.current;
@@ -375,37 +704,62 @@ export function LuxuryGalleryCard({
       return;
     }
 
-    const { progress, visible } = useDesireGalleryScene.getState();
-    progressRef.current = THREE.MathUtils.damp(progressRef.current, progress, 7.2, delta);
+    const { detailCardIndex: activeDetailIndex, progress, visible } = useDesireGalleryScene.getState();
+    const detailOpen = activeDetailIndex !== null;
+    const isActiveDetail = activeDetailIndex === trackIndex;
+
+    if (!detailOpen) {
+      progressRef.current = THREE.MathUtils.damp(progressRef.current, progress, 7.2, delta);
+    }
 
     const sceneProgress = progressRef.current;
     const trackSpan = Math.max(0, galleryCards.length - 3) * CARD_SPACING;
-    const targetX = position[0] + (trackIndex - 1) * CARD_SPACING - sceneProgress * trackSpan;
+    const galleryTargetX =
+      position[0] + (trackIndex - 1) * CARD_SPACING - sceneProgress * trackSpan;
+    const targetX =
+      detailOpen && activeDetailIndex !== null
+        ? isActiveDetail
+          ? 0
+          : (trackIndex - activeDetailIndex) * CARD_SPACING * 1.72
+        : galleryTargetX;
     const centerDistance = Math.abs(targetX);
-    const focus = 1 - Math.min(1, centerDistance / (CARD_SPACING * 1.6));
+    const focus = detailOpen && isActiveDetail ? 1 : 1 - Math.min(1, centerDistance / (CARD_SPACING * 1.6));
     const rangeFade = 1 - THREE.MathUtils.smoothstep(centerDistance, 3.05, 3.86);
-    const targetOpacity = visible ? rangeFade * (0.42 + focus * 0.58) : 0;
-    const targetScale = scale * THREE.MathUtils.lerp(0.79, 0.88, focus);
+    const targetOpacity = visible
+      ? detailOpen
+        ? isActiveDetail
+          ? 1
+          : 0
+        : rangeFade * (0.42 + focus * 0.58)
+      : 0;
+    const targetScale = detailOpen
+      ? scale * (isActiveDetail ? 1.22 : 0.74)
+      : scale * THREE.MathUtils.lerp(0.79, 0.88, focus);
     hoverTiltRef.current = THREE.MathUtils.damp(
       hoverTiltRef.current,
-      visible ? hoverTargetRef.current : 0,
+      visible && !detailOpen ? hoverTargetRef.current : 0,
       8,
       delta
     );
 
     interactionRotationRef.current = THREE.MathUtils.damp(
       interactionRotationRef.current,
-      visible ? manualRotationRef.current + hoverTiltRef.current : 0,
-      draggingRef.current ? 14 : 7,
+      visible && !detailOpen ? hoverTiltRef.current : 0,
+      7,
       delta
     );
 
     const targetRotationY =
-      rotation[1] +
-      THREE.MathUtils.clamp(-targetX * 0.045, -0.16, 0.16) +
-      interactionRotationRef.current;
-    const targetRotationZ = rotation[2] + targetX * 0.012;
-    const hover = Math.sin(state.clock.elapsedTime * 0.46 + trackIndex * 1.3) * 0.026;
+      detailOpen && isActiveDetail
+        ? 0
+        : rotation[1] +
+          THREE.MathUtils.clamp(-targetX * 0.045, -0.16, 0.16) +
+          interactionRotationRef.current;
+    const targetRotationZ = detailOpen && isActiveDetail ? 0 : rotation[2] + targetX * 0.012;
+    const hover =
+      detailOpen && isActiveDetail
+        ? 0
+        : Math.sin(state.clock.elapsedTime * 0.46 + trackIndex * 1.3) * 0.026;
 
     opacityRef.current = THREE.MathUtils.damp(opacityRef.current, targetOpacity, 4.8, delta);
     scaleRef.current = THREE.MathUtils.damp(scaleRef.current, targetScale, 4.2, delta);
@@ -414,14 +768,14 @@ export function LuxuryGalleryCard({
     group.position.x = THREE.MathUtils.damp(group.position.x, targetX, 5.8, delta);
     group.position.y = THREE.MathUtils.damp(
       group.position.y,
-      position[1] + THREE.MathUtils.lerp(-0.03, 0.05, focus) + hover,
+      position[1] + THREE.MathUtils.lerp(-0.03, detailOpen && isActiveDetail ? -0.04 : 0.05, focus) + hover,
       3.8,
       delta
     );
     group.position.z = THREE.MathUtils.damp(
       group.position.z,
-      position[2] + THREE.MathUtils.lerp(-0.1, 0.1, focus),
-      4,
+      position[2] + (detailOpen && isActiveDetail ? 0.76 : THREE.MathUtils.lerp(-0.1, 0.1, focus)),
+      detailOpen && isActiveDetail ? 5.8 : 4,
       delta
     );
     group.rotation.x = THREE.MathUtils.damp(group.rotation.x, rotation[0], 4.4, delta);
@@ -429,14 +783,15 @@ export function LuxuryGalleryCard({
     group.rotation.z = THREE.MathUtils.damp(group.rotation.z, targetRotationZ, 4.2, delta);
     group.scale.setScalar(scaleRef.current);
 
-    setShellOpacity(shell, opacityRef.current, focus);
+    setShellOpacity(shell, opacityRef.current, detailOpen && isActiveDetail ? 1 : focus);
 
     if (imageMaterialRef.current) {
       imageMaterialRef.current.uniforms.uOpacity.value = opacityRef.current * (0.78 + focus * 0.22);
     }
 
     if (glowMaterialRef.current) {
-      glowMaterialRef.current.opacity = opacityRef.current * focus * (isCenter ? 0.055 : 0.036);
+      glowMaterialRef.current.opacity =
+        opacityRef.current * focus * (detailOpen && isActiveDetail ? 0.12 : isCenter ? 0.055 : 0.036);
     }
   });
 
@@ -544,6 +899,12 @@ export function LuxuryGalleryCard({
         >
           {sideLabel}
         </Text>
+
+        <CardDetailOverlay
+          active={isDetailSelected}
+          closeHitRef={closeHitPlaneRef}
+          notes={detailNotes}
+        />
       </group>
     </group>
   );
@@ -572,10 +933,11 @@ function DesireGalleryRing() {
       return;
     }
 
-    const { progress, visible } = useDesireGalleryScene.getState();
+    const { detailCardIndex, progress, visible } = useDesireGalleryScene.getState();
+    const targetOpacity = visible ? (detailCardIndex === null ? 1 : 0.18) : 0;
 
     progressRef.current = THREE.MathUtils.damp(progressRef.current, progress, 6.8, delta);
-    opacityRef.current = THREE.MathUtils.damp(opacityRef.current, visible ? 1 : 0, 3.2, delta);
+    opacityRef.current = THREE.MathUtils.damp(opacityRef.current, targetOpacity, 3.2, delta);
     mesh.visible = opacityRef.current > 0.015;
     mesh.rotation.z = state.clock.elapsedTime * 0.035;
     material.uniforms.uOpacity.value = opacityRef.current;
@@ -607,12 +969,74 @@ function DesireGalleryRing() {
   );
 }
 
+function GalleryDetailBackdrop() {
+  const shadeMaterialRef = useRef<THREE.MeshBasicMaterial>(null);
+  const glowMaterialRef = useRef<THREE.MeshBasicMaterial>(null);
+  const opacityRef = useRef(0);
+
+  useFrame((_, delta) => {
+    const detailOpen = useDesireGalleryScene.getState().detailCardIndex !== null;
+
+    opacityRef.current = THREE.MathUtils.damp(opacityRef.current, detailOpen ? 1 : 0, 4.4, delta);
+
+    if (shadeMaterialRef.current) {
+      shadeMaterialRef.current.opacity = opacityRef.current * 0.58;
+    }
+
+    if (glowMaterialRef.current) {
+      glowMaterialRef.current.opacity = opacityRef.current * 0.22;
+    }
+  });
+
+  return (
+    <group position={[0, 0, -0.72]} renderOrder={0}>
+      <mesh renderOrder={0}>
+        <planeGeometry args={[8.8, 5.45]} />
+        <meshBasicMaterial
+          ref={shadeMaterialRef}
+          color="#030201"
+          depthTest={false}
+          depthWrite={false}
+          opacity={0}
+          transparent
+        />
+      </mesh>
+      <mesh position={[0, -1.62, 0.01]} renderOrder={1}>
+        <planeGeometry args={[4.2, 1.05]} />
+        <meshBasicMaterial
+          ref={glowMaterialRef}
+          blending={THREE.AdditiveBlending}
+          color="#B77A32"
+          depthTest={false}
+          depthWrite={false}
+          opacity={0}
+          transparent
+        />
+      </mesh>
+    </group>
+  );
+}
+
 export function DesireGlassGallery() {
   const groupRef = useRef<THREE.Group>(null);
   const { camera, size } = useThree();
   const forward = useMemo(() => new THREE.Vector3(), []);
   const up = useMemo(() => new THREE.Vector3(), []);
   const target = useMemo(() => new THREE.Vector3(), []);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        useDesireGalleryScene.getState().closeDetail();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
 
   useFrame((_, delta) => {
     const group = groupRef.current;
@@ -622,7 +1046,8 @@ export function DesireGlassGallery() {
     }
 
     const perspectiveCamera = camera as THREE.PerspectiveCamera;
-    const distance = size.width < 760 ? 6.18 : 5.92;
+    const detailOpen = useDesireGalleryScene.getState().detailCardIndex !== null;
+    const distance = detailOpen ? (size.width < 760 ? 4.78 : 4.72) : size.width < 760 ? 6.18 : 5.92;
 
     camera.getWorldDirection(forward);
     up.set(0, 1, 0).applyQuaternion(camera.quaternion);
@@ -634,8 +1059,11 @@ export function DesireGlassGallery() {
     const fov = THREE.MathUtils.degToRad(perspectiveCamera.fov);
     const viewHeight = (2 * Math.tan(fov / 2) * distance) / Math.max(0.001, perspectiveCamera.zoom);
     const viewWidth = viewHeight * (size.width / Math.max(1, size.height));
-    const targetScale =
-      size.width < 760
+    const targetScale = detailOpen
+      ? size.width < 760
+        ? Math.max(0.44, Math.min(0.58, viewWidth / 4.2))
+        : Math.max(0.68, Math.min(0.78, viewWidth / 7))
+      : size.width < 760
         ? Math.max(0.5, Math.min(0.72, viewWidth / 3.1))
         : Math.max(0.82, Math.min(1, viewWidth / 6.05));
 
@@ -644,11 +1072,13 @@ export function DesireGlassGallery() {
 
   return (
     <group ref={groupRef}>
+      <GalleryDetailBackdrop />
       <DesireGalleryRing />
       {galleryCards.map((card, trackIndex) => (
         <LuxuryGalleryCard
           accent={card.accent}
           bottomLabel={card.bottomLabel}
+          detailNotes={card.detailNotes}
           image={card.image}
           imagePosition={card.imagePosition}
           imageRotation={card.imageRotation}
