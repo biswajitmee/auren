@@ -14,7 +14,11 @@ import vertexShader from "@/shaders/goldenHelixParticles.vert";
 
 type BottleGoldenHelixProps = {
   active?: boolean;
+  position?: [number, number, number];
+  rotation?: [number, number, number];
+  scale?: [number, number, number];
   tier: PerformanceTier;
+  theatreKey?: string;
 };
 
 function maxParticleCount(tier: PerformanceTier) {
@@ -29,7 +33,14 @@ function maxParticleCount(tier: PerformanceTier) {
   return 760;
 }
 
-export function BottleGoldenHelix({ active = true, tier }: BottleGoldenHelixProps) {
+export function BottleGoldenHelix({
+  active = true,
+  position = [0.04, 0.14, 0.12],
+  rotation = [0, 0, 0],
+  scale = [1, 1, 1],
+  tier,
+  theatreKey = "Bottle Golden Helix"
+}: BottleGoldenHelixProps) {
   const groupRef = useRef<THREE.Group>(null);
   const geometryRef = useRef<THREE.BufferGeometry>(null);
   const levaOverrides = useAurenSceneStore((state) => state.enableLevaOverrides);
@@ -124,10 +135,10 @@ export function BottleGoldenHelix({ active = true, tier }: BottleGoldenHelixProp
 
   return (
     <e.group
-      position={[0.04, 0.14, 0.12]}
-      rotation={[0, 0, 0]}
-      scale={[1, 1, 1]}
-      theatreKey="Bottle Golden Helix"
+      position={position}
+      rotation={rotation}
+      scale={scale}
+      theatreKey={theatreKey}
     >
       <group ref={groupRef} visible={active && helixControls.helixEnabled}>
         <points frustumCulled={false} renderOrder={8}>

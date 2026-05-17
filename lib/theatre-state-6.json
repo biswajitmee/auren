@@ -97,26 +97,14 @@
               "z": 1
             },
             "position": {
-              "z": 2.0323269397793005,
-              "y": 0.45000000000000023,
-              "x": -0.5200000000000007
+              "z": 2.220000000000001,
+              "y": 0.44000000000000017,
+              "x": 0.09
             },
             "rotation": {
               "z": 0.10999999999999996,
-              "y": -11.629999999999983,
-              "x": -0.0699999999999999
-            }
-          },
-          "Bottle Golden Helix 2": {
-            "position": {
-              "x": 0.6400000000000005,
-              "z": 2.29,
-              "y": 0.6000000000000002
-            },
-            "rotation": {
-              "x": 0.22000000000000006,
-              "y": -11.039999999999944,
-              "z": -0.029999999999999978
+              "y": -1.4300000000000002,
+              "x": -0.01999999999999999
             }
           }
         }
@@ -261,7 +249,7 @@
                       0
                     ],
                     "type": "bezier",
-                    "value": 1
+                    "value": 1.02
                   },
                   {
                     "id": "euq-Nl6SBB",
@@ -370,7 +358,7 @@
                       0
                     ],
                     "type": "bezier",
-                    "value": 5.06
+                    "value": 5.70999999351309
                   },
                   {
                     "id": "ZhFrRLlmfJ",
@@ -575,7 +563,7 @@
                       0
                     ],
                     "type": "bezier",
-                    "value": 0
+                    "value": 0.04
                   },
                   {
                     "id": "IcPpgIZuFZ",
@@ -1044,21 +1032,8 @@
                 "__debugName": "Hero Bottle:[\"position\",\"x\"]",
                 "keyframes": [
                   {
-                    "id": "LxA6E8hbh3",
-                    "position": 0,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": -0.5100168198525911
-                  },
-                  {
                     "id": "OZcYaGej1a",
-                    "position": 0.267,
+                    "position": 0,
                     "connectedRight": true,
                     "handles": [
                       0.5,
@@ -1115,7 +1090,7 @@
                 "__debugName": "Hero Bottle:[\"position\",\"y\"]",
                 "keyframes": [
                   {
-                    "id": "u67omq0yuH",
+                    "id": "HPqjSxCtpy",
                     "position": 0,
                     "connectedRight": true,
                     "handles": [
@@ -1125,20 +1100,7 @@
                       0
                     ],
                     "type": "bezier",
-                    "value": -0.09058743532282933
-                  },
-                  {
-                    "id": "HPqjSxCtpy",
-                    "position": 0.267,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 0.06939887802390977
+                    "value": -0.32060112197609014
                   },
                   {
                     "id": "Wfors_dTlY",
@@ -1186,7 +1148,7 @@
                 "__debugName": "Hero Bottle:[\"position\",\"z\"]",
                 "keyframes": [
                   {
-                    "id": "MPP1bF3B-r",
+                    "id": "9IsmptfCNs",
                     "position": 0,
                     "connectedRight": true,
                     "handles": [
@@ -1196,20 +1158,7 @@
                       0
                     ],
                     "type": "bezier",
-                    "value": 0.20000419291447782
-                  },
-                  {
-                    "id": "9IsmptfCNs",
-                    "position": 0.267,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 1.7800041929144788
+                    "value": 0.6500041929144781
                   },
                   {
                     "id": "hYgM-eMs3R",
@@ -1257,7 +1206,7 @@
                 "__debugName": "Hero Bottle:[\"rotation\",\"x\"]",
                 "keyframes": [
                   {
-                    "id": "FXs0C-x1Dc",
+                    "id": "_2gckwXADQ",
                     "position": 0,
                     "connectedRight": true,
                     "handles": [
@@ -1267,20 +1216,7 @@
                       0
                     ],
                     "type": "bezier",
-                    "value": -0.11999999999999991
-                  },
-                  {
-                    "id": "_2gckwXADQ",
-                    "position": 0.267,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": -0.11999999999999984
+                    "value": -0.1999999999999998
                   },
                   {
                     "id": "2KVpQ9ibRM",
@@ -1328,7 +1264,7 @@
                 "__debugName": "Hero Bottle:[\"rotation\",\"y\"]",
                 "keyframes": [
                   {
-                    "id": "5G-1YLAUlM",
+                    "id": "r7EbeA1rYm",
                     "position": 0,
                     "connectedRight": true,
                     "handles": [
@@ -1338,20 +1274,7 @@
                       0
                     ],
                     "type": "bezier",
-                    "value": 0.3602351060085992
-                  },
-                  {
-                    "id": "r7EbeA1rYm",
-                    "position": 0.267,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 0.4701887359083447
+                    "value": 0.32007509205500234
                   },
                   {
                     "id": "QCYj8C0lmU",
@@ -1399,7 +1322,7 @@
                 "__debugName": "Hero Bottle:[\"rotation\",\"z\"]",
                 "keyframes": [
                   {
-                    "id": "yZLt4T6bkW",
+                    "id": "VboOiAdTa1",
                     "position": 0,
                     "connectedRight": true,
                     "handles": [
@@ -1409,20 +1332,7 @@
                       0
                     ],
                     "type": "bezier",
-                    "value": 0.040000000000000036
-                  },
-                  {
-                    "id": "VboOiAdTa1",
-                    "position": 0.267,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 0.030000000000000034
+                    "value": 0.030000000000000027
                   },
                   {
                     "id": "dWKX0ArJHO",
@@ -1471,7 +1381,7 @@
                 "keyframes": [
                   {
                     "id": "XVZNORpxjN",
-                    "position": 0.267,
+                    "position": 0,
                     "connectedRight": true,
                     "handles": [
                       0.5,
@@ -1529,7 +1439,7 @@
                 "keyframes": [
                   {
                     "id": "LMyHg3UOsn",
-                    "position": 0.267,
+                    "position": 0,
                     "connectedRight": true,
                     "handles": [
                       0.5,
@@ -1587,7 +1497,7 @@
                 "keyframes": [
                   {
                     "id": "jxbbmVD6lK",
-                    "position": 0.267,
+                    "position": 0,
                     "connectedRight": true,
                     "handles": [
                       0.5,
@@ -1670,19 +1580,6 @@
                     ],
                     "type": "bezier",
                     "value": 0
-                  },
-                  {
-                    "id": "y83iX5pNip",
-                    "position": 0.2,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 0
                   }
                 ]
               },
@@ -1701,20 +1598,7 @@
                       0
                     ],
                     "type": "bezier",
-                    "value": 2.4537240186802647
-                  },
-                  {
-                    "id": "XB8CG2IYop",
-                    "position": 0.2,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 2.4537240186802647
+                    "value": 0.40292894996718454
                   }
                 ]
               },
@@ -1725,19 +1609,6 @@
                   {
                     "id": "LyNlMZD45l",
                     "position": 0,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 0.6081174436310375
-                  },
-                  {
-                    "id": "NBT0czOfag",
-                    "position": 0.2,
                     "connectedRight": true,
                     "handles": [
                       0.5,
@@ -1766,19 +1637,6 @@
                     ],
                     "type": "bezier",
                     "value": 0
-                  },
-                  {
-                    "id": "8t8SpzIPKf",
-                    "position": 0.2,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 0
                   }
                 ]
               },
@@ -1798,19 +1656,6 @@
                     ],
                     "type": "bezier",
                     "value": 0
-                  },
-                  {
-                    "id": "VdFuMAI7xR",
-                    "position": 0.2,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": -1.2584626060481168
                   }
                 ]
               },
@@ -1821,19 +1666,6 @@
                   {
                     "id": "FQuJClAeKO",
                     "position": 0,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 0
-                  },
-                  {
-                    "id": "BQLrDVZPGM",
-                    "position": 0.2,
                     "connectedRight": true,
                     "handles": [
                       0.5,
@@ -1862,19 +1694,6 @@
                     ],
                     "type": "bezier",
                     "value": 1
-                  },
-                  {
-                    "id": "1qT910gopW",
-                    "position": 0.2,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 1
                   }
                 ]
               },
@@ -1885,19 +1704,6 @@
                   {
                     "id": "hbYcWsPC_B",
                     "position": 0,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 1
-                  },
-                  {
-                    "id": "PHMaKD-1rv",
-                    "position": 0.2,
                     "connectedRight": true,
                     "handles": [
                       0.5,
@@ -1926,19 +1732,6 @@
                     ],
                     "type": "bezier",
                     "value": 1
-                  },
-                  {
-                    "id": "39yvsakAVI",
-                    "position": 0.2,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 1
                   }
                 ]
               },
@@ -1949,19 +1742,6 @@
                   {
                     "id": "RFap-iq4N6",
                     "position": 0,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 0.12
-                  },
-                  {
-                    "id": "kB_EPqlQRB",
-                    "position": 0.2,
                     "connectedRight": true,
                     "handles": [
                       0.5,
@@ -1990,19 +1770,6 @@
                     ],
                     "type": "bezier",
                     "value": 1.18
-                  },
-                  {
-                    "id": "EPSdvzRK8F",
-                    "position": 0.2,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 1.18
                   }
                 ]
               },
@@ -2013,19 +1780,6 @@
                   {
                     "id": "4E9Y3FdDpf",
                     "position": 0,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 1
-                  },
-                  {
-                    "id": "AFQk2BSfPL",
-                    "position": 0.2,
                     "connectedRight": true,
                     "handles": [
                       0.5,
@@ -2729,612 +2483,6 @@
               "[\"rightIntensity\"]": "6-A8QaZu3P",
               "[\"color\"]": "22yetp0X7J"
             }
-          },
-          "Bottle Golden Helix": {
-            "trackData": {
-              "p9dMn1F86g": {
-                "type": "BasicKeyframedTrack",
-                "__debugName": "Bottle Golden Helix:[\"position\",\"x\"]",
-                "keyframes": [
-                  {
-                    "id": "7rXc3Tw6cZ",
-                    "position": 0,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": -0.5200000000000007
-                  },
-                  {
-                    "id": "JCSmc_YoLv",
-                    "position": 0.9,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": -0.14999999999999986
-                  }
-                ]
-              },
-              "mMC8E0_edY": {
-                "type": "BasicKeyframedTrack",
-                "__debugName": "Bottle Golden Helix:[\"position\",\"y\"]",
-                "keyframes": [
-                  {
-                    "id": "UEDYiZVL9C",
-                    "position": 0,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 0.45000000000000023
-                  },
-                  {
-                    "id": "2m_WMQldOS",
-                    "position": 0.9,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 0.35000000000000075
-                  }
-                ]
-              },
-              "XmGKgP4XYA": {
-                "type": "BasicKeyframedTrack",
-                "__debugName": "Bottle Golden Helix:[\"position\",\"z\"]",
-                "keyframes": [
-                  {
-                    "id": "CDB5qD8yjs",
-                    "position": 0,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 2.0323269397793005
-                  },
-                  {
-                    "id": "s5NuHOTbbV",
-                    "position": 0.9,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 0.7623269397792989
-                  }
-                ]
-              },
-              "jmAtaJInM8": {
-                "type": "BasicKeyframedTrack",
-                "__debugName": "Bottle Golden Helix:[\"rotation\",\"x\"]",
-                "keyframes": [
-                  {
-                    "id": "dj_qEfvjou",
-                    "position": 0,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": -0.0699999999999999
-                  },
-                  {
-                    "id": "EbvtmmQXCN",
-                    "position": 0.9,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": -0.4300000000000011
-                  }
-                ]
-              },
-              "23K7i1nksy": {
-                "type": "BasicKeyframedTrack",
-                "__debugName": "Bottle Golden Helix:[\"rotation\",\"y\"]",
-                "keyframes": [
-                  {
-                    "id": "5Qgf4Le9Dr",
-                    "position": 0,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": -11.629999999999983
-                  },
-                  {
-                    "id": "-YzhlfCo3w",
-                    "position": 0.9,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 0.27
-                  }
-                ]
-              },
-              "om3wEBIJHW": {
-                "type": "BasicKeyframedTrack",
-                "__debugName": "Bottle Golden Helix:[\"rotation\",\"z\"]",
-                "keyframes": [
-                  {
-                    "id": "idc-nrIbMm",
-                    "position": 0,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 0.10999999999999996
-                  },
-                  {
-                    "id": "TL8f8MO7We",
-                    "position": 0.9,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 0.10999999999999996
-                  }
-                ]
-              },
-              "16g9qskaWx": {
-                "type": "BasicKeyframedTrack",
-                "__debugName": "Bottle Golden Helix:[\"scale\",\"x\"]",
-                "keyframes": [
-                  {
-                    "id": "Zp1T1mTK0a",
-                    "position": 0,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 1
-                  },
-                  {
-                    "id": "j8MBMqSHDi",
-                    "position": 0.9,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 1
-                  }
-                ]
-              },
-              "H1wBOJjLKy": {
-                "type": "BasicKeyframedTrack",
-                "__debugName": "Bottle Golden Helix:[\"scale\",\"y\"]",
-                "keyframes": [
-                  {
-                    "id": "qpWIvOM90I",
-                    "position": 0,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 1
-                  },
-                  {
-                    "id": "BbgE6BzAoD",
-                    "position": 0.9,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 1
-                  }
-                ]
-              },
-              "6E6PiI-fJh": {
-                "type": "BasicKeyframedTrack",
-                "__debugName": "Bottle Golden Helix:[\"scale\",\"z\"]",
-                "keyframes": [
-                  {
-                    "id": "8-14HgKQ_G",
-                    "position": 0,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 1
-                  },
-                  {
-                    "id": "kEJxjjv3lZ",
-                    "position": 0.9,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 1
-                  }
-                ]
-              }
-            },
-            "trackIdByPropPath": {
-              "[\"position\",\"x\"]": "p9dMn1F86g",
-              "[\"position\",\"y\"]": "mMC8E0_edY",
-              "[\"position\",\"z\"]": "XmGKgP4XYA",
-              "[\"rotation\",\"x\"]": "jmAtaJInM8",
-              "[\"rotation\",\"y\"]": "23K7i1nksy",
-              "[\"rotation\",\"z\"]": "om3wEBIJHW",
-              "[\"scale\",\"x\"]": "16g9qskaWx",
-              "[\"scale\",\"y\"]": "H1wBOJjLKy",
-              "[\"scale\",\"z\"]": "6E6PiI-fJh"
-            }
-          },
-          "Bottle Golden Helix 2": {
-            "trackData": {
-              "gAwV7ZqH7B": {
-                "type": "BasicKeyframedTrack",
-                "__debugName": "Bottle Golden Helix 2:[\"position\",\"x\"]",
-                "keyframes": [
-                  {
-                    "id": "sKlWAEYyph",
-                    "position": 0,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 0.6400000000000005
-                  },
-                  {
-                    "id": "TMS_GKZRhF",
-                    "position": 0.9,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 0.6400000000000005
-                  }
-                ]
-              },
-              "zRP4Idk9QJ": {
-                "type": "BasicKeyframedTrack",
-                "__debugName": "Bottle Golden Helix 2:[\"position\",\"y\"]",
-                "keyframes": [
-                  {
-                    "id": "Yd46fdhWIm",
-                    "position": 0,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 0.6000000000000002
-                  },
-                  {
-                    "id": "o0YKUOC6jI",
-                    "position": 0.9,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 0.6000000000000002
-                  }
-                ]
-              },
-              "wHOPlhM27t": {
-                "type": "BasicKeyframedTrack",
-                "__debugName": "Bottle Golden Helix 2:[\"position\",\"z\"]",
-                "keyframes": [
-                  {
-                    "id": "3Jbkqap9M1",
-                    "position": 0,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 2.29
-                  },
-                  {
-                    "id": "FZipt-3lNn",
-                    "position": 0.9,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 2.29
-                  }
-                ]
-              },
-              "9d2bJ-DAqp": {
-                "type": "BasicKeyframedTrack",
-                "__debugName": "Bottle Golden Helix 2:[\"rotation\",\"x\"]",
-                "keyframes": [
-                  {
-                    "id": "1SNLOq0cmH",
-                    "position": 0,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 0.22000000000000006
-                  },
-                  {
-                    "id": "kKaIkUtIrJ",
-                    "position": 0.9,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 0.22000000000000006
-                  }
-                ]
-              },
-              "1ITyYRMHri": {
-                "type": "BasicKeyframedTrack",
-                "__debugName": "Bottle Golden Helix 2:[\"rotation\",\"y\"]",
-                "keyframes": [
-                  {
-                    "id": "Bl4izDR-v6",
-                    "position": 0,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": -11.039999999999944
-                  },
-                  {
-                    "id": "vgr6CYRh8_",
-                    "position": 0.9,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": -11.039999999999944
-                  }
-                ]
-              },
-              "Yj7tc157bQ": {
-                "type": "BasicKeyframedTrack",
-                "__debugName": "Bottle Golden Helix 2:[\"rotation\",\"z\"]",
-                "keyframes": [
-                  {
-                    "id": "8eyvK77fEj",
-                    "position": 0,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": -0.029999999999999978
-                  },
-                  {
-                    "id": "56ay6_Sx1o",
-                    "position": 0.9,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": -0.029999999999999978
-                  }
-                ]
-              },
-              "kKeWDhFwjU": {
-                "type": "BasicKeyframedTrack",
-                "__debugName": "Bottle Golden Helix 2:[\"scale\",\"x\"]",
-                "keyframes": [
-                  {
-                    "id": "_Fh0-qeWL0",
-                    "position": 0,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 1
-                  },
-                  {
-                    "id": "ivQNujlLCm",
-                    "position": 0.9,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 1
-                  }
-                ]
-              },
-              "YmNf-4yXFI": {
-                "type": "BasicKeyframedTrack",
-                "__debugName": "Bottle Golden Helix 2:[\"scale\",\"y\"]",
-                "keyframes": [
-                  {
-                    "id": "1VUDTsim8P",
-                    "position": 0,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 1
-                  },
-                  {
-                    "id": "7u8l3ltNMF",
-                    "position": 0.9,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 1
-                  }
-                ]
-              },
-              "fqS9e2vfj9": {
-                "type": "BasicKeyframedTrack",
-                "__debugName": "Bottle Golden Helix 2:[\"scale\",\"z\"]",
-                "keyframes": [
-                  {
-                    "id": "l5hiyM71Oh",
-                    "position": 0,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 1
-                  },
-                  {
-                    "id": "iRn5ByaHHi",
-                    "position": 0.9,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 1
-                  }
-                ]
-              }
-            },
-            "trackIdByPropPath": {
-              "[\"position\",\"x\"]": "gAwV7ZqH7B",
-              "[\"position\",\"y\"]": "zRP4Idk9QJ",
-              "[\"position\",\"z\"]": "wHOPlhM27t",
-              "[\"rotation\",\"x\"]": "9d2bJ-DAqp",
-              "[\"rotation\",\"y\"]": "1ITyYRMHri",
-              "[\"rotation\",\"z\"]": "Yj7tc157bQ",
-              "[\"scale\",\"x\"]": "kKeWDhFwjU",
-              "[\"scale\",\"y\"]": "YmNf-4yXFI",
-              "[\"scale\",\"z\"]": "fqS9e2vfj9"
-            }
           }
         }
       }
@@ -3342,8 +2490,6 @@
   },
   "definitionVersion": "0.4.0",
   "revisionHistory": [
-    "SJFp6PBCs8vydJGb",
-    "eZsxP3t7JNzGigwI",
     "pABgoPzC68WZcyFt",
     "YcTJqOx6Xkh8xEcd",
     "2MVWAboyQsp6f5D8",

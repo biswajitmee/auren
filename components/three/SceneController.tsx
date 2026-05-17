@@ -37,6 +37,12 @@ export function SceneController({
       <HeroEnvironment />
       <PerfumeBottle active={active && !gallerySceneReduced} tier={effectiveTier} />
       <BottleGoldenHelix active={active && !gallerySceneReduced} tier={effectiveTier} />
+      <BottleGoldenHelix
+        active={active && !gallerySceneReduced}
+        position={[-0.04, 0.14, 0.12]}
+        tier={effectiveTier}
+        theatreKey="Bottle Golden Helix 2"
+      />
       <ReflectiveFloor active={!gallerySceneReduced} tier={effectiveTier} />
       <GoldParticles tier={effectiveTier} />
       <SmokeShell active={!gallerySceneReduced} tier={effectiveTier} />

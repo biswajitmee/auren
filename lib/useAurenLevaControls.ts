@@ -145,7 +145,7 @@ export function useAurenLevaControls(enabled: boolean) {
       }),
       "Golden Helix Particles": folder({
         helixEnabled: aurenHeroPreset.goldHelix.helixEnabled,
-        helixRadius: range(aurenHeroPreset.goldHelix.helixRadius, 0.04, 0.72, 0.001),
+        helixRadius: range(aurenHeroPreset.goldHelix.helixRadius, 0.04, 2, 0.001),
         helixHeight: range(aurenHeroPreset.goldHelix.helixHeight, 0.18, 2.4, 0.001),
         helixTurns: range(aurenHeroPreset.goldHelix.helixTurns, 0.4, 8, 0.001),
         helixTubeRadius: range(aurenHeroPreset.goldHelix.helixTubeRadius, 0.004, 0.32, 0.001),
