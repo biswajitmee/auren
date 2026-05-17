@@ -14,7 +14,7 @@ const DESKTOP_QUERY = "(min-width: 900px)";
 const MOBILE_QUERY = "(max-width: 899px)";
 const DESKTOP_SCROLL_VH = Math.max(360, galleryItems.length * 86);
 const GALLERY_REVEAL_DELAY_MS = 500;
-const GALLERY_VISIBILITY_START = "top top";
+const GALLERY_VISIBILITY_START = "top 96%";
 
 export function CampaignGallerySection() {
   const sectionRef = useRef<HTMLElement>(null);

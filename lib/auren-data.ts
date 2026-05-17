@@ -1,7 +1,7 @@
 import { aurenAssets } from "@/lib/auren-assets";
 
 export const navLinks = [
-  { label: "Fragrance", href: "#fragrance-notes" },
+  { label: "Fragrance", href: "#product-reveal" },
   { label: "Gallery", href: "#campaign-gallery" },
   { label: "Ritual", href: "#ritual-story" },
   { label: "Film", href: "#film" },

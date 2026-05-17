@@ -1,6 +1,7 @@
 "use client";
 
 import gsap from "gsap";
+import { ArrowRight } from "lucide-react";
 import { useEffect, useRef } from "react";
 
 import { SectionFrame } from "@/components/layout/SectionFrame";
@@ -25,23 +26,52 @@ export function HeroSection() {
 
   return (
     <SectionFrame
-      className="flex min-h-screen items-end justify-center pb-0 pt-28 [&>div:first-child]:hidden"
+      className="hero-ui-stage flex min-h-screen items-end justify-center pb-0 pt-28 [&>div:first-child]:hidden"
       eyebrow="Arrival"
       id="hero"
       index="01"
       ref={sectionRef}
     >
       <h1 className="sr-only">AUREN NOIR</h1>
-      <div className="absolute bottom-[4.5vh] left-1/2 mx-auto flex w-full max-w-4xl -translate-x-1/2 flex-col items-center px-6 text-center md:bottom-[4vh]">
+      <div className="hero-copy-panel">
+        <span className="hero-copy-emblem" aria-hidden="true" />
         <p
-          className="max-w-3xl font-display text-3xl leading-tight text-ivory/88 sm:text-4xl lg:text-5xl"
+          className="hero-main-line"
           data-hero-reveal
         >
-          Structure is the new seduction.
+          A fragrance carved in shadow,
+          <br />
+          crowned in gold.
         </p>
-        <span className="mt-6 h-16 w-px overflow-hidden bg-ivory/16" data-hero-reveal>
-          <span className="block h-5 w-px animate-[scroll-line_1.8s_ease-in-out_infinite] bg-gold/90" />
-        </span>
+        <p className="hero-sub-line" data-hero-reveal>
+          <span aria-hidden="true" />
+          An extrait of amber, smoke, and quiet power.
+          <span aria-hidden="true" />
+        </p>
+        <a
+          className="hero-essence-button pointer-events-auto focus-ring"
+          data-hero-reveal
+          href="#fragrance-notes"
+        >
+          Discover the Essence
+          <ArrowRight aria-hidden="true" size={18} strokeWidth={1.25} />
+        </a>
+      </div>
+      <div className="hero-footnotes" data-hero-reveal>
+        <div className="hero-footnote hero-footnote-left">
+          <span aria-hidden="true" />
+          <p>01 / Royal Extrait</p>
+        </div>
+        <div className="hero-scroll-note">
+          <span className="hero-scroll-pin" aria-hidden="true">
+            <span />
+          </span>
+          <p>Scroll to Enter</p>
+        </div>
+        <div className="hero-footnote hero-footnote-right">
+          <p>Amber / Oud / Saffron / Vetiver</p>
+          <span aria-hidden="true" />
+        </div>
       </div>
       <style jsx global>{`
         @keyframes scroll-line {
