@@ -16,7 +16,7 @@ type TheatreScrollControllerProps = {
 
 const POSITION_EPSILON = 0.0001;
 const PROGRESS_EPSILON = 0.00001;
-const SEQUENCE_DAMPING = 7.5;
+const SEQUENCE_DAMPING = 3.5;
 
 export function TheatreScrollController({
   active = true,

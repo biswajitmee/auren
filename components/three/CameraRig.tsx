@@ -7,6 +7,8 @@ import { useFrame } from "@react-three/fiber";
 import { useMemo, useRef } from "react";
 import * as THREE from "three";
 
+import { useDesireGalleryScene } from "@/lib/useDesireGalleryScene";
+
 type HeroCameraValues = {
   target?: {
     x: number;
@@ -40,12 +42,17 @@ export function CameraRig() {
 
     const cameraValues = val(heroCameraObject.props) as HeroCameraValues;
     const target = cameraValues.target ?? { x: 0, y: 0.04, z: 0 };
+    const { sceneReduced, visible } = useDesireGalleryScene.getState();
+    const galleryFov = sceneReduced || visible ? 45 : null;
 
     lookAt.set(
       target.x,
       target.y,
       target.z
     );
+    if (galleryFov !== null) {
+      camera.fov = galleryFov;
+    }
     camera.lookAt(lookAt);
     camera.rotateZ(cameraValues.roll ?? 0);
     camera.updateProjectionMatrix();
