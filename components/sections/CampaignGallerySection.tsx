@@ -13,7 +13,7 @@ import { usePrefersReducedMotion } from "@/lib/usePrefersReducedMotion";
 const DESKTOP_QUERY = "(min-width: 900px)";
 const MOBILE_QUERY = "(max-width: 899px)";
 const DESKTOP_SCROLL_VH = Math.max(360, galleryItems.length * 86);
-const GALLERY_REVEAL_DELAY_MS = 500;
+const GALLERY_REVEAL_DELAY_MS = 0;
 const GALLERY_VISIBILITY_START = "top 96%";
 
 export function CampaignGallerySection() {
@@ -42,6 +42,12 @@ export function CampaignGallerySection() {
 
     const showGallery = () => {
       clearGalleryRevealDelay();
+      if (GALLERY_REVEAL_DELAY_MS === 0) {
+        setGallerySceneReduced(true);
+        setGalleryVisible(true);
+        return;
+      }
+
       revealDelayRef.current = window.setTimeout(() => {
         setGallerySceneReduced(true);
         setGalleryVisible(true);
