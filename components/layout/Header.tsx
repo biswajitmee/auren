@@ -13,6 +13,7 @@ export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const mobileOverlayRef = useRef<HTMLDivElement>(null);
   const mobileTimelineRef = useRef<gsap.core.Timeline | null>(null);
+  const mobileWaveFallbackRef = useRef<number | null>(null);
 
   useEffect(() => {
     const overlay = mobileOverlayRef.current;
@@ -20,10 +21,23 @@ export function Header() {
 
     const chars = overlay.querySelectorAll<HTMLElement>(".mobile-nav-char");
     mobileTimelineRef.current?.kill();
+    if (mobileWaveFallbackRef.current !== null) {
+      window.clearTimeout(mobileWaveFallbackRef.current);
+      mobileWaveFallbackRef.current = null;
+    }
 
     if (mobileMenuOpen) {
+      gsap.set(chars, { clearProps: "animation,opacity,visibility,transform" });
       gsap.set(overlay, { autoAlpha: 1, pointerEvents: "auto", yPercent: 0 });
-      gsap.set(chars, { autoAlpha: 1, rotateX: 0, yPercent: 0 });
+      mobileWaveFallbackRef.current = window.setTimeout(() => {
+        gsap.set(chars, {
+          animation: "none",
+          autoAlpha: 1,
+          rotateX: 0,
+          yPercent: 0
+        });
+        mobileWaveFallbackRef.current = null;
+      }, 900);
       return;
     }
 
@@ -68,10 +82,14 @@ export function Header() {
     };
   }, [mobileMenuOpen]);
 
-  const renderSplitLabel = (label: string) => (
+  const renderSplitLabel = (label: string, linkIndex: number) => (
     <span className="mobile-nav-split" aria-hidden="true">
       {label.split("").map((char, index) => (
-        <span className="mobile-nav-char" key={`${label}-${char}-${index}`}>
+        <span
+          className="mobile-nav-char"
+          key={`${label}-${char}-${index}`}
+          style={{ animationDelay: `${linkIndex * 0.055 + index * 0.012}s` }}
+        >
           {char === " " ? "\u00a0" : char}
         </span>
       ))}
@@ -150,7 +168,7 @@ export function Header() {
               <span className="mobile-nav-index" aria-hidden="true">
                 {String(index + 1).padStart(2, "0")}
               </span>
-              {renderSplitLabel(link.label)}
+              {renderSplitLabel(link.label, index)}
             </a>
           ))}
         </nav>
