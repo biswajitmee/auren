@@ -15,8 +15,8 @@ import ringVertexShader from "@/shaders/desireRing.vert";
 
 const CARD_SHELL_PATH = "/models/luxury_gallery_card_shell.glb";
 const CARD_SPACING = 2.14;
-const MOBILE_HORIZONTAL_SCROLL_SPEED = 1.65;
-const SHELL_DISPLAY_SCALE = 0.54;
+const MOBILE_HORIZONTAL_SCROLL_SPEED = 2.65;
+const SHELL_DISPLAY_SCALE = 0.60;
 const SHELL_DEPTH_SCALE = 0.82;
 const SHELL_FRONT_Z = 0.16 * SHELL_DEPTH_SCALE * 0.5;
 const CONTENT_Z = SHELL_FRONT_Z + 0.026;
