@@ -1,5 +1,8 @@
 "use client";
 
+import gsap from "gsap";
+import { useEffect, useRef, useState } from "react";
+
 import { navLinks } from "@/lib/auren-data";
 import { cn } from "@/lib/cn";
 import { useScrollProgress } from "@/lib/useScrollProgress";
@@ -7,6 +10,92 @@ import { useScrollProgress } from "@/lib/useScrollProgress";
 export function Header() {
   const progress = useScrollProgress((state) => state.progress);
   const settled = progress > 0.08;
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const mobileOverlayRef = useRef<HTMLDivElement>(null);
+  const mobileTimelineRef = useRef<gsap.core.Timeline | null>(null);
+
+  useEffect(() => {
+    const overlay = mobileOverlayRef.current;
+    if (!overlay) return;
+
+    const chars = overlay.querySelectorAll<HTMLElement>(".mobile-nav-char");
+    mobileTimelineRef.current?.kill();
+
+    if (mobileMenuOpen) {
+      mobileTimelineRef.current = gsap.timeline();
+      mobileTimelineRef.current
+        .set(overlay, { autoAlpha: 1, pointerEvents: "auto" })
+        .fromTo(
+          overlay,
+          { yPercent: -104 },
+          { yPercent: 0, duration: 0.78, ease: "back.out(1.28)" }
+        )
+        .fromTo(
+          chars,
+          { autoAlpha: 0, yPercent: 120, rotateX: -45 },
+          {
+            autoAlpha: 1,
+            yPercent: 0,
+            rotateX: 0,
+            duration: 0.58,
+            ease: "back.out(1.7)",
+            stagger: 0.012
+          },
+          "-=0.35"
+        );
+      return;
+    }
+
+    mobileTimelineRef.current = gsap.timeline();
+    mobileTimelineRef.current
+      .to(chars, {
+        autoAlpha: 0,
+        yPercent: -70,
+        duration: 0.18,
+        ease: "power2.in",
+        stagger: { each: 0.004, from: "end" }
+      })
+      .to(
+        overlay,
+        {
+          yPercent: -104,
+          duration: 0.42,
+          ease: "power3.in",
+          pointerEvents: "none",
+          autoAlpha: 0
+        },
+        "-=0.04"
+      );
+  }, [mobileMenuOpen]);
+
+  useEffect(() => {
+    if (!mobileMenuOpen) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setMobileMenuOpen(false);
+      }
+    };
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [mobileMenuOpen]);
+
+  const renderSplitLabel = (label: string) => (
+    <span className="mobile-nav-split" aria-hidden="true">
+      {label.split("").map((char, index) => (
+        <span className="mobile-nav-char" key={`${label}-${char}-${index}`}>
+          {char === " " ? "\u00a0" : char}
+        </span>
+      ))}
+    </span>
+  );
 
   return (
     <header
@@ -48,6 +137,41 @@ export function Header() {
           </a>
         ))}
       </nav>
+      <button
+        aria-controls="mobile-navigation"
+        aria-expanded={mobileMenuOpen}
+        aria-label={mobileMenuOpen ? "Close navigation" : "Open navigation"}
+        className={cn("mobile-nav-toggle pointer-events-auto md:hidden", mobileMenuOpen && "is-open")}
+        onClick={() => setMobileMenuOpen((open) => !open)}
+        type="button"
+      >
+        <span aria-hidden="true" />
+        <span aria-hidden="true" />
+        <span aria-hidden="true" />
+      </button>
+      <div
+        aria-hidden={!mobileMenuOpen}
+        className={cn("mobile-nav-overlay md:hidden", mobileMenuOpen && "is-open")}
+        id="mobile-navigation"
+        ref={mobileOverlayRef}
+      >
+        <nav className="mobile-nav-menu" aria-label="Mobile navigation">
+          {navLinks.map((link, index) => (
+            <a
+              className="mobile-nav-link focus-ring"
+              href={link.href}
+              key={link.href}
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              <span className="sr-only">{link.label}</span>
+              <span className="mobile-nav-index" aria-hidden="true">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              {renderSplitLabel(link.label)}
+            </a>
+          ))}
+        </nav>
+      </div>
     </header>
   );
 }
