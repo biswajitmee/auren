@@ -1,7 +1,6 @@
 "use client";
 
 import gsap from "gsap";
-import { ArrowRight } from "lucide-react";
 import { useEffect, useRef } from "react";
 
 import { SectionFrame } from "@/components/layout/SectionFrame";
@@ -34,43 +33,23 @@ export function HeroSection() {
     >
       <h1 className="sr-only">AUREN NOIR</h1>
       <div className="hero-copy-panel">
-        <span className="hero-copy-emblem" aria-hidden="true" />
         <p
           className="hero-main-line"
           data-hero-reveal
         >
-          A fragrance carved in shadow,
+          A fragrance carved in
           <br />
-          crowned in gold.
-        </p>
-        <p className="hero-sub-line" data-hero-reveal>
-          <span aria-hidden="true" />
-          An extrait of amber, smoke, and quiet power.
-          <span aria-hidden="true" />
+          shadow crowned in gold
         </p>
         <a
-          className="hero-essence-button pointer-events-auto focus-ring"
+          className="hero-cta-perfect"
           data-hero-reveal
           href="#fragrance-notes"
         >
-          Discover the Essence
-          <ArrowRight aria-hidden="true" size={18} strokeWidth={1.25} />
+          <span className="hero-cta-perfect-text">DISCOVER THE ESSENCE</span>
         </a>
-      </div>
-      <div className="hero-footnotes" data-hero-reveal>
-        <div className="hero-footnote hero-footnote-left">
-          <span aria-hidden="true" />
-          <p>01 / Royal Extrait</p>
-        </div>
-        <div className="hero-scroll-note">
-          <span className="hero-scroll-pin" aria-hidden="true">
-            <span />
-          </span>
+        <div className="hero-scroll-note" data-hero-reveal>
           <p>Scroll to Enter</p>
-        </div>
-        <div className="hero-footnote hero-footnote-right">
-          <p>Amber / Oud / Saffron / Vetiver</p>
-          <span aria-hidden="true" />
         </div>
       </div>
       <style jsx global>{`

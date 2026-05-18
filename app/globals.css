@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&family=Oswald:wght@600;700&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -14,6 +14,8 @@
   --color-charcoal: #1a1612;
   --color-bronze: #a0522d;
   --font-display: "Cormorant Garamond";
+  --font-hero: "Bebas Neue";
+  --font-scroll: "Oswald";
   --font-sans: "Inter";
   --font-mono: "IBM Plex Mono";
 }
@@ -103,7 +105,7 @@ img {
 
 .section-shell {
   position: relative;
-  min-height: 100vh;
+  min-height: 130vh;
   padding: clamp(5rem, 8vw, 8rem) clamp(1rem, 5vw, 5rem);
 }
 
@@ -276,14 +278,15 @@ img {
 
 .hero-copy-panel {
   position: absolute;
-  bottom: clamp(5.9rem, 9vh, 7.2rem);
+  top: 41%;
   left: 50%;
   z-index: 12;
   display: flex;
-  width: min(58rem, 92vw);
-  transform: translateX(-50%);
+  width: min(92vw, 980px);
+  transform: translate(-50%, -38%);
   flex-direction: column;
   align-items: center;
+  pointer-events: none;
   text-align: center;
 }
 
@@ -317,16 +320,30 @@ img {
 }
 
 .hero-main-line {
-  max-width: 54rem;
-  margin: 0;
-  color: rgba(245, 240, 232, 0.88);
-  font-family: var(--font-display), Georgia, serif;
-  font-size: clamp(2.45rem, 5.25vw, 5.5rem);
-  font-weight: 400;
-  line-height: 0.95;
+  max-width: 760px;
+  margin: 0 auto;
+  background: linear-gradient(
+    90deg,
+    #7d641f 0%,
+    #b89634 24%,
+    #d6c27c 48%,
+    #b49335 68%,
+    #69521c 100%
+  );
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-family: var(--font-hero), "Bebas Neue", "Oswald", "Archivo Black", "Arial Narrow", sans-serif;
+  font-size: clamp(40px, 3.2vw, 58px);
+  font-weight: 700;
+  line-height: 1.18;
+  letter-spacing: 0.015em;
+  text-align: center;
+  text-transform: uppercase;
   text-shadow:
-    0 0 22px rgba(0, 0, 0, 0.62),
-    0 0 38px rgba(201, 168, 76, 0.1);
+    0 0 16px rgba(194, 154, 55, 0.12),
+    0 3px 12px rgba(0, 0, 0, 0.72);
 }
 
 .hero-sub-line {
@@ -349,46 +366,194 @@ img {
 
 .hero-essence-button {
   position: relative;
+  z-index: 0;
+  isolation: isolate;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: min(23rem, 86vw);
-  min-height: 4rem;
-  margin-top: 1.45rem;
-  gap: 1.1rem;
-  border: 1px solid rgba(201, 168, 76, 0.68);
-  background: rgba(5, 4, 3, 0.34);
+  width: min(620px, 58vw);
+  height: 76px;
+  margin-top: 86px;
+  border: 1px solid rgba(157, 126, 38, 0.72);
+  background: rgba(5, 3, 0, 0.68);
   box-shadow:
-    inset 0 0 0 5px rgba(5, 4, 3, 0.86),
-    inset 0 0 0 6px rgba(201, 168, 76, 0.35),
-    0 16px 42px rgba(0, 0, 0, 0.34);
-  color: rgba(245, 224, 179, 0.88);
-  font-family: var(--font-display), Georgia, serif;
-  font-size: 0.9rem;
+    inset 0 0 0 6px rgba(0, 0, 0, 0.22),
+    inset 0 0 0 7px rgba(157, 126, 38, 0.55),
+    0 0 18px rgba(0, 0, 0, 0.38);
+  color: #9f842d;
+  font-family: var(--font-hero), "Bebas Neue", "Oswald", "Arial Narrow", sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.035em;
   line-height: 1;
+  text-decoration: none !important;
   text-transform: uppercase;
-  transition: color 220ms ease, border-color 220ms ease;
+  transition: filter 220ms ease;
+}
+
+.hero-essence-button-text {
+  background: linear-gradient(
+    90deg,
+    #80651e 0%,
+    #c7a348 50%,
+    #80651e 100%
+  );
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-family: var(--font-hero), "Bebas Neue", "Oswald", "Arial Narrow", sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.035em;
+  line-height: 1;
+  text-decoration: none !important;
+  text-transform: uppercase;
+}
+
+.hero-essence-button,
+.hero-essence-button:visited,
+.hero-essence-button:hover,
+.hero-essence-button:focus,
+.hero-essence-button-text {
+  text-decoration: none !important;
+}
+
+.hero-essence-button::before {
+  display: none;
+}
+
+.hero-essence-button::after {
+  display: none;
 }
 
 .hero-essence-button:hover {
-  border-color: rgba(245, 224, 179, 0.86);
-  color: var(--color-ivory);
+  filter: brightness(1.18);
+}
+
+.hero-cta-perfect {
+  pointer-events: auto;
+  position: relative;
+  width: 560px;
+  height: 68px;
+  margin-top: 86px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(5, 4, 1, 0.72);
+
+  border: 1px solid rgba(143, 112, 32, 0.78);
+  outline: none;
+  color: inherit;
+  text-decoration: none !important;
+
+  box-shadow: none !important;
+
+  overflow: visible;
+}
+
+.hero-cta-perfect::before {
+  content: "";
+  position: absolute;
+
+  left: 12px;
+  top: 8px;
+  width: 100%;
+  height: 100%;
+
+  border: 1px solid rgba(143, 112, 32, 0.72);
+  pointer-events: none;
+}
+
+.hero-cta-perfect::after {
+  content: "";
+  position: absolute;
+
+  left: 50%;
+  top: 100%;
+  transform: translateX(-50%);
+
+  width: 1px;
+  height: 78px;
+
+  background: linear-gradient(
+    180deg,
+    rgba(143, 112, 32, 0.85) 0%,
+    rgba(143, 112, 32, 0.25) 100%
+  );
+
+  pointer-events: none;
+}
+
+.hero-cta-perfect-text {
+  position: relative;
+  z-index: 2;
+
+  font-family: var(--font-hero), "Bebas Neue", "Oswald", "Arial Narrow", sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1;
+
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  text-align: center;
+
+  color: #8f7020;
+  text-decoration: none !important;
+
+  background: linear-gradient(
+    90deg,
+    #6d5418 0%,
+    #9b7c2d 35%,
+    #b4933a 50%,
+    #7b611e 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  text-shadow:
+    0 0 8px rgba(160, 120, 32, 0.12),
+    0 2px 8px rgba(0, 0, 0, 0.7);
+}
+
+.hero-cta-perfect,
+.hero-cta-perfect * {
+  box-sizing: border-box;
+}
+
+.hero-cta-perfect,
+.hero-cta-perfect:visited,
+.hero-cta-perfect:hover,
+.hero-cta-perfect:focus {
+  color: inherit !important;
+  text-decoration: none !important;
+}
+
+.hero-cta-perfect a,
+.hero-cta-perfect-text a {
+  color: inherit !important;
+  text-decoration: none !important;
+}
+
+.hero-cta-perfect + .hero-scroll-note::before {
+  display: none;
 }
 
 .hero-footnotes {
   position: absolute;
-  right: clamp(2rem, 4vw, 4rem);
-  bottom: clamp(1.25rem, 2.8vh, 2.1rem);
-  left: clamp(2rem, 4vw, 4rem);
+  right: 0;
+  bottom: clamp(1.85rem, 4.5vh, 3rem);
+  left: 0;
   z-index: 12;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-  align-items: end;
-  gap: 1.7rem;
+  display: flex;
+  justify-content: center;
   pointer-events: none;
-  color: rgba(201, 168, 76, 0.82);
-  font-family: var(--font-display), Georgia, serif;
-  font-size: clamp(0.72rem, 1vw, 1rem);
+  color: rgba(245, 240, 232, 0.7);
+  font-family: var(--font-mono), Consolas, monospace;
+  font-size: 0.72rem;
   line-height: 1;
   text-transform: uppercase;
 }
@@ -432,12 +597,41 @@ img {
 }
 
 .hero-scroll-note {
+  position: relative;
   display: grid;
-  min-width: 8rem;
+  min-width: 12rem;
+  margin-top: 90px;
   justify-items: center;
-  gap: 0.56rem;
-  font-family: var(--font-mono), Consolas, monospace;
-  font-size: 0.72rem;
+  gap: 0;
+  text-transform: uppercase;
+}
+
+.hero-scroll-note::before {
+  position: absolute;
+  bottom: calc(100% + 18px);
+  left: 50%;
+  width: 1px;
+  height: 72px;
+  content: "";
+  background: linear-gradient(
+    180deg,
+    rgba(152, 120, 34, 0.8),
+    rgba(152, 120, 34, 0.18)
+  );
+  transform: translateX(-50%);
+}
+
+.hero-scroll-note p {
+  color: rgba(236, 232, 224, 0.74);
+  font-family: var(--font-scroll), "Oswald", "Bebas Neue", "Arial Narrow", sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.42em;
+  text-align: center;
+  text-shadow:
+    0 0 10px rgba(255, 230, 170, 0.08),
+    0 2px 8px rgba(0, 0, 0, 0.72);
 }
 
 .hero-scroll-pin {
@@ -484,12 +678,13 @@ img {
   }
 
   .hero-copy-panel {
-    bottom: 5.8rem;
-    width: min(23rem, 92vw);
+    top: 46%;
+    bottom: auto;
+    width: min(23rem, 88vw);
   }
 
   .hero-main-line {
-    font-size: clamp(2.05rem, 10vw, 3.1rem);
+    font-size: clamp(40px, 7vw, 58px);
   }
 
   .hero-sub-line {
@@ -504,19 +699,88 @@ img {
   }
 
   .hero-essence-button {
-    min-height: 3.75rem;
-    font-size: 0.78rem;
+    width: min(20rem, 82vw);
+    min-height: 2.9rem;
+    margin-top: clamp(5.4rem, 14vh, 7.2rem);
+    font-size: 15px;
+  }
+
+  .hero-scroll-note {
+    margin-top: clamp(3.4rem, 8vh, 4.8rem);
+  }
+
+  .hero-scroll-note p {
+    font-size: 14px;
+    letter-spacing: 0.28em;
   }
 
   .hero-footnotes {
     right: 1.25rem;
     left: 1.25rem;
-    grid-template-columns: 1fr;
-    justify-items: center;
   }
 
   .hero-footnote {
     display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-copy-panel {
+    top: 52%;
+    width: 92vw;
+    transform: translate(-50%, -40%);
+  }
+
+  .hero-main-line {
+    max-width: 92vw;
+    font-size: clamp(34px, 10vw, 46px);
+    line-height: 1.12;
+  }
+
+  .hero-essence-button {
+    width: min(86vw, 520px);
+    height: 62px;
+    min-height: 0;
+    margin-top: 58px;
+  }
+
+  .hero-essence-button-text {
+    font-size: 13px;
+    letter-spacing: 0.035em;
+  }
+
+  .hero-cta-perfect {
+    width: min(82vw, 500px);
+    height: 58px;
+    margin-top: 58px;
+  }
+
+  .hero-cta-perfect::before {
+    left: 8px;
+    top: 6px;
+  }
+
+  .hero-cta-perfect::after {
+    height: 56px;
+  }
+
+  .hero-cta-perfect-text {
+    font-size: 13px;
+    letter-spacing: 0.22em;
+  }
+
+  .hero-scroll-note {
+    margin-top: 70px;
+  }
+
+  .hero-scroll-note::before {
+    bottom: calc(100% + 18px);
+    height: 52px;
+  }
+
+  .hero-scroll-note p {
+    font-size: 12px;
+    letter-spacing: 0.28em;
   }
 }
 
@@ -526,7 +790,8 @@ img {
   }
 
   .hero-copy-panel {
-    bottom: 2.6rem;
+    top: 50%;
+    bottom: auto;
   }
 }
 
