@@ -168,21 +168,8 @@
                     "value": 0.13506537785936892
                   },
                   {
-                    "id": "HEM9YsaTyd",
-                    "position": 0.6,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": -4.010585865953263
-                  },
-                  {
                     "id": "y4lhh-n4kR",
-                    "position": 0.833,
+                    "position": 1,
                     "connectedRight": true,
                     "handles": [
                       0.5,
@@ -191,7 +178,7 @@
                       0
                     ],
                     "type": "bezier",
-                    "value": -4.150034532206582
+                    "value": -2.550034532206586
                   },
                   {
                     "id": "dSKylUGkfC",
@@ -304,21 +291,8 @@
                     "value": 0.9538965743280866
                   },
                   {
-                    "id": "fxv_vKcLmn",
-                    "position": 0.6,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 2.5648979007493216
-                  },
-                  {
                     "id": "YhCHZzHHtf",
-                    "position": 0.833,
+                    "position": 1,
                     "connectedRight": true,
                     "handles": [
                       0.5,
@@ -327,7 +301,7 @@
                       0
                     ],
                     "type": "bezier",
-                    "value": 1.90890578957201
+                    "value": 2.298905789572008
                   },
                   {
                     "id": "TTqo0reuXd",
@@ -440,21 +414,8 @@
                     "value": 3.7826771783709363
                   },
                   {
-                    "id": "cEEjSJHfY0",
-                    "position": 0.6,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 3.892393751617442
-                  },
-                  {
                     "id": "-lKgJ-ufKA",
-                    "position": 0.833,
+                    "position": 1,
                     "connectedRight": true,
                     "handles": [
                       0.5,
@@ -463,7 +424,7 @@
                       0
                     ],
                     "type": "bezier",
-                    "value": 4.80196979579399
+                    "value": 3.7419697957939855
                   },
                   {
                     "id": "aXFS3AUOU3",
@@ -576,21 +537,8 @@
                     "value": 0
                   },
                   {
-                    "id": "eJD0t5A6Ft",
-                    "position": 0.6,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 0
-                  },
-                  {
                     "id": "7q5UrfKWnp",
-                    "position": 0.833,
+                    "position": 1,
                     "connectedRight": true,
                     "handles": [
                       0.5,
@@ -699,21 +647,8 @@
                     "value": 0.040893289536106936
                   },
                   {
-                    "id": "AfpxDlOAW9",
-                    "position": 0.6,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 1.0350920574981033
-                  },
-                  {
                     "id": "H9GrrrH11Z",
-                    "position": 0.833,
+                    "position": 1,
                     "connectedRight": true,
                     "handles": [
                       0.5,
@@ -822,21 +757,8 @@
                     "value": 0
                   },
                   {
-                    "id": "1z65TDpCek",
-                    "position": 0.6,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 3.9583411365099184
-                  },
-                  {
                     "id": "71GClgthtL",
-                    "position": 0.833,
+                    "position": 1,
                     "connectedRight": true,
                     "handles": [
                       0.5,
@@ -945,21 +867,8 @@
                     "value": 40.667
                   },
                   {
-                    "id": "jlioTSpZU1",
-                    "position": 0.6,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 44.95487303612437
-                  },
-                  {
                     "id": "FXYAmKG5PF",
-                    "position": 0.833,
+                    "position": 1,
                     "connectedRight": true,
                     "handles": [
                       0.5,
@@ -968,7 +877,7 @@
                       0
                     ],
                     "type": "bezier",
-                    "value": 45
+                    "value": 75.267
                   },
                   {
                     "id": "VIU6qwNh6X",
@@ -1272,7 +1181,7 @@
                   },
                   {
                     "id": "eg85ilUj0c",
-                    "position": 0.7,
+                    "position": 0.933,
                     "connectedRight": true,
                     "handles": [
                       0.5,
@@ -1285,7 +1194,7 @@
                   },
                   {
                     "id": "agezYvndct",
-                    "position": 1.1,
+                    "position": 1.3,
                     "connectedRight": true,
                     "handles": [
                       0.5,
@@ -1343,7 +1252,7 @@
                   },
                   {
                     "id": "Zt4v8QqvDB",
-                    "position": 0.7,
+                    "position": 0.933,
                     "connectedRight": true,
                     "handles": [
                       0.5,
@@ -1356,7 +1265,7 @@
                   },
                   {
                     "id": "h6SwYtBZxE",
-                    "position": 1.1,
+                    "position": 1.3,
                     "connectedRight": true,
                     "handles": [
                       0.5,
@@ -1414,7 +1323,7 @@
                   },
                   {
                     "id": "0B6KAOP5v7",
-                    "position": 0.7,
+                    "position": 0.933,
                     "connectedRight": true,
                     "handles": [
                       0.5,
@@ -1423,11 +1332,11 @@
                       0
                     ],
                     "type": "bezier",
-                    "value": 2.1917945176910267
+                    "value": 1.7217945176910272
                   },
                   {
                     "id": "yDJH-8Qw-y",
-                    "position": 1.1,
+                    "position": 1.3,
                     "connectedRight": true,
                     "handles": [
                       0.5,
@@ -1485,7 +1394,7 @@
                   },
                   {
                     "id": "eI3JkfHwou",
-                    "position": 0.7,
+                    "position": 0.933,
                     "connectedRight": true,
                     "handles": [
                       0.5,
@@ -1494,11 +1403,11 @@
                       0
                     ],
                     "type": "bezier",
-                    "value": 0.027756939281787574
+                    "value": 0.11775693928178756
                   },
                   {
                     "id": "_G_O9vsm26",
-                    "position": 1.1,
+                    "position": 1.3,
                     "connectedRight": true,
                     "handles": [
                       0.5,
@@ -1556,7 +1465,7 @@
                   },
                   {
                     "id": "b2JYCDwniT",
-                    "position": 0.7,
+                    "position": 0.933,
                     "connectedRight": true,
                     "handles": [
                       0.5,
@@ -1565,11 +1474,11 @@
                       0
                     ],
                     "type": "bezier",
-                    "value": 6.11047862704638
+                    "value": 6.13047862704638
                   },
                   {
                     "id": "B7emAVDqul",
-                    "position": 1.1,
+                    "position": 1.3,
                     "connectedRight": true,
                     "handles": [
                       0.5,
@@ -1627,7 +1536,7 @@
                   },
                   {
                     "id": "p7g2_ukEze",
-                    "position": 0.7,
+                    "position": 0.933,
                     "connectedRight": true,
                     "handles": [
                       0.5,
@@ -1640,7 +1549,7 @@
                   },
                   {
                     "id": "bO9xz3DNfa",
-                    "position": 1.1,
+                    "position": 1.3,
                     "connectedRight": true,
                     "handles": [
                       0.5,
@@ -1685,7 +1594,7 @@
                   },
                   {
                     "id": "dH-_oFZbz1",
-                    "position": 0.7,
+                    "position": 0.933,
                     "connectedRight": true,
                     "handles": [
                       0.5,
@@ -1698,7 +1607,7 @@
                   },
                   {
                     "id": "_OuQZpcOey",
-                    "position": 1.1,
+                    "position": 1.3,
                     "connectedRight": true,
                     "handles": [
                       0.5,
@@ -1743,7 +1652,7 @@
                   },
                   {
                     "id": "QiewWn3XJh",
-                    "position": 0.7,
+                    "position": 0.933,
                     "connectedRight": true,
                     "handles": [
                       0.5,
@@ -1756,7 +1665,7 @@
                   },
                   {
                     "id": "b8cV2U_x18",
-                    "position": 1.1,
+                    "position": 1.3,
                     "connectedRight": true,
                     "handles": [
                       0.5,
@@ -1801,7 +1710,7 @@
                   },
                   {
                     "id": "5MmVUyZ6r1",
-                    "position": 0.7,
+                    "position": 0.933,
                     "connectedRight": true,
                     "handles": [
                       0.5,
@@ -1814,7 +1723,7 @@
                   },
                   {
                     "id": "RlshTe7eu8",
-                    "position": 1.1,
+                    "position": 1.3,
                     "connectedRight": true,
                     "handles": [
                       0.5,
@@ -3699,7 +3608,6 @@
   },
   "definitionVersion": "0.4.0",
   "revisionHistory": [
-    "qnJx5jdV-a3ilalF",
     "YPri-bSpttAG9lkX",
     "y_eDOqnSCZSgkwMV",
     "f9ganYVNKSZFZv4U",

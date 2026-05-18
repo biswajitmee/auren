@@ -7,15 +7,22 @@ import { useFrame } from "@react-three/fiber";
 import { useMemo, useRef } from "react";
 import * as THREE from "three";
 
-import { useDesireGalleryScene } from "@/lib/useDesireGalleryScene";
-
 type HeroCameraValues = {
+  far?: number;
+  fov?: number;
+  near?: number;
+  position?: {
+    x: number;
+    y: number;
+    z: number;
+  };
   target?: {
     x: number;
     y: number;
     z: number;
   };
   roll?: number;
+  zoom?: number;
 };
 
 const heroCameraAdditionalProps = {
@@ -27,13 +34,31 @@ const heroCameraAdditionalProps = {
   roll: t.number(0)
 };
 
+const DEFAULT_CAMERA_POSITION = { x: 0, y: 0.12, z: 7.2 };
+const DEFAULT_CAMERA_TARGET = { x: 0, y: 0.04, z: 0 };
+const DEFAULT_CAMERA_FOV = 34;
+const DEFAULT_CAMERA_NEAR = 0.1;
+const DEFAULT_CAMERA_FAR = 100;
+const DEFAULT_CAMERA_ZOOM = 1;
+
+function finiteOrDefault(value: number | undefined, fallback: number): number {
+  return typeof value === "number" && Number.isFinite(value) ? value : fallback;
+}
+
 export function CameraRig() {
   const cameraRef = useRef<THREE.PerspectiveCamera>(null);
   const heroCameraObjectRef = useRef<ISheetObject | null>(null);
-  const fovRef = useRef(34);
-  const lookAt = useMemo(() => new THREE.Vector3(0, 0.04, 0), []);
+  const lookAt = useMemo(
+    () =>
+      new THREE.Vector3(
+        DEFAULT_CAMERA_TARGET.x,
+        DEFAULT_CAMERA_TARGET.y,
+        DEFAULT_CAMERA_TARGET.z
+      ),
+    []
+  );
 
-  useFrame((_, delta) => {
+  useFrame(() => {
     const camera = cameraRef.current;
     const heroCameraObject = heroCameraObjectRef.current;
 
@@ -42,17 +67,24 @@ export function CameraRig() {
     }
 
     const cameraValues = val(heroCameraObject.props) as HeroCameraValues;
-    const target = cameraValues.target ?? { x: 0, y: 0.04, z: 0 };
-    const { detailCardIndex, sceneReduced, visible } = useDesireGalleryScene.getState();
-    const targetFov = sceneReduced || visible ? (detailCardIndex === null ? 45 : 34) : 34;
+    const position = cameraValues.position ?? DEFAULT_CAMERA_POSITION;
+    const target = cameraValues.target ?? DEFAULT_CAMERA_TARGET;
+    const nextNear = finiteOrDefault(cameraValues.near, DEFAULT_CAMERA_NEAR);
+    const nextFar = finiteOrDefault(cameraValues.far, DEFAULT_CAMERA_FAR);
+    const nextFov = finiteOrDefault(cameraValues.fov, DEFAULT_CAMERA_FOV);
+    const nextZoom = finiteOrDefault(cameraValues.zoom, DEFAULT_CAMERA_ZOOM);
+
+    camera.position.set(position.x, position.y, position.z);
+    camera.near = nextNear;
+    camera.far = Math.max(nextNear + 0.001, nextFar);
+    camera.fov = Math.max(1, Math.min(120, nextFov));
+    camera.zoom = Math.max(0.001, nextZoom);
 
     lookAt.set(
       target.x,
       target.y,
       target.z
     );
-    fovRef.current = THREE.MathUtils.damp(fovRef.current, targetFov, 4.8, delta);
-    camera.fov = fovRef.current;
     camera.lookAt(lookAt);
     camera.rotateZ(cameraValues.roll ?? 0);
     camera.updateProjectionMatrix();
