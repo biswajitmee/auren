@@ -15,6 +15,7 @@ import ringVertexShader from "@/shaders/desireRing.vert";
 
 const CARD_SHELL_PATH = "/models/luxury_gallery_card_shell.glb";
 const CARD_SPACING = 2.14;
+const MOBILE_HORIZONTAL_SCROLL_SPEED = 1.65;
 const SHELL_DISPLAY_SCALE = 0.54;
 const SHELL_DEPTH_SCALE = 0.82;
 const SHELL_FRONT_Z = 0.16 * SHELL_DEPTH_SCALE * 0.5;
@@ -551,7 +552,7 @@ export function LuxuryGalleryCard({
   const scaleRef = useRef(0.92);
   const detailCardIndex = useDesireGalleryScene((state) => state.detailCardIndex);
   const isDetailSelected = detailCardIndex === trackIndex;
-  const { camera } = useThree();
+  const { camera, size } = useThree();
   const { scene } = useGLTF(CARD_SHELL_PATH) as GLTF;
   const texture = useTexture(image) as THREE.Texture;
   const pointerNdc = useMemo(() => new THREE.Vector2(), []);
@@ -712,7 +713,10 @@ export function LuxuryGalleryCard({
       progressRef.current = THREE.MathUtils.damp(progressRef.current, progress, 7.2, delta);
     }
 
-    const sceneProgress = progressRef.current;
+    const sceneProgress =
+      size.width < 760
+        ? THREE.MathUtils.clamp(progressRef.current * MOBILE_HORIZONTAL_SCROLL_SPEED, 0, 1)
+        : progressRef.current;
     const trackSpan = Math.max(0, galleryCards.length - 3) * CARD_SPACING;
     const galleryTargetX =
       position[0] + (trackIndex - 1) * CARD_SPACING - sceneProgress * trackSpan;
