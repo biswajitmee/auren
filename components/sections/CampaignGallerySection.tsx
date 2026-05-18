@@ -14,7 +14,7 @@ const DESKTOP_QUERY = "(min-width: 900px)";
 const MOBILE_QUERY = "(max-width: 899px)";
 const DESKTOP_SCROLL_VH = Math.max(360, galleryItems.length * 86);
 const GALLERY_REVEAL_DELAY_MS = 0;
-const GALLERY_VISIBILITY_START = "top 96%";
+const GALLERY_VISIBILITY_START = "top 20%";
 
 export function CampaignGallerySection() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -150,7 +150,7 @@ export function CampaignGallerySection() {
 
   return (
     <SectionFrame
-      className="min-h-screen [&>[data-section-kicker]]:opacity-0"
+      className="[&>[data-section-kicker]]:opacity-0 min-h-screen"
       data-clear-section-layer
       eyebrow="Campaign Gallery"
       id="campaign-gallery"
@@ -160,15 +160,15 @@ export function CampaignGallerySection() {
     >
       <div
         aria-hidden
-        className="pointer-events-none mb-10 flex flex-col justify-between gap-6 opacity-0 md:flex-row md:items-end"
+        className="flex md:flex-row flex-col justify-between md:items-end gap-6 opacity-0 mb-10 pointer-events-none"
       >
         <div>
           <MicroLabel>03 / Campaign Archive</MicroLabel>
-          <h2 className="mt-4 max-w-3xl font-display text-5xl leading-[0.96] text-ivory sm:text-7xl">
+          <h2 className="mt-4 max-w-3xl font-display text-ivory text-5xl sm:text-7xl leading-[0.96]">
             Architecture of desire.
           </h2>
         </div>
-        <p className="max-w-sm border-t border-gold/24 pt-4 font-mono text-[0.66rem] uppercase leading-5 text-ivory/48">
+        <p className="pt-4 border-gold/24 border-t max-w-sm font-mono text-[0.66rem] text-ivory/48 uppercase leading-5">
           Five cinematic chapters composed in black marble, shadow, flame, and
           gold.
         </p>
