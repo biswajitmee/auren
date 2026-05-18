@@ -39,10 +39,10 @@ export const aurenHeroPreset = {
     labelBoost: 1
   },
   spotlight: {
-    spotlightX: 0,
-    spotlightY: 8.7,
-    spotlightZ: 0.82,
-    spotlightIntensity: 10.8,
+    spotlightX: -8,
+    spotlightY: 0,
+    spotlightZ: -8,
+    spotlightIntensity: 3.750000000000001,
     spotlightAngle: 0.28,
     spotlightPenumbra: 0.96,
     spotlightDistance: 0,
@@ -50,10 +50,10 @@ export const aurenHeroPreset = {
     spotlightColor: "#f0d08a"
   },
   rim: {
-    rimX: -4.32,
-    rimY: 0.7700000000000002,
-    rimZ: 4.5,
-    rimIntensity: 3.51,
+    rimX: -4.16,
+    rimY: 1.4800000000000002,
+    rimZ: 3.4699999999999998,
+    rimIntensity: 6,
     rimColor: "#e6bf64"
   },
   beam: {
@@ -76,10 +76,10 @@ export const aurenHeroPreset = {
   },
   particles: {
     particlesEnabled: true,
-    particleDensity: 1.59,
-    particleOpacity: 0.92,
-    particleSize: 0.53,
-    particleSpeed: 0.82,
+    particleDensity: 1.76,
+    particleOpacity: 1.26,
+    particleSize: 2.02,
+    particleSpeed: 0.18999999999999995,
     particleSpread: 0.8,
     particleBeamDensity: 0.7699999999999999,
     particleTwinkle: 1.5899999999999999,
@@ -145,7 +145,7 @@ export const aurenHeroPreset = {
   },
   floor: {
     floorEnabled: true,
-    floorY: -0.34,
+    floorY: -0.55,
     floorReflectivity: 1.3,
     floorBlur: 0.54,
     floorRoughness: 0.12,

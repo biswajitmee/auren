@@ -324,11 +324,12 @@ img {
   margin: 0 auto;
   background: linear-gradient(
     90deg,
-    #7d641f 0%,
-    #b89634 24%,
-    #d6c27c 48%,
-    #b49335 68%,
-    #69521c 100%
+    #72591c 0%,
+    #927323 36%,
+    #aa852d 58%,
+    #d6c27c 78%,
+    #e0d39a 88%,
+    #9a7928 100%
   );
   color: transparent;
   background-clip: text;
@@ -434,8 +435,8 @@ img {
 .hero-cta-perfect {
   pointer-events: auto;
   position: relative;
-  width: 560px;
-  height: 68px;
+  width: min(420px, 72vw);
+  height: 58px;
   margin-top: 86px;
 
   display: flex;
@@ -476,7 +477,7 @@ img {
   transform: translateX(-50%);
 
   width: 1px;
-  height: 78px;
+  height: 64px;
 
   background: linear-gradient(
     180deg,
@@ -494,7 +495,7 @@ img {
   font-family: var(--font-hero), "Bebas Neue", "Oswald", "Arial Narrow", sans-serif;
   font-size: 17px;
   font-weight: 700;
-  line-height: 1;
+  line-height: 0.9;
 
   letter-spacing: 0.34em;
   text-transform: uppercase;
@@ -750,8 +751,8 @@ img {
   }
 
   .hero-cta-perfect {
-    width: min(82vw, 500px);
-    height: 58px;
+    width: min(82vw, 420px);
+    height: 54px;
     margin-top: 58px;
   }
 
@@ -761,7 +762,7 @@ img {
   }
 
   .hero-cta-perfect::after {
-    height: 56px;
+    height: 48px;
   }
 
   .hero-cta-perfect-text {
