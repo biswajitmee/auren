@@ -15,7 +15,8 @@ import ringVertexShader from "@/shaders/desireRing.vert";
 
 const CARD_SHELL_PATH = "/models/luxury_gallery_card_shell.glb";
 const CARD_SPACING = 2.14;
-const MOBILE_HORIZONTAL_SCROLL_SPEED = 3;
+const MOBILE_CARD_SPACING = 3.08;
+const MOBILE_HORIZONTAL_SCROLL_SPEED = 1;
 const SHELL_DISPLAY_SCALE = 0.60;
 const SHELL_DEPTH_SCALE = 0.82;
 const SHELL_FRONT_Z = 0.16 * SHELL_DEPTH_SCALE * 0.5;
@@ -713,13 +714,17 @@ export function LuxuryGalleryCard({
       progressRef.current = THREE.MathUtils.damp(progressRef.current, progress, 7.2, delta);
     }
 
-    const sceneProgress =
-      size.width < 760
-        ? THREE.MathUtils.clamp(progressRef.current * MOBILE_HORIZONTAL_SCROLL_SPEED, 0, 1)
-        : progressRef.current;
-    const trackSpan = Math.max(0, galleryCards.length - 3) * CARD_SPACING;
+    const isMobileGallery = size.width < 760;
+    const trackSpacing = isMobileGallery ? MOBILE_CARD_SPACING : CARD_SPACING;
+    const visibleTrackCards = isMobileGallery ? 1 : 3;
+    const sceneProgress = isMobileGallery
+      ? THREE.MathUtils.clamp(progressRef.current * MOBILE_HORIZONTAL_SCROLL_SPEED, 0, 1)
+      : progressRef.current;
+    const trackSpan = Math.max(0, galleryCards.length - visibleTrackCards) * trackSpacing;
     const galleryTargetX =
-      position[0] + (trackIndex - 1) * CARD_SPACING - sceneProgress * trackSpan;
+      position[0] +
+      (trackIndex - (isMobileGallery ? 0 : 1)) * trackSpacing -
+      sceneProgress * trackSpan;
     const targetX =
       detailOpen && activeDetailIndex !== null
         ? isActiveDetail
@@ -727,8 +732,10 @@ export function LuxuryGalleryCard({
           : (trackIndex - activeDetailIndex) * CARD_SPACING * 1.72
         : galleryTargetX;
     const centerDistance = Math.abs(targetX);
-    const focus = detailOpen && isActiveDetail ? 1 : 1 - Math.min(1, centerDistance / (CARD_SPACING * 1.6));
-    const rangeFade = 1 - THREE.MathUtils.smoothstep(centerDistance, 3.05, 3.86);
+    const focus = detailOpen && isActiveDetail ? 1 : 1 - Math.min(1, centerDistance / (trackSpacing * 1.6));
+    const rangeFade = isMobileGallery
+      ? 1 - THREE.MathUtils.smoothstep(centerDistance, 1.12, 2.28)
+      : 1 - THREE.MathUtils.smoothstep(centerDistance, 3.05, 3.86);
     const targetOpacity = visible
       ? detailOpen
         ? isActiveDetail
